@@ -1,0 +1,224 @@
+.container {
+    width: 100%;
+}
+
+.header--container {
+    position: sticky;
+    display: flex;
+    justify-content: space-between;
+    top: 0px;
+    left: 0px;
+    z-index: 99999;
+    width: 100%;
+}
+
+.header--content {
+    display: flex;
+    align-content: center;
+    justify-content: center;
+    z-index: 10;
+}
+
+.main--btn {
+    margin-left: 30px;
+    width: 50px;
+    height: 50px;
+    align-self: center;
+    z-index: 99999;
+}
+
+.btn {
+    z-index: 10;
+    align-self: center;
+    margin: 10px 20px;
+}
+
+.fixed--container {
+    display: flex;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background-color: rgb(201, 201, 201);
+    z-index: 9999;
+    top: 0px;
+    overflow-x: hidden;
+    overflow-y: scroll;
+}
+
+.fixed-list--container {
+    display: flex;
+    width: 300px;
+    height: 100%;
+    left: 0px;
+    top: 0px;
+    background-color: rgb(28, 28, 28);
+    z-index: -1;
+}
+
+.default.fixed--container {
+    display: none;
+}
+
+.default .fixed-list--container {
+    display: none;
+}
+
+.open.fixed--container {
+    animation: black-out 500ms;
+    animation-fill-mode: forwards;
+}
+
+.open .fixed-list--container {
+    animation: slide-in 600ms;
+    animation-fill-mode: forwards;
+}
+
+.close.fixed--container {
+    animation: black-in 500ms;
+    animation-fill-mode: forwards;
+}
+
+.close .fixed-list--container {
+    animation: slide-out 500ms;
+    animation-fill-mode: forwards;
+}
+
+.fixed-list {
+    position: fixed;
+    width: 300px;
+    left: 0px;
+    top: 60px;
+    display: grid;
+    grid-template-columns: 300px;
+    column-gap: 5px;
+    z-index: -1;
+    opacity: 1;
+}
+
+.fixed-list--expand-link--container {
+    display: grid;
+    grid-template-columns: 300px;
+}
+
+.fixed-list--expand-link--title {
+    color: white;
+    font-size: 16px;
+    text-decoration: underline;
+}
+
+.hidden {
+    animation: hide 500ms;
+    animation-fill-mode: forwards;
+}
+
+.showen {
+    animation: show 500ms;
+    animation-fill-mode: forwards;
+}
+
+@keyframes slide-out {
+    0% {
+        display: flex;
+    }
+
+    from {
+        transform: translateX(0px);
+    }
+
+    to {
+        transform: translateX(-500px);
+    }
+
+    100% {
+        display: none;
+    }
+}
+
+@keyframes slide-in {
+    0% {
+        display: flex;
+    }
+
+    from {
+        transform: translateX(-500px);
+    }
+
+    to {
+        transform: translateX(0px);
+    }
+}
+
+@keyframes black-in {
+    0% {
+        display: flex;
+        touch-action: none;
+    }
+
+    from {
+        background-color: rgba(201, 201, 201, 0.5);
+    }
+
+    to {
+        background-color: rgba(201, 201, 201, 0);
+    }
+
+    100% {
+        display: none;
+    }
+}
+
+@keyframes black-out {
+    0% {
+        display: flex;
+    }
+
+    from {
+        background-color: rgba(201, 201, 201, 0);
+    }
+
+    to {
+        background-color: rgba(201, 201, 201, 0.5);
+    }
+
+    100% {
+        display: flex;
+    }
+}
+
+@keyframes hide {
+    0% {
+        display: flex;
+        touch-action: none;
+    }
+
+    from {
+        opacity: 1;
+    }
+
+    to {
+        opacity: 0;
+    }
+
+    100% {
+        display: none;
+    }
+}
+
+@keyframes show {
+    0% {
+        display: flex;
+        touch-action: auto;
+    }
+
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+
+    100% {
+        display: flex;
+    }
+}

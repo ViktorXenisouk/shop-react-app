@@ -1,0 +1,29 @@
+.container {
+    display: flex;
+    justify-content: center;
+}
+
+.content{
+    width: 400px;
+    display: grid;
+    justify-content: center;
+
+}
+
+.img{
+    width: 225px;
+    height: 225px;
+    display: block;
+    background-repeat: no-repeat;
+    background-size: cover;
+    cursor: zoom-in;
+    overflow: hidden;
+}
+
+.img:focus{
+    transform: scale(1.25);
+}
+
+.link{
+    margin-right: 10px;
+}

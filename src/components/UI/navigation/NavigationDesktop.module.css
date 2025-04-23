@@ -1,0 +1,31 @@
+.logo--container{
+    display: flex;
+}
+
+.nav-list--container{
+    display: flex;
+    justify-content: right;
+    padding-right: 20px;
+}
+
+.container{
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.right--container {
+    display: flex;
+    align-content: center;
+    margin: 10px 20px;
+}
+
+.btn{
+    color: black;
+    background-color: white;
+    padding: 10px 20px;
+    font-size: 16px;
+    border:none;
+    cursor: pointer;
+    margin-left: 10px;
+}
