@@ -11,10 +11,16 @@ function App() {
       <main>
         <Routes>
           <Route index element={<pages.Main />} />
-          <Route path='/products/*' element={<pages.Products />}/>
+          <Route path='/login' element={<pages.Login/>}/>
+          <Route path='/register' element={<pages.Register/>} />
+          <Route path='/products/*' element={<pages.Products />} />
           <Route path='/product/:id' element={<pages.Product />} />
           <Route path='/backet' element={<pages.Basket />} />
-          <Route path='*' element={<pages.ErrorPage />} />
+          <Route path='*' element={<pages.ErrorPage message='can not find the page' status={404}/>} />
+          <Route path='/admin'>
+            <Route path='/admin' index element={<pages.AdminLogin />} />
+            <Route path='/admin/users' element={<pages.AdminUsers/>}/>
+          </Route>
         </Routes>
       </main>
     </div>

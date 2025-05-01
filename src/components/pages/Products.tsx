@@ -5,9 +5,9 @@ import { ItemData } from "../API/itemsData"
 import ProductCard from "../card/productCard/ProductCard"
 import Filter from '../UI/filter/Filter';
 import { useLocation, useParams, useSearchParams } from "react-router-dom"
-import { URLSearchParams } from 'node:url'
+import dotenv from 'dotenv';
 
-const shop = ({ data }: { data: ItemData[] }) => {
+const MyProducts = ({ data }: { data: ItemData[] }) => {
 
     return (
         <div className={style['main']}>
@@ -17,25 +17,25 @@ const shop = ({ data }: { data: ItemData[] }) => {
 }
 
 const Products = () => {
+    const url = process.env.server as string
 
-    const params = useParams()
-
-    const [searchParams,setSearchParams] = useSearchParams()
+    const [searchParams, setSearchParams] = useSearchParams()
 
     const tag = searchParams.get('tag')
     const category = searchParams.get('category')
     const search = searchParams.get('search')
 
-    console.log(tag,category,search)
+    const requestInit: RequestInit = {}
+    requestInit.method = 'GET'
 
     return (
         <div className={style['container']}>
             <div className={style['header']}>
 
             </div>
-            <Loading getData={getAllItemDatasAndBasket} params={{tags:tag,category:category,name:search,page:10,count:1}} page={shop} />
+            <Loading page={MyProducts} url={`${url}/products/search/?tag=${tag}?category=${category}`} requestInit={requestInit} />
             <div className={style['filter']}>
-                <Filter/>
+                <Filter />
             </div>
         </div>
     )

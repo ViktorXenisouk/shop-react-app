@@ -46,9 +46,14 @@ const MyFilter = ({data} : {data:FilterData[]}) => {
 }
 
 const Filter = () => {
-    return (
-        <Loading getData={getFilterDataByCategory} page={MyFilter}/>
-    )
+       const url = process.env.server as string
+       const requestInit: RequestInit = {}
+       requestInit.method = 'GET'
+   
+       return (
+           <Loading page={MyFilter} url={`${url}/user/basket`} requestInit={requestInit} />
+   
+       )
 }
 
 export default Filter

@@ -64,7 +64,7 @@ const transformCatalog = (currentCatalog: CatalogData, path: string) => {
         path = '/' + path + currentCatalog.path;
     }
     else{
-        path = path + '-' + currentCatalog.path;
+        path = path + '/' + currentCatalog.path;
     }
     currentCatalog.path = path
 

@@ -17,7 +17,7 @@ const MyProduct = ({ data }: { data: ItemData }) => {
             <div className={style['content']}>
                 <button onClick={onButtonClick}>Back</button>
                 <p>{data.category}</p>
-                <div className={style['img']} style={{backgroundImage:`url(${data.imageURL})`}}>
+                <div className={style['img']} style={{ backgroundImage: `url(${data.imageURL})` }}>
 
                 </div>
                 <h3>{data.name}</h3>
@@ -28,13 +28,17 @@ const MyProduct = ({ data }: { data: ItemData }) => {
 }
 
 const Product = () => {
+    const url = process.env.server as string
 
     const params = useParams()
 
     const id = params.id as string;
 
+    const requestInit: RequestInit = {}
+    requestInit.method = 'GET'
+
     return (
-        <Loading getData={getItemById} page={MyProduct} params={parseInt(id)} />
+        <Loading page={MyProduct} url={`${url}/user/basket/${id}`} requestInit={requestInit} />
     )
 }
 

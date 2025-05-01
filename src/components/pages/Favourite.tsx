@@ -1,22 +1,22 @@
 import style from "./Basket.module.css"
 import { type BasketInfo } from "../API/basket"
 import { Loading } from "../UI/loading/Loading"
-import BasketCard from "../card/backetCard/BacketCard"
+import { FavouriteCard } from "../card/favouriteCard/FavouriteCard"
 import * as Cookie from "../utils/cookie"
 
-const MyBasket = ({ data }: { data:{data: BasketInfo[]} }) => {
+const MyFavourite = ({ data }: { data:{data: string[]} }) => {
     console.log(data)
 
     const d = data.data
 
     return (
         <div className={style['container']}>
-            {d && d.length > 0 ? d.map((item) => <BasketCard id={item.id} name={item.id.toString()} count={item.count} />) : 'is empty'}
+            {d && d.length > 0 ? d.map((item) => <FavouriteCard id={item} />) : 'is empty'}
         </div>
     )
 }
 
-const Basket = () => {
+const Favourite = () => {
     const url = process.env.REACT_APP_API_URL as string
     const token = Cookie.get('user_token')
     const requestInit: RequestInit = {}
@@ -26,8 +26,8 @@ const Basket = () => {
     }
 
     return (
-        <Loading page={MyBasket} url={`${url}/user/basket`} requestInit={requestInit} />
+        <Loading page={MyFavourite} url={`${url}/user/basket`} requestInit={requestInit} />
     )
 }
 
-export default Basket
+export default Favourite
