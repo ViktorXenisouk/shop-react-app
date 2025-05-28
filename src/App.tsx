@@ -1,8 +1,10 @@
 import React from 'react';
 import { Routes, Route } from 'react-router-dom'
-import * as pages from './components/pages/index'
+import * as pages from './pages/index'
 import './App.css';
-import Navbar from './components/UI/navigation/Navbar';
+import Navbar from './features/navigation/Navbar';
+import AdminCategories from './pages/AdminCategories';
+import AdminProductsCreate from './features/admin/adminProducts/components/AdminProductCreate';
 
 function App() {
   return (
@@ -19,7 +21,11 @@ function App() {
           <Route path='*' element={<pages.ErrorPage message='can not find the page' status={404}/>} />
           <Route path='/admin'>
             <Route path='/admin' index element={<pages.AdminLogin />} />
+            <Route path='/admin/products' element={<pages.AdminProducts/>}/>
             <Route path='/admin/users' element={<pages.AdminUsers/>}/>
+            <Route path='/admin/categories' element={<pages.AdminCategories/>}/>
+            <Route path='/admin/admins' element={<pages.AdminUsers/>}/>
+            <Route path='/admin/products/create' element={<AdminProductsCreate/>}/>
           </Route>
         </Routes>
       </main>
