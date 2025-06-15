@@ -3,11 +3,12 @@ import filterBlockStyle from "./UI/FilterBlock.module.css"
 import style from "./Filter.module.css"
 import { DataLoaderFromPromise } from "../loading/Loading"
 import { type FilterData } from "./types"
-import HorizontalFilterList from "./UI/HorizontalFilterList"
-import VerticalFilterList from "./UI/VerticalFilterList"
+import FilterList from "./UI/FilterList"
 import { safeFetch } from "../../services/safeFetch"
 import { useLocation } from "react-router-dom"
 import { useNavigate } from "react-router-dom"
+
+import { Box, ButtonGroup, Button, Stack } from "@mui/material"
 
 
 const MyFilter = ({ data }: { data: any }) => {
@@ -32,33 +33,35 @@ const MyFilter = ({ data }: { data: any }) => {
             tags.push(el.value)
         }
 
-        
+
         navigate(`/?tags=${tags.join(',')}`)
     }
 
     const getFilters = () => {
         const arr = []
-        for(const key in data){
+        for (const key in data) {
             console.log(key)
-            arr.push({name:key,isHor:data[key].isHor,tags:data[key].tags})
+            arr.push({ name: key, isHor: data[key].isHor, tags: data[key].tags })
         }
         return arr.map((item) => !item.isHor ?
-        <VerticalFilterList name={item.name} tags={item.tags} /> :
-        <HorizontalFilterList name={item.name} tags={item.tags} />)
+            <FilterList name={item.name} tags={item.tags} direction="column"/> :
+            <FilterList name={item.name} tags={item.tags} direction="row"/>)
     }
 
     return (
-        <div className={style['container']}>
-            <div className={style['content']}>
-                {
-                    getFilters()
-                }
-            </div>
-            <div className={style['btn--container']}>
-                <button className={style['btn']} onClick={onSearchClick}>Show Goods</button>
-                <button className={style['btn']} onClick={onResetClick}>Reset Filter</button>
-            </div>
-        </div>
+            <Box>
+                <Stack>
+                    {getFilters()}
+                </Stack>
+                <ButtonGroup>
+                    <Button onClick={onSearchClick}>
+                        Show
+                    </Button>
+                    <Button onClick={onResetClick}>
+                        Reset Filter
+                    </Button>
+                </ButtonGroup>
+            </Box>
     )
 }
 
@@ -81,7 +84,6 @@ const Filter = () => {
 
     return (
         <DataLoaderFromPromise page={MyFilter} res={res} />
-
     )
 }
 

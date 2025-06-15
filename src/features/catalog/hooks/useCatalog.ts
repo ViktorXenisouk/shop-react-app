@@ -1,40 +1,25 @@
 import { create } from "zustand"
+import { Catalog } from "../../../types/Catalog";
+import { safeFetch } from "../../../services/safeFetch";
 
-const url = process.env.REACT_APP_API_URL as string
-
-type Cat = {
-    name: string;
-    path: string;
-    catalogs: Cat[];
-}
-
-type Catalog = {
-    catalog: Cat | null;
+type CatalogStorage = {
+    catalog: Catalog[] | null | undefined;
     isLoading: boolean;
     fetchCatalog: () => void;
 };
 
-const useCatalogStorage = create<Catalog>((set) => ({
+const useCatalogStorage = create<CatalogStorage>((set) => ({
     catalog: null,
     isLoading: false,
     fetchCatalog: async () => {
-        const url = process.env.REACT_APP_API_URL as string
-        const options = {
-            method: "GET"
-        }
-        try {
-            const response = await fetch(`${url}/category`, options)
+        set({isLoading:true})
+        const requestInit: RequestInit = {}
+        requestInit.method = 'GET'
+    
+        const result = await safeFetch<Catalog[]>('/category',requestInit)
 
-            if (response.ok) {
-                const result = await response.json()
-                set({ catalog: result.data })
-            }
-        }
-        catch {
-
-        }
-        finally {
-            set({ isLoading: true })
-        }
+        set({catalog:result.data,isLoading:false})
     },
 }));
+
+export {useCatalogStorage}

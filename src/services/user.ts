@@ -1,4 +1,4 @@
-import * as Cookie from "../utils/cookie"
+import Cookie from "../utils/cookie"
 
 const url = process.env.REACT_APP_API_URL as string
 

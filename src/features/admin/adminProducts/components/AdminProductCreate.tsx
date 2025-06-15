@@ -1,39 +1,54 @@
 import { useState } from "react"
-import { createProduct } from "./api";
+import { createProduct } from "../api";
+import { Box, TextField, Button } from "@mui/material"
 import MessageShower from "../../../../components/MessageShower";
+import TagsInput from "./TagsInput";
+import CategorieInput from "./CategorieInput"
 
 const AdminProductsCreate = () => {
 
-    const [name, setName] = useState('')
-    const [discription, setDiscription] = useState('')
-    const [category, setCategory] = useState('')
+    const [body, setBody] = useState<{ name: string, discription: string, tags: string[], category: string }>({ name: '', discription: '', tags: [], category: '' })
 
-    const [message,setMessage] = useState('')
+    const [message, setMessage] = useState('')
 
-    const changeName = (event: React.ChangeEvent<HTMLInputElement>) => setName(event.target.value)
-    const changeDiscription = (event: React.ChangeEvent<HTMLInputElement>) => setDiscription(event.target.value)
-    const changeCategory = (event: React.ChangeEvent<HTMLInputElement>) => setCategory(event.target.value)
+    const nameHandler = (event: React.ChangeEvent<HTMLInputElement>) => setBody((prev) => {
+        prev.name = event.target.value
+        return prev
+    })
+    const discriptionHandler = (event: React.ChangeEvent<HTMLInputElement>) => setBody((prev) => {
+        prev.discription = event.target.value
+        return prev
+    })
+    const categoryHandler = (event: React.ChangeEvent<HTMLInputElement>) => setBody((prev) => {
+        prev.category = event.target.value
+        return prev
+    })
+    const tagsHandler = (value:string[]) => setBody((prev) => {
+        prev.tags = value
+        return prev
+    })
 
-    const onSubmit: React.MouseEventHandler<HTMLInputElement> = async (event) => {
+    const submitHandler: React.MouseEventHandler<HTMLButtonElement> = async (event) => {
         event.preventDefault()
-        const res = await createProduct(name, discription, category)
-        if(res.message){
+        console.log(body)
+        const res = await createProduct(body)
+        if (res.message) {
             console.log('message:')
             setMessage(res.message)
         }
     }
 
     return (
-        <div>
-            <form>
-                <input type="text" placeholder="name" onChange={changeName} />
-                <input type="text" placeholder="discription" onChange={changeDiscription} />
-                <input type="text" placeholder="category/computers" onChange={changeCategory} />
-
-                <input type="submit" value='submit' onClick={onSubmit} />
-            </form>
-            <MessageShower message={message}/>
-        </div>
+            <Box>
+                <TextField onChange={nameHandler} label='name' />
+                <TextField onChange={discriptionHandler} multiline defaultValue='some discription' label='discription' />
+                <TagsInput/>
+                <CategorieInput />
+                <Button onClick={submitHandler}>
+                    Submit
+                </Button>
+                <MessageShower message={message} />
+            </Box>
     )
 }
 

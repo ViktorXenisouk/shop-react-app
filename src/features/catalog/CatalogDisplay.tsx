@@ -1,11 +1,28 @@
-import { CATALOG_DATA } from "./api/catalog.data"
 import CatalogDisplayCard from "./CatalogDisplayCard"
 import { Grid, Box, Fade } from "@mui/material"
+import { useCatalogStorage } from "./hooks/useCatalog";
+import {useEffect,useState} from 'react';
+import { Catalog } from "../../types/Catalog";
 
 const CatalogDisplay = ({ currentId }: { currentId: number }) => {
+    useEffect(() => {
+        const catalog = store.catalog
+        if(catalog)
+            setCatalogs(catalog[currentId]?.catalogs || [])
+    },[currentId])
+
+    useEffect(() => {
+        if(!store.isLoading && !store.catalog){
+            store.fetchCatalog()
+        }
+    },[])
+
+    const [catalogs,setCatalogs] = useState<Catalog[]>([])
+
+    const store = useCatalogStorage()
+
     if (currentId === -1) return null;
 
-    const catalogs = CATALOG_DATA[currentId]?.catalogs || [];
     const isVisible = currentId !== -1;
 
     return (

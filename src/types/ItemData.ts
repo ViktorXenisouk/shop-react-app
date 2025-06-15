@@ -4,6 +4,7 @@ interface Product {
     category: string;
     tags?: string[];
     imageURL: string;
+    discription:string;
 }
 
 export type {Product}

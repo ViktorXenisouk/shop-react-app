@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react"
-import style from "./FilterBlock.module.css"
 import { parseTag } from "../utils"
 
+import { Box, Radio, Typography } from "@mui/material"
 
-const FilterBlock = ({ children }: { children: string}) => {
+
+const FilterBlock = ({ children }: { children: string }) => {
 
     const [isEnable, setIsEnable] = useState(false)
 
@@ -21,10 +22,10 @@ const FilterBlock = ({ children }: { children: string}) => {
     }, [])
 
     return (
-        <div onClick={onClick} className={style['container'] + ' unselectable'}>
-            <input className={style['input']} type="radio" value={children} checked={isEnable} />
-            <p className={style['text']}>{parseTag(children)}</p>
-        </div>
+            <Box component='div' onClick={onClick} display='flex' justifyContent='start' className='unselectable'>
+                <Radio checked={isEnable} value={children}/>
+                <Typography alignContent='center'>{parseTag(children)}</Typography>
+            </Box>
     )
 }
 

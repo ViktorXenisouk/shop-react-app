@@ -3,21 +3,30 @@ import { DataLoaderFromPromise } from "../loading/Loading"
 import { Product } from "../../types/ItemData"
 import ProductCard from "./ProductCard"
 import Filter from '../filter/Filter';
-import { useSearchParams } from "react-router-dom"
 import { safeFetch } from "../../services/safeFetch";
 import { useLocation } from "react-router-dom";
+
+import { Grid, Box } from "@mui/material"
 
 const MyProducts = ({ data }: { data: Product[] }) => {
 
     const getProducts = () => {
-
         return data.map((item) => <ProductCard count={0} id={item._id} title={item.name} imgURL={item.imageURL} />)
     }
 
     return (
-        <div className={style['main']}>
-            {getProducts()}
-        </div>
+        <Box >
+            <Grid container
+                spacing={4}
+                direction="row"
+                sx={{
+                    justifyContent: "flex-start",
+                    alignItems: "flex-start",
+                    flexGrow: 0
+                }} >
+                {getProducts()}
+            </Grid>
+        </Box>
     )
 }
 
@@ -37,15 +46,31 @@ const Products = () => {
     const res = safeFetch<Product[]>(`/products/search/${subPath}`, requestInit)
 
     return (
-        <div className={style['container']}>
-            <div className={style['header']}>
+        <Box
+            sx={{
+                display: 'grid',
+                gridTemplateAreas: `
+      'header header'
+      'filter main'
+    `,
+                gridTemplateColumns: 'auto 1fr',
+                gridTemplateRows: 'auto 1fr',
+                margin: '10px 50px',
+                height: '100%',
+            }}
+        >
+            <Box sx={{ gridArea: 'header' }}>
+                {/* Контент заголовка */}
+            </Box>
 
-            </div>
-            <DataLoaderFromPromise page={MyProducts} res={res} />
-            <div className={style['filter']}>
+            <Box sx={{ gridArea: 'filter', marginRight: 10 }}>
                 <Filter />
-            </div>
-        </div>
+            </Box>
+
+            <Box sx={{ gridArea: 'main' }}>
+                <DataLoaderFromPromise page={MyProducts} res={res} />
+            </Box>
+        </Box>
     )
 }
 

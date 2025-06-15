@@ -1,4 +1,4 @@
-import * as Cookie from "../../utils/cookie"
+import Cookie from "../../utils/cookie"
 import { safeFetch } from "../../services/safeFetch"
 
 const getResponse = () => {

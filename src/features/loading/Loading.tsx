@@ -23,23 +23,34 @@ const DataLoaderFromHook = <T,>({ res, page }: HookDataLoaderProps<T>) => {
 };
 
 const DataLoaderFromPromise = <T,>({ res, page }: ResponseDataLoaderProps<T>) => {
-  const [currentPage, setCurrentPage] = useState<JSX.Element>(<div>Loading...</div>);
-
-  const fetch = async () => {
-    const result = await res
-
-    if (result.success && result.data) {
-      setCurrentPage(React.createElement(page, { data:result.data }));    }
-    else{
-      setCurrentPage(<ErrorPage status={result.status || 500} message={result.message || 'some mistake'} />)
-    }
-  }
+  const [data, setData] = useState<T | null>(null)
+  const [error, setError] = useState<{ status: number; message: string } | null>(null)
+  const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    fetch()
-  },[res,page])
+    const fetch = async () => {
+      setLoading(true)
+      const result = await res
 
-  return currentPage;
+      if (result.success && result.data) {
+        setData(result.data)
+      } else {
+        setError({
+          status: result.status || 500,
+          message: result.message || 'some mistake'
+        })
+      }
+      setLoading(false)
+    }
+
+    fetch()
+  }, [res, page])
+
+  if (loading) return <div>Loading...</div>
+  if (error) return <ErrorPage status={error.status} message={error.message} />
+  if (data) return React.createElement(page, { data })
+
+  return null
 }
 
 const DataLoaderFromHookWithPagination = <T,>({ isLoaded,data,error, page }: PaginationDataLoaderProps<T>) => {

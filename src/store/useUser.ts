@@ -1,5 +1,5 @@
 import { create } from "zustand"
-import * as Cookie from "../utils/cookie";
+import Cookie from "../utils/cookie";
 import { BasketInfo } from "../features/basket/types";
 import { safeFetch } from "../services/safeFetch";
 

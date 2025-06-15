@@ -1,8 +1,6 @@
 import { create } from "zustand"
-import * as Cookie from "../utils/cookie";
+import Cookie from "../utils/cookie";
 import { safeFetch } from "../services/safeFetch";
-
-const url = process.env.REACT_APP_API_URL as string
 
 type AuthUserState = {
     token: string | null;

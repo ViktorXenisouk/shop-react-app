@@ -1,4 +1,4 @@
-import * as Cookie from "./cookie"
+import Cookie from "./cookie"
 
 const getAdminToken = () => {
     const token = Cookie.get('admin_token')

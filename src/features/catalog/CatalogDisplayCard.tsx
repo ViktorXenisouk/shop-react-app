@@ -1,9 +1,10 @@
-import { CatalogData } from "./api/catalog.data"
+import { Catalog } from '../../types/Catalog';
 import { useState } from 'react';
 import { Box, Typography, Button, Collapse, Link as MuiLink, Stack, Grid, Avatar } from '@mui/material';
 import { Link as RouterLink } from 'react-router-dom';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
 import Image from '../../UI/Image';
+import MyLink from "../navigation/features/MyLink";
 
 const CatalogDisplayCard = ({ name, path, subCataloge }: { name: string, path: string, subCataloge?: any[] }) => {
     const [expanded, setExpanded] = useState(false);
@@ -18,13 +19,15 @@ const CatalogDisplayCard = ({ name, path, subCataloge }: { name: string, path: s
             <Box display={'flex'}>
                 <Avatar src={imgURL}></Avatar>
 
+                <MuiLink>
+
+                </MuiLink>
                 <MuiLink
                     component={RouterLink}
-                    to={`/products${path}`}
+                    to={`/products/${path}`}
                     underline="hover"
                     color="primary"
-                    sx={{ display: 'block', mt: 1, fontWeight: 'bold' }}
-                >
+                    sx={{ display: 'block', mt: 1, fontWeight: 'bold' }}>
                     {name}
                 </MuiLink>
             </Box>
@@ -41,7 +44,7 @@ const CatalogDisplayCard = ({ name, path, subCataloge }: { name: string, path: s
                             <MuiLink
                                 key={item.path}
                                 component={RouterLink}
-                                to={`/products${item.path}`}
+                                to={`/products/${item.path}`}
                                 underline="hover"
                             >
                                 {item.name}

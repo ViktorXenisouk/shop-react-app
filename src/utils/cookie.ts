@@ -29,4 +29,6 @@ const set = (name: string, value: string, options = {} as any) => {
 
 const remove = (name: string) => set(name, "", {'max-age': -1})
 
-export {get,set,remove}
+const Cookie={get,set,remove}
+
+export default Cookie
