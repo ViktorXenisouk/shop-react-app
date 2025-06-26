@@ -29,7 +29,8 @@ const CatalogDisplay = ({ currentId }: { currentId: number }) => {
         <Fade in={isVisible} timeout={200} unmountOnExit>
             <Box
                 sx={{
-                    padding: 2,
+                    pt: 2,
+                    pl:4,
                     minWidth: 600,
                     borderLeft: '1px solid #ccc',
                 }}
@@ -39,7 +40,7 @@ const CatalogDisplay = ({ currentId }: { currentId: number }) => {
                         <CatalogDisplayCard
                             key={item.path}
                             name={item.name}
-                            path={item.path}
+                            path={item.fullPath}
                             subCataloge={item.catalogs}
                         />
                     ))}

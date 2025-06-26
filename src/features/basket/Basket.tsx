@@ -1,28 +1,40 @@
-import style from "./Basket.module.css"
 import { type BasketInfo } from "./types"
-import { DataLoaderFromHook } from "../loading/Loading"
 import BasketCard from "./components/BacketCard"
-import Cookie from "../../utils/cookie"
-import { useRequest } from "../../hooks/useRequest"
-
-const MyBasket = ({ data }: {data: BasketInfo[]}) => {
-    console.log(data)
-
-    return (
-        <div className={style['container']}>
-            {data && data.length > 0 ? data.map((item) => <BasketCard id={item.id} name={item.id.toString()} count={item.count} />) : 'is empty'}
-        </div>
-    )
-}
+import { useAuthUserStore } from "../../store/useAuth"
+import {Box,Stack,Typography} from "@mui/material"
+import { useMemo } from "react"
 
 const Basket = () => {
-    const url = process.env.REACT_APP_API_URL as string
-    const token = Cookie.get('user_token')
+   const store = useAuthUserStore()
 
-    const response = useRequest<BasketInfo[]>(url,{method:'GET',token:token})
+    const user = store.user
+
+    const basket = useMemo(() => {
+        if(!store.user){
+            return []
+        }
+
+        console.log('update basket Info')
+
+        return store.user.basketInfo
+    },[store.user?.basketInfo,store.user?.favourite])
+
+
+    const page = user ? (
+        <Stack>
+            {basket.length > 0 ? basket.map((item) => <BasketCard id={item.id} info={{count:item.count,liked:(user.favourite.includes(item.id))}} />) :
+            <Typography>your basket is empty</Typography>}
+        </Stack>
+    ) :
+        (
+            <Typography>You are not login</Typography>
+        )
 
     return (
-        <DataLoaderFromHook page={MyBasket} res={response} />
+        <Box>
+            <Typography>Basket</Typography>
+            {page}
+        </Box>
     )
 }
 

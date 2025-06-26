@@ -7,7 +7,7 @@ const Image = ({imgURL,weight,height}:{imgURL:string,weight:number|string|null,h
         sx={{
             height: weight,
             weight:height,
-            backgroundImage: imgURL,
+            backgroundImage: `url(${imgURL})`,
             backgroundSize: 'cover',
             backgroundPosition: 'center',
             borderRadius: 1,

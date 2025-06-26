@@ -1,70 +1,63 @@
 import { Link as RouterLink } from "react-router-dom"
 import { useEffect, useState } from "react";
-import CountBlock from "../countBlock/CountBlock";
+import CountBlock from "../../UI/CountBlock";
 
 import { Card, CardActions, CardContent, CardMedia, Box, Grid, Button, Link as MuiLink } from "@mui/material"
-import { ShoppingBasket, FavoriteBorder } from "@mui/icons-material"
-import Image from "../../UI/Image";
+import { ShoppingBasket, FavoriteBorder, Favorite } from "@mui/icons-material"
+import { useAuthUserStore } from "../../store/useAuth";
+import BasketCountBlock from "../../UI/BasketCountBlock";
+import LikeButton from '../../UI/LikeButton';
+import type { ImageItem } from "../../types/Image";
 
 type ItemCardProps = {
     title: string;
     id: string;
-    imgURL: string;
+    img: ImageItem;
     count?: number;
+    isLiked?: boolean
 }
-const ProductCard = ({ title, id, imgURL, count }: ItemCardProps) => {
 
-    const [cnt, setCnt] = useState(count)
+const ProductCard = ({ title, id, img, count, isLiked }: ItemCardProps) => {
 
-    const imgUrl = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRmqfYB4D3aqQcH4HpWAQKcD5Hgx4jbs7HCciF9-UlXn9VV6J28rAtu1W8emao&s';
+    const [cnt, setCnt] = useState(count ?? 0)
+    const [liked, setLiked] = useState(isLiked ?? false)
 
+    const store = useAuthUserStore()
 
-    useEffect(() => {
-        if (!cnt || cnt <= 0) {
-
-        }
-
-    }, [cnt])
-
-    const onLikeClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-
+    const onLikeClick = () => {
+        setLiked((prev) => {
+            const newV = !prev
+            store.addOrRemoveFavourite(id, newV)
+            return newV
+        })
     }
 
-    const onBucketClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-
+    const onChangeHandlerCount = (count: number) => {
+        store.createOrChangeBasketItem({ id, count: count })
     }
 
     return (
-        <Grid size={{ xs: 12, sm: 4, md: 3 }} sx={{ flexGrow: 0,minWidth:200 }}>
+        <Grid size={{ xs: 12, sm: 4, md: 3 }} sx={{ flexGrow: 0, minWidth:{md:200} }}>
             <Card sx={{ width: "100%" }}>
                 <CardMedia
                     component="img"
-                    alt="green iguana"
+                    alt={img.name ?? ''}
                     height="140"
-                    image={imgUrl}
+                    image={img.url}
                 />
                 <CardContent>
                     <MuiLink
                         component={RouterLink}
                         to={`/product/${id}`}
                         underline="hover"
-                        color="primary"
+                        color="text.secondary"
                         sx={{ display: 'block', mt: 1, fontWeight: 'bold' }}>
                         {title}
                     </MuiLink>
                 </CardContent>
-                <CardActions sx={{justifyContent:'space-between'}}>
-                    <Button>
-                        <FavoriteBorder />
-                    </Button>
-                    {
-                        !cnt || cnt <= 0 ?
-                            <Button>
-                                <ShoppingBasket />
-                            </Button>
-                            :
-                            <CountBlock count={cnt} setCount={setCnt} />
-                    }
+                <CardActions sx={{ justifyContent: 'space-between' }}>
+                    <LikeButton liked={liked} onClick={onLikeClick}/>
+                    <BasketCountBlock onChange={onChangeHandlerCount} count={count} setCount={setCnt} id={id} />
                 </CardActions>
             </Card>
         </Grid>

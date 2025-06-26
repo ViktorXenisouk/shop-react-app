@@ -1,30 +1,23 @@
 import { create } from "zustand"
-import Cookie from "../utils/cookie";
 import { BasketInfo } from "../features/basket/types";
-import { safeFetch } from "../services/safeFetch";
+import { autoSaveFetch } from "../services/safeFetch";
 
 interface UserState {
     basket:BasketInfo[]|null;
     favourite:string[]|null;
-    setBasket:(basket:BasketInfo[]) => void;
-    setFavourite:(favourites:string[]) => void;
+    setBasket:(basket:BasketInfo[],token:string) => void;
+    setFavourite:(favourites:string[],token:string) => void;
 }
 
-const useUser = create<UserState>((set) => ({
+const useUserStore = create<UserState>((set) => ({
    basket:null,
    favourite:null,
-   setBasket: setBasket,
-   setFavourite,
+   setBasket: async (basket:BasketInfo[],token:string) => {
+        const result = await autoSaveFetch('/users/basket',{method:'POST',body:basket,token:token})
+   },
+   setFavourite : async (favourites:string[],token:string) => {
+        const result = await autoSaveFetch('/users/favourite',{method:'POST',body:favourites,token:token})
+   },
 }));
 
-const setBasket = (basket:BasketInfo[]) => {
-    const requestInit : RequestInit = {}
-
-    
-    const result = safeFetch('/user/basket',requestInit)
-
-}
-
-const setFavourite = () => {
-    
-}
+export { useUserStore }

@@ -12,18 +12,19 @@ const CatalogMenu = ({ currentId, onCurrentIndexUpdate } : {currentId:number,onC
     }
     return (
         <Stack
-            sx={{ backgroundColor: '#f5f5f5', padding: 2 }}
+        spacing={0}
+            sx={{ backgroundColor: '#f5f5f5', p: 0,m:0,pt:'5px' }}
         >
             {!store.isLoading && store.catalog ? store.catalog.map((item, i) => (
                 <CatalogCard
-                    key={i}
+                    key={item.fullPath}
                     isActive={currentId === i}
                     catalogIndex={i}
                     setCurrentId={onCurrentIndexUpdate}
                 >
                     {item.name}
                 </CatalogCard>
-            )) : ''}
+            )) : null}
         </Stack>
     );
 };

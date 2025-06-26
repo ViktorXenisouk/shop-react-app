@@ -1,0 +1,175 @@
+import React, { useEffect, useState } from 'react';
+import {
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
+  Button,
+  Grid,
+  Typography,
+  IconButton,
+  Box,
+  Avatar,
+} from '@mui/material';
+import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate';
+import CloseIcon from '@mui/icons-material/Close';
+import type { ImageItem } from '../../types/Image';
+import { autoSaveFetch } from '../../services/safeFetch';
+
+type Props = {
+  open: boolean;
+  onClose: () => void;
+  onSelect: (images: ImageItem[]) => void; // теперь массив
+  folder: string
+  deafultImages?: { name: string, url: string }[]
+};
+
+const ImagePickerModal: React.FC<Props> = ({ open, onClose, onSelect, folder, deafultImages }) => {
+  const [availableImages, setAvailableImages] = useState<{ url: string, name: string }[]>([])
+  const [selectedImages, setSelectedImages] = useState<ImageItem[]>(deafultImages ?? []);
+  const [uploadPreview, setUploadPreview] = useState<string | null>(null);
+  const [uploading, setUploading] = useState(false);
+
+  useEffect(() => {
+    autoSaveFetch<{ url: string, name: string }[]>(`/images/${folder}`, { method: 'GET' }).then((result) => {
+      console.log('data')
+      console.log(result.data)
+      setAvailableImages(result.data ?? [])
+    })
+
+  }, [folder])
+
+  const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    setUploadPreview(URL.createObjectURL(file));
+
+    const formData = new FormData();
+    formData.append('image', file);
+
+    setUploading(true);
+    const result = await autoSaveFetch<{ url: string }>(`http://localhost:3000/images/upload/${folder}`, {
+      method: 'POST',
+      body: formData,
+    });
+
+    if (!result.data) {
+      alert('some error during')
+      return
+    }
+
+    setUploading(false);
+    const newImage = { url: result.data.url, name: file.name };
+    setSelectedImages(prev => [...prev, newImage]);
+  };
+
+  const toggleSelect = (image: ImageItem) => {
+    setSelectedImages(prev =>
+      prev.find(img => img.url === image.url)
+        ? prev.filter(img => img.url !== image.url)
+        : [...prev, image]
+    );
+  };
+
+  const handleConfirm = () => {
+    onSelect(selectedImages);
+    onClose();
+  };
+
+  const isSelected = (url: string) => selectedImages.some(img => img.url === url);
+
+  return (
+    <Dialog fullScreen open={open} onClose={onClose}>
+      <DialogTitle>
+        Выбор изображений
+        <IconButton onClick={onClose} sx={{ position: 'absolute', right: 16, top: 16 }}>
+          <CloseIcon />
+        </IconButton>
+      </DialogTitle>
+
+      <DialogContent>
+        <Grid container>
+          {selectedImages.map((img) =>
+            <Grid size={{ xs: 4, sm: 3, md: 2 }} >
+              <Box
+                onClick={() => toggleSelect(img)}
+                sx={{
+                  border: isSelected(img.url) ? '2px solid blue' : '1px solid gray',
+                  borderRadius: 2,
+                  p: 1,
+                  cursor: 'pointer',
+                }}
+              >
+                <Avatar
+                  variant="rounded"
+                  src={img.url}
+                  alt={img.name}
+                  sx={{ width: '100%', height: 100, objectFit: 'cover' }}
+                />
+                <Typography variant="caption" noWrap>{img.name}</Typography>
+              </Box>
+            </Grid>)}
+      </Grid>
+        <Typography variant="h6" gutterBottom>Доступные изображения</Typography>
+        <Grid container spacing={2}>
+          {availableImages.length > 0 ? availableImages.map((img) => (
+            <Grid size={{ xs: 4, sm: 3, md: 2 }} key={img.url}>
+              <Box
+                onClick={() => toggleSelect(img)}
+                sx={{
+                  border: isSelected(img.url) ? '2px solid blue' : '1px solid gray',
+                  borderRadius: 2,
+                  p: 1,
+                  cursor: 'pointer',
+                }}
+              >
+                <Avatar
+                  variant="rounded"
+                  src={img.url}
+                  alt={img.name}
+                  sx={{ width: '100%', height: 100, objectFit: 'cover' }}
+                />
+                <Typography variant="caption" noWrap>{img.name}</Typography>
+              </Box>
+            </Grid>
+          )) : null}
+        </Grid>
+
+        <Box mt={4}>
+          <Typography variant="h6" gutterBottom>Загрузить новое</Typography>
+          <Button
+            variant="outlined"
+            component="label"
+            startIcon={<AddPhotoAlternateIcon />}
+            disabled={uploading}
+          >
+            Загрузить
+            <input type="file" accept="image/*" hidden onChange={handleFileUpload} />
+          </Button>
+
+          {uploadPreview && (
+            <Box mt={2}>
+              <Typography variant="caption">Предпросмотр:</Typography>
+              <Avatar
+                src={uploadPreview}
+                alt="preview"
+                variant="rounded"
+                sx={{ width: 120, height: 120, mt: 1 }}
+              />
+            </Box>
+          )}
+        </Box>
+      </DialogContent>
+
+      <DialogActions>
+        <Button onClick={onClose}>Отмена</Button>
+        <Button onClick={handleConfirm} disabled={selectedImages.length === 0} variant="contained">
+          Выбрать {selectedImages.length > 0 ? `(${selectedImages.length})` : ''}
+        </Button>
+      </DialogActions>
+    </Dialog>
+  );
+};
+
+export default ImagePickerModal;

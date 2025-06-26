@@ -30,23 +30,29 @@ const AdminMe = () => {
         const result = await fetchAdmin(store.token || '')
 
         console.log(result)
-        if(result){
+        if (result) {
             store.setAdmin(result)
         }
-        else{
+        else {
             alert('you are not admin')
             navigate('/')
         }
     }
 
+    const logout = () => {
+        store.logout()
+        navigate('/')
+    }
+
     return (
         <Box>
             <Typography>{store.token}</Typography>
-<Typography>name:{store.admin?.name}</Typography>
-<Typography>email:{store.admin?.email}</Typography>
-<Typography>lvl:{store.admin?.securityLvl}</Typography>
-<Button onClick={loadAdmin}>Fetch</Button>
-<Button component={LinkRouter} to='/admin/edit'>Edit Me</Button>
+            <Typography>name:{store.admin?.name}</Typography>
+            <Typography>email:{store.admin?.email}</Typography>
+            <Typography>lvl:{store.admin?.securityLvl}</Typography>
+            <Button onClick={loadAdmin}>Fetch</Button>
+            <Button component={LinkRouter} to='/admin/edit'>Edit Me</Button>
+            <Button onClick={logout}>Logout</Button>
         </Box>
     )
 

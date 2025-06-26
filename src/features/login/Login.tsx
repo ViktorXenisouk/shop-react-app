@@ -2,12 +2,13 @@ import { useState, ChangeEventHandler } from "react"
 import { useNavigate } from "react-router-dom"
 import MessageShower from "../../components/MessageShower"
 import { useAuthUserStore } from "../../store/useAuth"
+
 import ButtonLink from "../../UI/ButtonLink"
-import Grid from "@mui/material/Grid"
-import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import { Button } from "@mui/material"
 import Stack from "@mui/material/Stack"
+
+import { inputBodyHandler } from "../../utils/inputHandler"
 
 const Login = () => {
 
@@ -15,17 +16,17 @@ const Login = () => {
 
     const navigate = useNavigate()
 
-    const [email, setEmail] = useState('')
-    const [password, setPassword] = useState('')
+    const [body,setBody] = useState<{email:string,password:string}>({email:'abcd@gmail.com',password:'admin'})
+
     const [message, setMessage] = useState('')
 
-    const onChangeName: ChangeEventHandler<HTMLInputElement> = (event) => setEmail(event.target.value)
-    const onChangePassword: ChangeEventHandler<HTMLInputElement> = (event) => setPassword(event.target.value)
+    const emailHandler = inputBodyHandler(setBody,(prev,v) => prev.email = v)
+    const passwordHandler = inputBodyHandler(setBody,(prev,v) => prev.password = v)
 
     const onClick = async (event: any) => {
         event.preventDefault()
 
-        const data = await login(email, password)
+        const data = await login(body.email, body.password)
 
         console.log(data)
 
@@ -52,15 +53,15 @@ const Login = () => {
                     required
                     label="email"
                     type="email"
-                    value={email}
-                    onChange={onChangeName}
+                    onChange={emailHandler}
+                    defaultValue={'abcd@gmail.com'}
                 />
                 <TextField
                     label="Password"
                     type="password"
                     autoComplete="current-password"
-                    value={password}
-                    onChange={onChangePassword}
+                    defaultValue={'admin'}
+                    onChange={passwordHandler}
                 />
                 <Button
                     variant="text"

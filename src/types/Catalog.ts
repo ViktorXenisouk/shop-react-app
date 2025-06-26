@@ -7,6 +7,7 @@ type Catalog = {
     path: string;
     parentPath?: string;
     catalogs?: Catalog[];
+    subCategories?:Catalog[];
     tags?:Tag;
     discription?:string
 }

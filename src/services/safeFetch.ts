@@ -16,8 +16,8 @@ const safeFetch = async <T>(url: string, requestInit: RequestInit): Promise<Fetc
             };
         }
 
-        const data = await response.json();
-        return { data: data.data as T, success: true, message: data?.message || 'ok' };
+        const result = await response.json();
+        return { data: result.data as T, success: true, message: result?.message || 'ok',paginationInfo:result?.paginationInfo };
     } catch (error: any) {
         return {
             data: {} as T,

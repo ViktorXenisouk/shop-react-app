@@ -5,6 +5,8 @@ import Product from "../features/product/Product"
 import Products from "../features/productList/Products";
 import Login from "../features/login/Login";
 import Register from "./Register";
+import MePage from "./MePage"
+import SearchPage from "./SearchPage";
 
 import AdminLogin from "./AdminLogin";
 import AdminUsers from "../features/admin/adminUsers/AdminUsers";
@@ -18,17 +20,19 @@ import AdminCategoryCreate from "../features/admin/adminCategory/AdminCategoryCr
 import AdminCategoryEdit from "../features/admin/adminCategory/AdminCategoryEdit"
 
 import AdminAdmins from "../features/admin/adminAdmins/AdminAdmins";
-import AdminAdminsCreate from "../features/admin/adminAdmins/AdminAdminsCreate";
+import AdminAdminsCreate from "../features/admin/adminAdmins/AdminAdminsCreate"
+import AdminAdminsEdit from "../features/admin/adminAdmins/AdminAdminsEdit";
 
 import AdminEditMe from "../features/admin/adminMe/AdminEditMe";
 import AdminMe from "../features/admin/adminMe/AdminMe";
 
 export {
+    MePage,SearchPage,
     Basket, Main, ErrorPage, Products, Product,
     Login, Register,
     AdminLogin, AdminMe, AdminEditMe,
     AdminUsers, AdminUsersEdit,
     AdminProducts, AdminProductsEdit,
     AdminCategories, AdminCategoryCreate, AdminCategoryEdit, 
-    AdminAdmins, AdminAdminsCreate
+    AdminAdmins, AdminAdminsCreate,AdminAdminsEdit
 }

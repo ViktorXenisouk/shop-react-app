@@ -1,26 +1,42 @@
 import { useState, useEffect } from "react";
 import { FetchHookResponse } from "../types/fetch";
-import { autoSaveFetch,AutoSafeFetch } from "../services/safeFetch";
-
+import { autoSaveFetch, AutoSafeFetch } from "../services/safeFetch";
 
 const useRequest = <T>(url: string, options: AutoSafeFetch): FetchHookResponse<T> => {
-    const [isLoaded, setIsLoaded] = useState(false);
-    const [data, setData] = useState<T | undefined>(undefined);
-    const [error, setError] = useState<{ status: number, message: string } | undefined>(undefined);
+  const [isLoaded, setIsLoaded] = useState(false);
+  const [data, setData] = useState<T | undefined>(undefined);
+  const [paginationInfo, setPaginationInfo] = useState<{ total: number, page: number, totalPages: number } | null>(null)
+  const [error, setError] = useState<{ status: number; message: string } | undefined>(undefined);
 
+  useEffect(() => {
+    let isActive = true;
 
-    useEffect(() => {
-        const fetchData = async () => {
-            setIsLoaded(false)
-            const res = await autoSaveFetch<T>(url,options)
-            setData(res.data)
-            setIsLoaded(true)
+    const fetchData = async () => {
+      setIsLoaded(false);
+      try {
+        const res = await autoSaveFetch<T>(url, options);
+        if (isActive) {
+          setData(res.data);
+          setError(undefined);
+          setPaginationInfo(res.paginationInfo ?? null)
         }
+      } catch (err: any) {
+        if (isActive) {
+          setError({ status: err?.status || 500, message: err?.message || "Unknown error" });
+        }
+      } finally {
+        if (isActive) setIsLoaded(true);
+      }
+    };
 
-        fetchData();
-    }, []);
+    fetchData();
 
-    return [isLoaded, data, error];
+    return () => {
+      isActive = false;
+    };
+  }, [url, JSON.stringify(options)]);
+
+  return [isLoaded, data, error,paginationInfo];
 };
 
-export { useRequest }
+export { useRequest };

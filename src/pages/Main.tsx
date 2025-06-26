@@ -1,6 +1,7 @@
 import style from './Main.module.css';
 import { useEffect, useState } from 'react';
 import Catalog from '../features/catalog/Catalog';
+import {Box} from "@mui/material"
 
 const Main = () => {
     const [currentId,setCurrentId] = useState(-1)
@@ -19,12 +20,12 @@ const Main = () => {
     }
 
     return (
-        <div className={style['container']}>
+        <Box display='flex'>
             <Catalog/>
             <div className={style['context']}>
 
             </div>
-        </div>
+        </Box>
     )
 }
 

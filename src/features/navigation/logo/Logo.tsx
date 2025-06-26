@@ -1,13 +1,9 @@
-import { Link } from "react-router-dom"
-import style from './Logo.module.css'
-import animStyle from "../NavigationMobile.module.css"
+import {Apps} from "@mui/icons-material"
 
-const Logo = ({ className }:{className?:string}) => {
+const Logo = () => {
 
     return (
-        <Link className={(style["logo"] + ' ' + (className))} to='/'>
-            Logo
-        </Link>
+        <Apps/>
     )
 }
 

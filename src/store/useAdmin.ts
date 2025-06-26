@@ -30,7 +30,7 @@ const useAdminAuthStore = create<AdminAuthState>()(persist(
         logout: () =>
             set({ token: null }),
     }), {
-    name: 'user-storage', // ключ в localStorage
+    name: 'admin-storage', // ключ в localStorage
 }
 
 ))

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 import { NavigationDesktop } from "./features/NavigationDesktop"
 import { NavigationMobile } from "./features/NavigationMobile"
-import Search from "../search/Search"
+import Search from "../search/SearchModal"
 import { AppBar, Toolbar, useMediaQuery, useTheme, Slide, useScrollTrigger } from '@mui/material';
 
 const HideOnScroll = ({ children }: { children: React.ReactElement }) => {

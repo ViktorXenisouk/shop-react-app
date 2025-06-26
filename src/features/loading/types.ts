@@ -14,7 +14,7 @@ type ResponseDataLoaderProps<T> = {
 type PaginationDataLoaderProps<T> = {
     isLoaded:boolean,
     data:T,
-    error:ErrorMessage,
+    error?:ErrorMessage|null,
     page:React.ComponentType<{ data: T }>;
 }
 

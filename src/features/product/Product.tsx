@@ -2,28 +2,90 @@ import { useParams } from "react-router-dom"
 import { DataLoaderFromPromise } from "../loading/Loading"
 import { type Product } from "../../types/ItemData"
 import { useNavigate } from "react-router"
-import { Link } from "react-router-dom"
-import style from "./Product.module.css"
-import { safeFetch } from "../../services/safeFetch"
+import { Link as RouterLink } from "react-router-dom"
+import { autoSaveFetch } from "../../services/safeFetch"
+import ImageCarousel from "../../UI/ImageCarousel"
+import { useState } from "react"
+import { useAuthUserStore } from "../../store/useAuth"
+import BasketCountBlock from "../../UI/BasketCountBlock"
+import LikeButton from "../../UI/LikeButton"
+import { Box, Stack, Typography, Grid, ImageListItem, Breadcrumbs, Link } from "@mui/material"
+import { useMyParams } from "../../hooks/useParams"
+import CategoryParser from "../../UI/CategoryParser"
 
 const MyProduct = ({ data }: { data: Product }) => {
     const navigate = useNavigate();
 
+    const store = useAuthUserStore()
+
+    const [count, setCount] = useState<number>(() => {
+        if (data._id && store.user) {
+            const cnt = store.user?.basketInfo.find((v) => v.id == data._id)?.count ?? 0
+            return cnt
+        }
+        return 0
+    })
+
+    const [liked, setLiked] = useState<boolean>(
+        () => {
+            if (data._id && store.user) {
+                const isLiked = store.user?.favourite.includes(data._id)
+                return isLiked
+            }
+            return false
+        }
+
+    )
+
+    const likeHandler = () => {
+        setLiked((prev) => {
+            const newV = !prev
+            store.addOrRemoveFavourite(data._id, newV)
+            return newV
+        })
+    }
+
     const onButtonClick = () => {
         navigate(-1)
     }
-    return (
-        <div className={style['container']}>
-            <div className={style['content']}>
-                <button onClick={onButtonClick}>Back</button>
-                <p>{data.category}</p>
-                <div className={style['img']} style={{ backgroundImage: `url(${data.imageURL})` }}>
 
-                </div>
-                <h3>{data.name}</h3>
-                <p>{data.tags?.map((item) => <Link className={style['link']} to={`/products/?tag=${item}`}>{item}</Link>)}</p>
-            </div>
-        </div>
+    const changeHandler = (count: number) => {
+        store.createOrChangeBasketItem({ id: data._id, count: count })
+    }
+
+    const parse = (name: string) => {
+        const parts = name.split('/')
+
+        const allPaths: string[] = [];
+        for (let i = 1; i <= parts.length; i++) {
+            allPaths.push(parts.slice(0, i).join('/'));
+        }
+
+        const all = parts.map((item, i) => { return { name: parts[i], fullPath: allPaths[i] } })
+
+        return all
+    }
+
+    return (
+        <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+            <Grid container>
+                <Grid size={{ xs: 12 }}>
+                    <CategoryParser category={data.category}/>
+                </Grid>
+                <Grid size={{ xs: 6 }}>
+                    <ImageCarousel imgs={data.imgs.map((v) => { return { url: v.url, name: v.name ?? '' } })} />
+                </Grid>
+                <Grid size={{ xs: 6 }}>
+                    <Typography>{data.name}</Typography>
+                    <BasketCountBlock id={data._id} onChange={changeHandler} count={count} setCount={setCount} />
+                    <LikeButton liked={liked} onClick={likeHandler} />
+                </Grid>
+                <Grid size={{ xs: 12 }}>
+                    <Typography>{data.tags?.map((item) => <Typography component={RouterLink} to={`/products/?tag=${item}`}>{item}</Typography>)}</Typography>
+                    <Typography>{data.discription}</Typography>
+                </Grid>
+            </Grid>
+        </Box>
     )
 }
 
@@ -32,10 +94,7 @@ const ProductPage = () => {
 
     const id = params.id as string;
 
-    const requestInit: RequestInit = {}
-    requestInit.method = 'GET'
-
-    const res = safeFetch<Product>(`/products/${id}`,requestInit)
+    const res = autoSaveFetch<Product>(`/products/${id}`, { method: 'GET' })
 
     return (
         <DataLoaderFromPromise page={MyProduct} res={res} />

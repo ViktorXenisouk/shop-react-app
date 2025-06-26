@@ -1,8 +1,9 @@
 import { safeFetch } from "../../../services/safeFetch"
 import { getAdminToken } from "../../../utils/getToken"
 import { sanitizePayload } from "../../../utils/sanitizePayload"
+import type { ImageItem } from "../../../types/Image"
 
-const createProduct = async (body:{name:string,discription:string,category:string,imgs?:string[],tags?:string[]}) => {
+const createProduct = async (body:{name:string,discription:string,category:string,imgs?:ImageItem[],tags?:string[]}) => {
     const token = getAdminToken()
     if(!token) return {success:false,message:'cannot find your token'}
 

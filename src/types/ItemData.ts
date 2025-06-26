@@ -3,7 +3,7 @@ interface Product {
     name: string;
     category: string;
     tags?: string[];
-    imageURL: string;
+    imgs: {name:string,url:string}[];
     discription:string;
 }
 

@@ -1,18 +1,17 @@
-import FilterBlock from "./FilterBlock"
-import filterStyle from "./Filters.module.css"
-import style from "./VerticalFilterList.module.css"
+import CustomRadio from "./FilterBlock"
+import {Container,Typography,Stack} from "@mui/material"
 
 const VerticalFilterList = ({ name, tags }: { name: string, tags: string[] }) => {
 
 
 
     return (
-        <div className={filterStyle['container']}>
-            <h4 className={filterStyle['title']}>{name}</h4>
-            <div className={style['list']}>
-                {tags.map((item) => <FilterBlock>{item}</FilterBlock>)}
-            </div>
-        </div>
+        <Container>
+            <Typography variant="h2">{name}</Typography>
+            <Stack>
+                {tags.map((item,i) => <CustomRadio label={item} value={item} name={`${name}${i}`} />)}
+            </Stack>
+        </Container>
     )
 }
 

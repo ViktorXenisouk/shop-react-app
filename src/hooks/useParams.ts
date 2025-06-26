@@ -12,7 +12,7 @@ const useMyParams = (baseUrl: string) => {
     const set = (name: string, value: string) => {
         const queryParams = new URLSearchParams(location.search);
         queryParams.set(name, value);
-        navigate(`${baseUrl}?${queryParams.toString()}`);
+        navigate(`${location.pathname}/?${queryParams.toString()}`);
     }
 
     return {get,set}
