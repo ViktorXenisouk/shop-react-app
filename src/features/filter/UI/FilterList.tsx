@@ -1,4 +1,4 @@
-import CustomRadio from "./FilterBlock"
+import CustomRadio from "./CustomRadio"
 
 import {Box,Grid,Typography} from "@mui/material"
 
@@ -6,7 +6,7 @@ const FilterList = ({ name, tags ,direction}: { name: string, tags:string[],dire
 
     return (
         <Box>
-            <Typography>{name}</Typography>
+            <Typography variant='h6'>{name}</Typography>
             <Grid container direction={direction}>
                 {tags.map((item,i) => <CustomRadio label={item} value={item} name={`${name}${i}`} />)}
             </Grid>

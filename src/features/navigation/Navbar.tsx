@@ -21,7 +21,7 @@ const Navbar = () => {
   return (
     <>
       <HideOnScroll>
-        <AppBar color="default" position="sticky" elevation={4}>
+        <AppBar color="default" position="sticky" elevation={4} sx={{borderBottom:'1px solid #ccc'}}>
           <Toolbar>
             {isMobile ? (
               <NavigationMobile onSearchClick={() => setIsSearchActive(true)} />

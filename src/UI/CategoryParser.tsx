@@ -1,8 +1,10 @@
-import {Breadcrumbs,Link} from "@mui/material"
-import { Link as RouterLink } from "react-router-dom"
+import { Breadcrumbs, Link } from "@mui/material"
+import { Link as RouterLink, useSearchParams } from "react-router-dom"
+import { Home } from "@mui/icons-material"
 
 
-const CategoryParser = ({category}:{category:string}) => {
+const CategoryParser = ({ category,renderMain }: { category: string,renderMain?:boolean }) => {
+    const [searchParams, setSearchParams] = useSearchParams()
 
     const parse = (name: string) => {
         const parts = name.split('/')
@@ -18,12 +20,18 @@ const CategoryParser = ({category}:{category:string}) => {
     }
 
     return (
-         <Breadcrumbs>
-                        {parse(category).map((item) =>
-                            <Link component={RouterLink} to={`/products/${item.fullPath}`}>
-                                {item.name}
-                            </Link>)}
-                    </Breadcrumbs>
+        <Breadcrumbs>
+        {
+            renderMain && 
+            <Link component={RouterLink} to={`/?${searchParams.toString()}`} sx={{display: 'flex', alignItems: 'center' }}>
+               <Home fontSize="inherit"  sx={{ mr: 0.5 }}/> Main
+            </Link>
+        }
+            {parse(category).map((item) =>
+                <Link component={RouterLink} to={`/products/${item.fullPath}?${searchParams.toString()}`}>
+                    {item.name}
+                </Link>)}
+        </Breadcrumbs>
     )
 }
 

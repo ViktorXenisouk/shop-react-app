@@ -1,15 +1,15 @@
 import { useEffect, useState } from "react"
 import style from "./UI/FilterBlock.module.css"
-import { DataLoaderFromPromise } from "../loading/Loading"
+import { DataLoaderSimple } from "../loading/Loading"
 import { type FilterData } from "./types"
 import FilterList from "./UI/FilterList"
 import { safeFetch } from "../../services/safeFetch"
 import { useLocation, useSearchParams } from "react-router-dom"
 
-import { Box, ButtonGroup, Button, Stack } from "@mui/material"
+import { Box, ButtonGroup, Button, Stack, Skeleton } from "@mui/material"
 
 
-const MyFilter = ({ data }: { data: any }) => {
+const MyFilter = ({ data }: { data: any | null }) => {
     const [searchParams, setSearchParams] = useSearchParams()
     const [event] = useState(new Event('restart-filter'))
 
@@ -34,6 +34,11 @@ const MyFilter = ({ data }: { data: any }) => {
     }
 
     const getFilters = () => {
+        if (!data) {
+            return (
+                <Skeleton variant="rectangular" width={190} height={42} />
+            )
+        }
         const arr = []
         for (const key in data) {
             arr.push({ name: key, isHor: data[key].isHor, tags: data[key].tags })
@@ -73,7 +78,7 @@ const Filter = () => {
     const res = safeFetch<FilterData[]>(`/category/filter/${subPath}`, { method: 'GET' })
 
     return (
-        <DataLoaderFromPromise page={MyFilter} res={res} />
+        <DataLoaderSimple page={MyFilter} res={res} />
     )
 }
 

@@ -17,8 +17,8 @@ type A = "imageWithText" | "paragraph" | "gallery"
 
 type Block = ArticleBlock & { id: string }
 
-const ArticleEditor = ({ onChange }: { onChange?: (blocks: Block[]) => void }) => {
-  const [blocks, setBlocks] = useState<Block[]>([]);
+const ArticleEditor = ({ onChange, defaultValue }: { onChange?: (blocks: Block[]) => void, defaultValue?: ArticleBlock[] }) => {
+  const [blocks, setBlocks] = useState<Block[]>(defaultValue ? defaultValue.map((v) => {return {...v,id:uuidv4()}}) : []);
 
   const addBlock = (type: A) => {
     const newBlock: Block = {
@@ -26,7 +26,7 @@ const ArticleEditor = ({ onChange }: { onChange?: (blocks: Block[]) => void }) =
       title: '',
       type: type,
       text: '',
-      imgUrl: '',
+      image: '',
       variant: 'left',
     };
     setBlocks((prev) => [...prev, newBlock]);
@@ -60,46 +60,46 @@ const ArticleEditor = ({ onChange }: { onChange?: (blocks: Block[]) => void }) =
   };
 
   return (
-      <Box>
-        <Accordion>
-          <AccordionSummary
-            expandIcon={<ExpandMoreIcon />}>
-            <Typography>Editor</Typography>
-          </AccordionSummary>
-          <AccordionDetails>
-            <Box>
-              <Typography variant="h5" gutterBottom>Редактор статьи</Typography>
+    <Box>
+      <Accordion>
+        <AccordionSummary
+          expandIcon={<ExpandMoreIcon />}>
+          <Typography>Editor</Typography>
+        </AccordionSummary>
+        <AccordionDetails>
+          <Box>
+            <Typography variant="h5" gutterBottom>Редактор статьи</Typography>
 
-              <Box display="flex" gap={2} mb={3}>
-                <Button onClick={() => addBlock('paragraph')} variant="outlined">+ paragraf</Button>
-                <Button onClick={() => addBlock('imageWithText')} variant="outlined">+ image with text</Button>
-                <Button onClick={() => addBlock('gallery')} variant="outlined">+ galery</Button>
-              </Box>
-
-              <DndContext collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
-                <SortableContext items={blocks.map((b) => b.id)} strategy={verticalListSortingStrategy}>
-                  {blocks.map((block) => (
-                    <ArticleEditorBlock block={block} updateBlock={updateBlock} deleteBlock={deleteBlock} />
-                  ))}
-                </SortableContext>
-              </DndContext>
-              <Box mt={4}>
-                <Typography variant="subtitle2">JSON:</Typography>
-                <pre style={{ fontSize: 12 }}>{JSON.stringify(blocks, null, 2)}</pre>
-              </Box>
+            <Box display="flex" gap={2} mb={3}>
+              <Button onClick={() => addBlock('paragraph')} variant="outlined">+ paragraf</Button>
+              <Button onClick={() => addBlock('imageWithText')} variant="outlined">+ image with text</Button>
+              <Button onClick={() => addBlock('gallery')} variant="outlined">+ galery</Button>
             </Box>
-          </AccordionDetails>
-        </Accordion>
-        <Accordion>
-          <AccordionSummary
-            expandIcon={<ExpandMoreIcon />}>
-            <Typography>Presentation</Typography>
-          </AccordionSummary>
-          <AccordionDetails>
-            <Article articles={blocks} />
-          </AccordionDetails>
-        </Accordion>
-      </Box>
+
+            <DndContext collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
+              <SortableContext items={blocks.map((b) => b.id)} strategy={verticalListSortingStrategy}>
+                {blocks.map((block) => (
+                  <ArticleEditorBlock block={block} updateBlock={updateBlock} deleteBlock={deleteBlock} />
+                ))}
+              </SortableContext>
+            </DndContext>
+            <Box mt={4}>
+              <Typography variant="subtitle2">JSON:</Typography>
+              <pre style={{ fontSize: 12 }}>{JSON.stringify(blocks, null, 2)}</pre>
+            </Box>
+          </Box>
+        </AccordionDetails>
+      </Accordion>
+      <Accordion>
+        <AccordionSummary
+          expandIcon={<ExpandMoreIcon />}>
+          <Typography>Presentation</Typography>
+        </AccordionSummary>
+        <AccordionDetails>
+          <Article articles={blocks} />
+        </AccordionDetails>
+      </Accordion>
+    </Box>
   );
 };
 

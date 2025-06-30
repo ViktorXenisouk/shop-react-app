@@ -8,7 +8,7 @@ const Catalog = () => {
     const [currentId, setCurrentId] = useState(-1);
     const [isCatalogMouseOver, setIsCatalogMouseOver] = useState(false);
 
-    const timer = useTimer(() => setCurrentId(-1), 300000);
+    const timer = useTimer(() => setCurrentId(-1), 3000);
 
     useEffect(() => {
         if (!isCatalogMouseOver) {
@@ -19,7 +19,7 @@ const Catalog = () => {
     }, [isCatalogMouseOver]);
 
     return (
-        <Box component='div' display="flex" position="relative"
+        <Box component='div' display="flex" position="relative" sx={{height:'100%'}}
         onMouseOver={() => setIsCatalogMouseOver(true)}
         onMouseOut={() => setIsCatalogMouseOver(false)}
         >

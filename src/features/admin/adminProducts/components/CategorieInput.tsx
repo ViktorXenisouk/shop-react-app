@@ -7,7 +7,7 @@ import { autoSaveFetch } from '../../../../services/safeFetch';
 import { useRequest } from '../../../../hooks/useRequest';
 
 
-const CategorieInput = ({ onChange }: { onChange?: (value?: string) => void }) => {
+const CategorieInput = ({ onChange,defaultValue }: { onChange?: (value?: string) => void,defaultValue?:string }) => {
     const [open, setOpen] = useState(false);
 
     const [isLoaded, data, errors] = useRequest<Catalog[]>('/category/find/', { method: "GET" })
@@ -36,6 +36,7 @@ const CategorieInput = ({ onChange }: { onChange?: (value?: string) => void }) =
             onOpen={handleOpen}
             onClose={handleClose}
             options={options}
+            defaultValue={defaultValue}
             loading={!isLoaded}
             renderInput={(params) => (
                 <TextField

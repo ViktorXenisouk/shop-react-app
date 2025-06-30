@@ -1,16 +1,20 @@
 import { Typography } from '@mui/material';
 import { grey } from '@mui/material/colors';
+import { Link } from 'react-router-dom';
 
 type Props = {
   children: React.ReactNode;
   isActive: boolean;
   catalogIndex: number;
   setCurrentId: (id: number) => void;
+  fullPath: string;
 };
 
-const CatalogCard = ({ children, isActive, catalogIndex, setCurrentId }: Props) => {
+const CatalogCard = ({ children, isActive, catalogIndex, setCurrentId,fullPath }: Props) => {
   return (
     <Typography
+    component={Link}
+    to={`/products/${fullPath}`}
       onMouseOver={() => setCurrentId(catalogIndex)}
       sx={{
         pt:1,

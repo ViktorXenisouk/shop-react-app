@@ -6,7 +6,7 @@ type Article = {
 type ArticleBlock = {
     title:string,
     text:string,
-    imgUrl:string,
+    image:string,
     variant:string,
     type:'imageWithText' | 'paragraph' | 'gallery'
 }

@@ -1,3 +1,5 @@
+import { type ArticleBlock } from "./article";
+
 interface Product {
     _id: string;
     name: string;
@@ -5,6 +7,7 @@ interface Product {
     tags?: string[];
     imgs: {name:string,url:string}[];
     discription:string;
+    blocks:ArticleBlock[]
 }
 
 export type {Product}

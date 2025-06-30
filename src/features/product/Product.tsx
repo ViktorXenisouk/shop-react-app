@@ -9,9 +9,10 @@ import { useState } from "react"
 import { useAuthUserStore } from "../../store/useAuth"
 import BasketCountBlock from "../../UI/BasketCountBlock"
 import LikeButton from "../../UI/LikeButton"
-import { Box, Stack, Typography, Grid, ImageListItem, Breadcrumbs, Link } from "@mui/material"
+import { Box, Stack, Typography, Grid, ImageListItem, Breadcrumbs, Link, Container } from "@mui/material"
 import { useMyParams } from "../../hooks/useParams"
 import CategoryParser from "../../UI/CategoryParser"
+import Article from "../article/Article"
 
 const MyProduct = ({ data }: { data: Product }) => {
     const navigate = useNavigate();
@@ -70,19 +71,27 @@ const MyProduct = ({ data }: { data: Product }) => {
         <Box sx={{ display: 'flex', justifyContent: 'center' }}>
             <Grid container>
                 <Grid size={{ xs: 12 }}>
-                    <CategoryParser category={data.category}/>
+                    <Box sx={{ display: 'flex', justifyContent: 'flex-start', ml: '20px', mt: '20px' }}>
+                        <CategoryParser category={data.category} />
+                    </Box>
                 </Grid>
                 <Grid size={{ xs: 6 }}>
                     <ImageCarousel imgs={data.imgs.map((v) => { return { url: v.url, name: v.name ?? '' } })} />
                 </Grid>
                 <Grid size={{ xs: 6 }}>
-                    <Typography>{data.name}</Typography>
-                    <BasketCountBlock id={data._id} onChange={changeHandler} count={count} setCount={setCount} />
-                    <LikeButton liked={liked} onClick={likeHandler} />
+                    <Container maxWidth='sm'>
+                        <Typography variant="h2">{data.name}</Typography>
+                        <Typography>{data.discription}</Typography>
+                        <BasketCountBlock id={data._id} onChange={changeHandler} count={count} setCount={setCount} />
+                        <LikeButton liked={liked} onClick={likeHandler} />
+                    </Container>
                 </Grid>
                 <Grid size={{ xs: 12 }}>
                     <Typography>{data.tags?.map((item) => <Typography component={RouterLink} to={`/products/?tag=${item}`}>{item}</Typography>)}</Typography>
-                    <Typography>{data.discription}</Typography>
+                    {
+                        data.blocks && 
+                        <Article articles={data.blocks}/>
+                    }
                 </Grid>
             </Grid>
         </Box>

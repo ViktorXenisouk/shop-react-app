@@ -9,12 +9,14 @@ import { useState } from "react"
 import ImagePickerModal from "../../../imagePickerModal/ImagePickerModal";
 import type { ImageItem } from "../../../../types/Image";
 import ArticleEditor from "../../../article/ArticleEditor"
+import CategorieInput from "./CategorieInput"
+import type { ArticleBlock } from "../../../../types/article"
 
 type Handle = React.ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement>
 
 const Render = ({ data }: { data: Product }) => {
 
-  const [body, setBody] = useState({} as { name?: string, tags?: string[], discription?: string, imgs: ImageItem[] })
+  const [body, setBody] = useState({} as { name?: string, tags?: string[], discription?: string, imgs?: ImageItem[], category?: string, blocks: ArticleBlock[] })
 
   const handleName: Handle = (event) => {
     setBody((prev) => {
@@ -38,6 +40,11 @@ const Render = ({ data }: { data: Product }) => {
     })
   }
 
+  const categoryHandler = (value: string | undefined) => setBody((prev) => {
+    prev.category = value ?? ''
+    return prev
+  })
+
   const save = async () => {
     const requestInit: RequestInit = {}
     requestInit.method = 'PATCH'
@@ -60,6 +67,13 @@ const Render = ({ data }: { data: Product }) => {
     setOpen(false)
   }
 
+  const articleHndler = (values: ArticleBlock[]) => {
+    setBody((prev) => {
+      prev.blocks = values
+      return prev
+    })
+  }
+
   const imagesHandler = (images: ImageItem[]) => setBody((prev) => {
     prev.imgs = images
     return prev
@@ -72,9 +86,10 @@ const Render = ({ data }: { data: Product }) => {
         <TextField onChange={handleName} defaultValue={data.name} label='name' />
         <TextField onChange={handleDiscription} multiline defaultValue={data.discription} label='discription' />
         <TagsInput onChange={handleTags} defaultValue={data.tags ?? []} />
+        <CategorieInput defaultValue={data.category} onChange={categoryHandler} />
         <Button onClick={save}>save</Button>
         <Button onClick={() => setOpen(true)}>set fills</Button>
-        <ArticleEditor />
+        <ArticleEditor onChange={articleHndler} defaultValue={data.blocks}/>
       </Box>
       <ImagePickerModal open={open} onClose={closeModal} onSelect={imagesHandler} folder="" deafultImages={data.imgs} />
     </>

@@ -1,3 +1,8 @@
+import { Search as SearchIcon } from '@mui/icons-material';
+import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import type { SearchItem } from '../../types/searchItem';
+import { useRequest } from '../../hooks/useRequest';
 import {
     Autocomplete,
     Box,
@@ -8,25 +13,17 @@ import {
     IconButton,
     Stack
 } from '@mui/material';
-import { Search as SearchIcon } from '@mui/icons-material';
-import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import type { SearchItem } from '../../types/searchItem';
-import { useRequest } from '../../hooks/useRequest';
-import { SxProps } from '@mui/material';
 
 const SearchForm = ({ onSubmit }: { onSubmit?: () => void }) => {
     const navigate = useNavigate();
     const [inputValue, setInputValue] = useState('');
     const [current, setCurrent] = useState<SearchItem | null | string>(null);
 
-    // 🔄 Автоматически загружаем подсказки при изменении inputValue
     const [isLoaded, options] = useRequest<SearchItem[]>(
         `/search/help/?search=${encodeURIComponent(inputValue)}`,
         { method: 'GET' }
     );
 
-    // 🔍 Обработка отправки формы
     const submitHandler = () => {
         const searchTerm = inputValue.trim();
         if (searchTerm) {
@@ -37,13 +34,14 @@ const SearchForm = ({ onSubmit }: { onSubmit?: () => void }) => {
         }
     };
 
-    // ▶️ Если выбран конкретный элемент — переходим сразу
     useEffect(() => {
         if (current) {
             if (typeof current === 'string') {
+                console.log(`is string ${current}`)
                 navigate(current);
             }
-            else if (typeof current === 'object' && current.url in current) {
+            else if (typeof current == 'object') {
+                console.log(`is object ${current.url}`)
                 navigate(current.url);
             }
             onSubmit?.();

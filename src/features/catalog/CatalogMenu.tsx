@@ -4,19 +4,25 @@ import { Stack } from "@mui/material"
 import { useCatalogStorage } from "./hooks/useCatalog";
 
 
-const CatalogMenu = ({ currentId, onCurrentIndexUpdate } : {currentId:number,onCurrentIndexUpdate:any}) => {
+const CatalogMenu = ({ currentId, onCurrentIndexUpdate, onMouseOut }: { currentId: number, onCurrentIndexUpdate: any, onMouseOut?: React.Dispatch<React.SetStateAction<boolean>> }) => {
     const store = useCatalogStorage()
 
-    if(!store.isLoading && !store.catalog){
+    if (!store.isLoading && !store.catalog) {
         store.fetchCatalog()
     }
     return (
         <Stack
-        spacing={0}
-            sx={{ backgroundColor: '#f5f5f5', p: 0,m:0,pt:'5px' }}
+            spacing={0}
+            sx={{
+                backgroundColor: '#f5f5f5', p: 0, m: 0, pt: '5px', height: '100%', borderRight: '1px solid #ccc',
+            }}
+            component='div'
+            onMouseOut={() => onMouseOut && onMouseOut(false)}
+            onMouseOver={() => onMouseOut && onMouseOut(true)}
         >
             {!store.isLoading && store.catalog ? store.catalog.map((item, i) => (
                 <CatalogCard
+                fullPath={item.fullPath}
                     key={item.fullPath}
                     isActive={currentId === i}
                     catalogIndex={i}

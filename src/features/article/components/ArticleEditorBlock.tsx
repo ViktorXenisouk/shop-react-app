@@ -76,12 +76,12 @@ setOpen(false)
             </Button>
             <Box display="flex" gap={1} flexWrap="wrap" mt={2}>
               <img
-                src={block.imgUrl}
+                src={block.image}
                 alt={`gallery-${0}`}
                 style={{ width: 80, height: 80, objectFit: 'cover', borderRadius: 4 }}
               />
             </Box>
-            <ImagePickerModal open={open} onClose={onModalClose} onSelect={(imgs) => updateBlock(block.id,{imgUrl:imgs[0].url})} folder=''/>
+            <ImagePickerModal open={open} onClose={onModalClose} onSelect={(imgs) => updateBlock(block.id,{image:imgs[0].url})} folder=''/>
           </>
         )}
       </Paper>

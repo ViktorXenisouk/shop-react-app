@@ -21,6 +21,8 @@ const SortSwitcher: React.FC = () => {
     const sortOption = (searchParams.get('sort') as SortOption) || 'price';
     const sortOrder = (searchParams.get('order') as SortOrder) || 'asc';
 
+    console.log(searchParams.get('sort'))
+
     const handleSortOptionChange = (event: any) => {
         const newSort = event.target.value as SortOption;
         searchParams.set('sort', newSort);

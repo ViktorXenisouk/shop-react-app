@@ -1,29 +1,42 @@
 import style from "./Products.module.css"
-import { DataLoaderFromHook, DataLoaderFromHookWithPagination, DataLoaderFromPromise } from "../loading/Loading"
+import { DataLoaderFromHook, DataLoaderFromHookWithPagination, DataLoaderFromPromise,DataLoaderFromHookSimple } from "../loading/Loading"
 import { Product } from "../../types/ItemData"
 import ProductCard from "./ProductCard"
 import Filter from '../filter/Filter';
 import { autoSaveFetch, safeFetch } from "../../services/safeFetch";
 import { useLocation, useParams, useSearchParams } from "react-router-dom";
 
-import { Grid, Box, Pagination } from "@mui/material"
+import { Grid, Box, Pagination,Skeleton } from "@mui/material"
 import { useAuthUserStore } from "../../store/useAuth";
 import ProductsHeader from "./ProductsHeader";
 import { usePaginatedItems } from "../../hooks/usePaginatedItems";
 import { parseParams } from "../../utils/parseParams";
 import { useEffect, useState } from "react";
 import { useRequest } from "../../hooks/useRequest";
-import { isArray } from "util";
 
-const MyProducts = ({ data }: { data: Product[] | null }) => {
+import {CardSkeleton} from "./ProductCardView";
+
+const MyProducts = ({ data }: { data?: Product[] | null }) => {
 
     const store = useAuthUserStore()
 
+    const [searchParams,setSearchParams] = useSearchParams()
+
     const getProducts = () => {
+        if(!data)
+        {
+            const arr = []
+
+            for(let i = 0; i < 10; i++){
+                arr.push(<CardSkeleton/>)
+            }
+
+            return arr
+        }
         return (data && typeof data.map === 'function') && data.map((item) => {
             const count = store.user?.basketInfo.find((v) => v.id == item._id)?.count ?? 0
             const liked = store.user?.favourite.includes(item._id) ?? false
-            return <ProductCard count={count} isLiked={liked} id={item._id} title={item.name} img={item.imgs[0]} />
+            return <ProductCard count={count} isLiked={liked} id={item._id} title={item.name} img={item.imgs[0]} view={searchParams.get('view')}/>
         })
     }
 
@@ -55,7 +68,7 @@ const Products = () => {
     const requestInit: RequestInit = {}
     requestInit.method = 'GET'
 
-    const res = useRequest<Product[]>(`/products/search/?${searchParams.toString()}`,{method:'GET'})
+    const res = useRequest<Product[]>(`/products/search/${subPath}?${searchParams.toString()}`,{method:'GET'})
 
     //const [isLoaded, data, error, setPage, info] = usePaginatedItems<Product[]>(parseInt(searchParams.get('page') ?? '1'), parseInt(searchParams.get('limit') ?? '10'), '/products/search/', { method: "GET" })
 
@@ -92,7 +105,7 @@ const Products = () => {
             </Box>
 
             <Box sx={{ gridArea: 'main', pt: 3 }}>
-                <DataLoaderFromHook res={res} page={MyProducts}/>
+                <DataLoaderFromHookSimple res={res} page={MyProducts}/>
                 <Pagination page={parseInt(searchParams.get('page') ?? '') ?? undefined} onChange={onChangePage} count={res[3]?.totalPages} />
             </Box>
         </Box>

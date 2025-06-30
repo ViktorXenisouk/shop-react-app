@@ -1,23 +1,26 @@
 import CatalogDisplayCard from "./CatalogDisplayCard"
-import { Grid, Box, Fade } from "@mui/material"
+import { Grid, Box, Fade, IconButton } from "@mui/material"
 import { useCatalogStorage } from "./hooks/useCatalog";
-import {useEffect,useState} from 'react';
+import { useEffect, useState } from 'react';
 import { Catalog } from "../../types/Catalog";
+import { Close } from "@mui/icons-material"
+import { grey } from "@mui/material/colors";
+import React from "react";
 
-const CatalogDisplay = ({ currentId }: { currentId: number }) => {
+const CatalogDisplay = ({ currentId, onClose, onMouseOut }: { currentId: number, onClose?: () => void, onMouseOut?: React.Dispatch<React.SetStateAction<boolean>> }) => {
     useEffect(() => {
         const catalog = store.catalog
-        if(catalog)
+        if (catalog)
             setCatalogs(catalog[currentId]?.catalogs || [])
-    },[currentId])
+    }, [currentId])
 
     useEffect(() => {
-        if(!store.isLoading && !store.catalog){
+        if (!store.isLoading && !store.catalog) {
             store.fetchCatalog()
         }
-    },[])
+    }, [])
 
-    const [catalogs,setCatalogs] = useState<Catalog[]>([])
+    const [catalogs, setCatalogs] = useState<Catalog[]>([])
 
     const store = useCatalogStorage()
 
@@ -26,15 +29,18 @@ const CatalogDisplay = ({ currentId }: { currentId: number }) => {
     const isVisible = currentId !== -1;
 
     return (
-        <Fade in={isVisible} timeout={200} unmountOnExit>
+        <Fade in={isVisible} timeout={200}>
             <Box
+                component='div'
                 sx={{
-                    pt: 2,
-                    pl:4,
-                    minWidth: 600,
-                    borderLeft: '1px solid #ccc',
+                    width:'100%',
+                    position: 'sticky',
+                    backgroundColor:grey[200]
                 }}
+                onMouseOut={() => onMouseOut && onMouseOut(false)}
+                onMouseOver={() => onMouseOut && onMouseOut(true)}
             >
+                <IconButton onClick={onClose}><Close /></IconButton>
                 <Grid container spacing={2}>
                     {catalogs.map((item) => (
                         <CatalogDisplayCard

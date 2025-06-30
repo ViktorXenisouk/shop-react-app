@@ -2,8 +2,10 @@ import { useNavigate, useParams } from "react-router-dom"
 import { useAuthUserStore } from "../store/useAuth"
 import FavouriteView from "../features/favourite/FavouriteView"
 import Basket from '../features/basket/Basket';
-import { Box, Typography, ToggleButtonGroup, ToggleButton,Container } from "@mui/material"
-import {ShoppingBasketRounded} from "@mui/icons-material"
+import { Box, Typography, Container, } from "@mui/material"
+import { ShoppingBasketRounded, Favorite, Person } from "@mui/icons-material"
+import BottomNavigation from '@mui/material/BottomNavigation';
+import BottomNavigationAction from '@mui/material/BottomNavigationAction';
 
 
 const MePage = () => {
@@ -18,19 +20,14 @@ const MePage = () => {
     console.log(user)
 
     const handleChange = (
-        event: React.MouseEvent<HTMLElement>,
-        value: string,
+        event: any,
+        value: any,
     ) => {
-        if(value)
         navigate(`/me/${value}`);
     };
 
     const getPage = () => {
         switch (page) {
-            case 'favourite':
-                return <FavouriteView />
-            case 'basket':
-                return <Basket />
             case 'me':
                 return (
                     <Box>
@@ -38,30 +35,33 @@ const MePage = () => {
                         <Typography>{user?.email}</Typography>
                     </Box>
                 )
+            case 'basket':
+                return <Basket />
+            case 'favourite':
+                return <FavouriteView />
         }
     }
 
     return (
-        <Container >
-            <ToggleButtonGroup
-                color="primary"
+        <Box >
+            <BottomNavigation
+                showLabels
                 value={page}
-                exclusive
                 onChange={handleChange}
                 aria-label="Platform"
                 sx={{
-                    display:'flex',
-                    justifyContent:'center'
+                    display: 'flex',
+                    justifyContent: 'center'
                 }}
             >
-                <ToggleButton value="me">Me</ToggleButton>
-                <ToggleButton value="favourite">Favourite</ToggleButton>
-                <ToggleButton value="basket"><ShoppingBasketRounded/>Basket</ToggleButton>
-            </ToggleButtonGroup>
+                <BottomNavigationAction value='me' label="Me" icon={<Person />} />
+                <BottomNavigationAction value='basket' label="Shoping" icon={<ShoppingBasketRounded />} />
+                <BottomNavigationAction value='favourite' label="Favorites" icon={<Favorite />} />
+            </BottomNavigation>
             <Box>
                 {getPage()}
             </Box>
-        </Container>
+        </Box>
     )
 }
 

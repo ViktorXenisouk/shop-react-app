@@ -1,6 +1,6 @@
 import ErrorPage from "./ErrorPage";
 import Basket from "../features/basket/Basket";
-import Main from "./Main";
+import Main from "../features/main/Main";
 import Product from "../features/product/Product"
 import Products from "../features/productList/Products";
 import Login from "../features/login/Login";

@@ -2,10 +2,10 @@ import React, { useState } from 'react';
 import { Box, IconButton, MobileStepper, Paper } from '@mui/material';
 import KeyboardArrowLeft from '@mui/icons-material/KeyboardArrowLeft';
 import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight';
-import {Grow} from "@mui/material"
+import { Grow } from "@mui/material"
 import ZoomOnHoverImage from './ZoomOnHoverImage';
 
-const ImageCarousel = ({imgs}:{imgs:{url:string,name:string}[]}) => {
+const ImageCarousel = ({ imgs }: { imgs: { url: string, name: string }[] }) => {
   const [activeStep, setActiveStep] = useState(0);
   const maxSteps = imgs.length;
 
@@ -18,27 +18,18 @@ const ImageCarousel = ({imgs}:{imgs:{url:string,name:string}[]}) => {
   };
 
   return (
-    <Box sx={{ maxWidth: 600, flexGrow: 1 }}>
-      <Paper
-        square
-        elevation={0}
-        sx={{
-          display: 'flex',
-          alignItems: 'center',
-          height: 50,
-          pl: 2,
-          bgcolor: 'background.default',
-        }}
-      >
-        {imgs[activeStep].name}
-      </Paper>
-
- <ZoomOnHoverImage
-        src={imgs[activeStep].url}
-        alt={imgs[activeStep].name}
-      />
+    <Box sx={{ width: '100%', flexGrow: 1, pt: '30px' }}>
+      <Box sx={{width:'100%',display:'flex' , justifyContent:'center',}}>
+        <ZoomOnHoverImage
+          src={imgs[activeStep].url}
+          alt={imgs[activeStep].name}
+          width='700px'
+          height='500px'
+        />
+      </Box>
 
       <MobileStepper
+      sx={{width:'100%'}}
         steps={maxSteps}
         position="static"
         activeStep={activeStep}
