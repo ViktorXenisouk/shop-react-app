@@ -8,7 +8,7 @@ const Article = ({ articles }: { articles: ArticleBlock[] }) => {
 
     return (
         <Container>
-            <Stack>
+            <Stack spacing='50px' sx={{bgcolor:'grey.200'}}>
                 {articles.map((block, index) => {
                     switch (block.type) {
                         case 'imageWithText':

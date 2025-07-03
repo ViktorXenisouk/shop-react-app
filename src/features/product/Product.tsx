@@ -10,14 +10,33 @@ import { useAuthUserStore } from "../../store/useAuth"
 import BasketCountBlock from "../../UI/BasketCountBlock"
 import LikeButton from "../../UI/LikeButton"
 import { Box, Stack, Typography, Grid, ImageListItem, Breadcrumbs, Link, Container } from "@mui/material"
-import { useMyParams } from "../../hooks/useParams"
 import CategoryParser from "../../UI/CategoryParser"
 import Article from "../article/Article"
+import Params from "./components/Params"
+
+import { useMemo } from "react"
+
+import Navigation from "./components/Navigation"
+import WriteComment from "./components/WriteComment"
+import ReadComments from "./components/ReadComments"
 
 const MyProduct = ({ data }: { data: Product }) => {
     const navigate = useNavigate();
 
+    const [value, setValue] = useState(0)
+
     const store = useAuthUserStore()
+
+    const component = useMemo(() => {
+        switch (value) {
+            case 0: return <ReadComments />
+            case 1: return <WriteComment />
+            case 2: return <Article articles={data.blocks ?? []} />
+            case 3: return <ReadComments />
+            case 4: return <Params />
+            default: return null
+        }
+    }, [value])
 
     const [count, setCount] = useState<number>(() => {
         if (data._id && store.user) {
@@ -87,11 +106,11 @@ const MyProduct = ({ data }: { data: Product }) => {
                     </Container>
                 </Grid>
                 <Grid size={{ xs: 12 }}>
-                    <Typography>{data.tags?.map((item) => <Typography component={RouterLink} to={`/products/?tag=${item}`}>{item}</Typography>)}</Typography>
-                    {
-                        data.blocks && 
-                        <Article articles={data.blocks}/>
-                    }
+                    <Typography>Tags: {data.tags?.map((item) => <Typography sx={{color:'black'}} component={RouterLink} to={`/products/?tag=${item}`}>{item}, </Typography>)}</Typography>
+                </Grid>
+                <Grid size={{ xs: 12 }}>
+                    <Navigation onChange={(v) => setValue(v)} value={value} />
+                    {component}
                 </Grid>
             </Grid>
         </Box>

@@ -1,23 +1,48 @@
 import { Box } from "@mui/material"
-import type { ArticleBlock } from "../../../types/article" 
+import type { ArticleBlock } from "../../../types/article"
 
-const GalleryBlock = ({variant,image}:ArticleBlock) => {
-const justify = {
-    left: 'flex-start',
-    right: 'flex-end',
-    center: 'center',
-  }[variant || 'center'];
+const GalleryBlock = ({ variant, image }: ArticleBlock) => {
+  const align = {
+    left: 'right',
+    right: 'left',
+  }[variant || 'left'];
 
-  return (
-    <Box display="flex" flexWrap="wrap" gap={2} justifyContent={justify} my={4}>
+  const columnPos = variant == 'left' ? '1' : '2'
+
+  const Img = () => {
+    return (
       <Box
+        component="img"
+        src={image}
+        alt={`gallery-${image}`}
+        sx={{ width: '160px', height: '160px', objectFit: 'cover', borderRadius: 1, gridColumn: columnPos, justifyContent: align }}
+      />
+    )
+  }
+
+  if (variant == 'center')
+    return (
+      <Box display="flex" flexWrap="wrap" gap={2} justifyContent={'center'} my={4}>
+        <Box
           component="img"
           src={image}
           alt={`gallery-${image}`}
           sx={{ width: '160px', height: '160px', objectFit: 'cover', borderRadius: 1 }}
         />
-    </Box>
-  );
+      </Box>
+    )
+  else if (variant == 'left')
+    return (
+      <Box display="grid" sx={{ gridTemplateColumns: 'repeat(2,  50%)', justifyContent: 'center' }}>
+        <Img />
+      </Box>
+    )
+  else
+    return (
+      <Box display="grid" sx={{ gridTemplateColumns: 'repeat(2,  50%)', justifyContent: 'center' }}>
+        <Img />
+      </Box>
+    )
 }
 
 export default GalleryBlock

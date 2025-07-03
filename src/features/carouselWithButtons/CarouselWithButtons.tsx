@@ -78,7 +78,9 @@ const CarouselWithButtons = ({ children,height = '300px' }: Props) => {
           spacing={2}
           sx={{
             py: 2,
-            height:'100px'
+            height:'100px',
+            display:'flex',
+            alignContent:'center'
           }}
         >
          {children}
