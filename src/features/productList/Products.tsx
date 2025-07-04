@@ -1,12 +1,11 @@
-import style from "./Products.module.css"
-import { DataLoaderFromHook, DataLoaderFromHookWithPagination, DataLoaderFromPromise,DataLoaderFromHookSimple } from "../loading/Loading"
+import { DataLoaderFromHook, DataLoaderFromHookWithPagination, DataLoaderFromPromise, DataLoaderFromHookSimple } from "../loading/Loading"
 import { Product } from "../../types/ItemData"
 import ProductCard from "./ProductCard"
 import Filter from '../filter/Filter';
 import { autoSaveFetch, safeFetch } from "../../services/safeFetch";
 import { useLocation, useParams, useSearchParams } from "react-router-dom";
 
-import { Grid, Box, Pagination,Skeleton } from "@mui/material"
+import { Grid, Box, Pagination, Skeleton } from "@mui/material"
 import { useAuthUserStore } from "../../store/useAuth";
 import ProductsHeader from "./ProductsHeader";
 import { usePaginatedItems } from "../../hooks/usePaginatedItems";
@@ -14,21 +13,31 @@ import { parseParams } from "../../utils/parseParams";
 import { useEffect, useState } from "react";
 import { useRequest } from "../../hooks/useRequest";
 
-import {CardSkeleton} from "./ProductCardView";
+import { CardSkeleton } from "./ProductCardView";
+
+import style from "./class.module.css"
 
 const MyProducts = ({ data }: { data?: Product[] | null }) => {
 
     const store = useAuthUserStore()
 
-    const [searchParams,setSearchParams] = useSearchParams()
+    const [searchParams, setSearchParams] = useSearchParams()
+
+    const getSize = () => {
+        if (true) {
+            return { xs: 12, sm: 4, md: 3 }
+        }
+        else {
+            return { xs: 12 }
+        }
+    }
 
     const getProducts = () => {
-        if(!data)
-        {
+        if (!data) {
             const arr = []
 
-            for(let i = 0; i < 10; i++){
-                arr.push(<CardSkeleton/>)
+            for (let i = 0; i < 10; i++) {
+                arr.push(<CardSkeleton />)
             }
 
             return arr
@@ -36,19 +45,22 @@ const MyProducts = ({ data }: { data?: Product[] | null }) => {
         return (data && typeof data.map === 'function') && data.map((item) => {
             const count = store.user?.basketInfo.find((v) => v.id == item._id)?.count ?? 0
             const liked = store.user?.favourite.includes(item._id) ?? false
-            return <ProductCard count={count} isLiked={liked} id={item._id} title={item.name} img={item.imgs[0]} view={searchParams.get('view')}/>
+            return (
+                <Grid component='div' className={style['table-grid']} size={getSize()} 
+                sx={{ flexGrow: 0, minWidth: { md: 200 } }}>
+                    <ProductCard count={count} isLiked={liked} id={item._id} title={item.name} img={item.imgs[0]} view={searchParams.get('view')} />
+                </Grid>)
         })
     }
 
     return (
         <Box >
             <Grid container
-                spacing={4}
                 direction="row"
                 sx={{
                     justifyContent: "flex-start",
                     alignItems: "flex-start",
-                    flexGrow: 0
+                    flexGrow: 0,
                 }} >
                 {getProducts()}
             </Grid>
@@ -68,13 +80,13 @@ const Products = () => {
     const requestInit: RequestInit = {}
     requestInit.method = 'GET'
 
-    const res = useRequest<Product[]>(`/products/search/${subPath}?${searchParams.toString()}`,{method:'GET'})
+    const res = useRequest<Product[]>(`/products/search/${subPath}?${searchParams.toString()}`, { method: 'GET' })
 
     //const [isLoaded, data, error, setPage, info] = usePaginatedItems<Product[]>(parseInt(searchParams.get('page') ?? '1'), parseInt(searchParams.get('limit') ?? '10'), '/products/search/', { method: "GET" })
 
     const onChangePage = (ev: any, page: number) => {
         //setPage(page)
-        searchParams.set('page',`${page}`)
+        searchParams.set('page', `${page}`)
         setSearchParams(searchParams)
     }
 
@@ -105,7 +117,7 @@ const Products = () => {
             </Box>
 
             <Box sx={{ gridArea: 'main', pt: 3 }}>
-                <DataLoaderFromHookSimple res={res} page={MyProducts}/>
+                <DataLoaderFromHookSimple res={res} page={MyProducts} />
                 <Pagination page={parseInt(searchParams.get('page') ?? '') ?? undefined} onChange={onChangePage} count={res[3]?.totalPages} />
             </Box>
         </Box>

@@ -19,18 +19,8 @@ type ItemCardProps = {
 
 const ProductCardView = (props: ItemCardProps) => {
 
-    const getSize = () => {
-        if(props.view === 'grid'){
-return { xs: 12, sm: 4, md: 3 }
-        }
-        else{
-return {xs:12}
-        }
-    }
-
     return (
-        <Grid size={getSize()} sx={{ flexGrow: 0, minWidth: { md: 200 } }}>
-            <Card sx={{ width: "100%" }}>
+            <Card raised sx={{ width: "100%" }}>
                 <CardMedia
                     component="img"
                     alt={props.img.name ?? ''}
@@ -53,7 +43,6 @@ return {xs:12}
                     <BasketCountBlock onChange={props.onChangeHandlerCount} count={props.count} setCount={props.setCnt} id={props.id} />
                 </CardActions>
             </Card>
-        </Grid>
     )
 }
 

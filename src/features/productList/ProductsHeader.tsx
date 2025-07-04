@@ -12,24 +12,13 @@ const A = ({ data }: { data: Catalog | null }) => {
     const [searchParams,setSearchParama] = useSearchParams()
     return (
         <Box sx={{ minHeight: '24px' }}>
-            <Grid container
-            sx={{
-          '--Grid-borderWidth': '1px',
-          borderTop: 'var(--Grid-borderWidth) solid',
-          borderLeft: 'var(--Grid-borderWidth) solid',
-          borderColor: 'divider',
-          '& > div': {
-            borderRight: 'var(--Grid-borderWidth) solid',
-            borderBottom: 'var(--Grid-borderWidth) solid',
-            borderColor: 'divider',
-          },
-        }}>
+            <Grid container>
                 {data?.subCategories ? data.subCategories.map((catalog) =>
-                    <Grid size={{ xs: 4 }}>
+                    <Grid size={{ xs: 4 }} sx={{border:'black solid 1px'}}>
                         <Box 
-                        sx={{minHeight:'40px',borderRight:'black solid 1px'}}
+                        sx={{minHeight:'40px', display:'flex', alignContent:'center', justifyContent:'center'}}
                         component={Link} to={`/products/${catalog.fullPath}?${searchParams.toString()}`}>
-                            <Typography align="center">{catalog.name}</Typography>
+                            <Typography sx={{color:'black'}} justifyContent='center' align="center">{catalog.name}</Typography>
                         </Box>
                     </Grid>)
                     :
