@@ -12,6 +12,8 @@ const useRequest = <T>(url: string, options: AutoSafeFetch): FetchHookResponse<T
     let isActive = true;
 
     const fetchData = async () => {
+      setData(undefined)
+      setError(undefined)
       setIsLoaded(false);
       try {
         const res = await autoSaveFetch<T>(url, options);

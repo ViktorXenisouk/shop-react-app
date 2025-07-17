@@ -1,6 +1,7 @@
 import CommentCard from "./CommentCard"
 import { useMemo, useState } from "react";
-import { Box, Button, Grid, Modal, Stack, Select, MenuItem, Paper } from '@mui/material';
+import { Box, Button, Grid, Modal, Stack, Select, MenuItem, Paper, IconButton } from '@mui/material';
+import { Remove } from "@mui/icons-material"
 import CarouselWithButtons from "../../carouselWithButtons/CarouselWithButtons";
 import ItemForCarousel from "../../carouselWithButtons/ItemForCarousel";
 
@@ -37,13 +38,16 @@ const ReadCommentsModal = ({ open, onClose }: Props) => {
 
     return (
         <Modal open={open} onClose={onClose} sx={{ display: 'flex', justifyContent: 'center' }}>
-            <Box sx={{ overflowY: 'scroll', width: '600px' }}>
-                <Paper>
-                    <Select value={sort} onChange={handleChange}>
+            <Box sx={{ backgroundColor: 'background.default', overflowY: 'scroll', width: '600px', px: '20px' }}>
+                <Box sx={{ display: 'flex', justifyContent: 'space-between',alignContent:'center' }}>
+                    <Select sx={{ backgroundColor: 'background.paper' }} variant="outlined" value={sort} onChange={handleChange}>
                         <MenuItem value={'0'}>Worsest</MenuItem>
                         <MenuItem value={'1'}>Best</MenuItem>
                     </Select>
-                </Paper>
+                    <IconButton sx={{width:'60px',height:'60px'}} onClick={onClose}>
+                        <Remove />
+                    </IconButton>
+                </Box>
                 <Stack>
                     {com.map((v) => <CommentCard {...v} />)}
                 </Stack>
@@ -65,9 +69,9 @@ const ReadComments = () => {
         <>
             <Box sx={{ width: '100%' }}>
                 <Grid container spacing={4}>
-                    {c.map((v) => <Grid size={{ xs: 3 }}><CommentCard {...v} /></Grid>)}
+                    {c.map((v) => <Grid size={{ xs: 12, md: 4, lg: 3 }}><CommentCard {...v} /></Grid>)}
                 </Grid>
-                <Button onClick={() => setOpen(true)}>See All of {commments.length} comments</Button>
+                <Button sx={{ mt: '40px', textDecoration: 'underline' }} variant="text" onClick={() => setOpen(true)}>See All of {commments.length} comments</Button>
             </Box>
             <ReadCommentsModal open={open} onClose={closeHandler} />
         </>

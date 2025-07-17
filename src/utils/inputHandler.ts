@@ -9,7 +9,7 @@ const inputHandler = (callback:(value:string)=>void) => {
 
 const inputBodyHandler= <T>(setBody:React.Dispatch<React.SetStateAction<T>>,callback:(prev:T,value:string)=>any) => {
 
-    const changeHandler : React.ChangeEventHandler<HTMLInputElement> = (ev) => {
+    const changeHandler : (ev:{target:{value:string}}) => void = (ev) => {
         setBody((prev) => {
             callback(prev,ev.target.value)
             return prev

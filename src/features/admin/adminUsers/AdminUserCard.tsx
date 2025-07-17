@@ -1,7 +1,7 @@
 import type { User } from "../../../types/user"
 import { Link as LinkRouter} from "react-router-dom"
 import { Card,CardContent,Typography,ButtonGroup,Button } from "@mui/material"
-import { safeFetch } from "../../../services/safeFetch"
+import { autoSaveFetch } from "../../../services/safeFetch"
 import { useAdminAuthStore } from "../../../store/useAdmin"
 import { useState } from "react"
 import { Link } from "react-router-dom"
@@ -12,16 +12,12 @@ const AdminUserCard = (props:User) => {
     const [isBlocked,setIsBlocked] = useState(props.isBlocked ? true : false)
 
     const blockHandler = async () => {
-        const requestInit: RequestInit = {}
-        requestInit.method = 'PATCH'
-        const token = store.token
-        requestInit.body = JSON.stringify({id:props._id,blocked:!isBlocked})
-        requestInit.headers = {
-            'Authorization': `Bearer ${token}`,
-            'Content-Type': 'application/json'
-        }
-    
-        const result = await safeFetch('/users/block',requestInit)
+
+      const body = {id:props._id,blocked:!isBlocked}
+
+      console.log(body)
+  
+        const result = await autoSaveFetch('/users/block',{token:store.token??'',method:'PATCH',body:body})
 
         alert(result.message)
 

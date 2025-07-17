@@ -1,12 +1,23 @@
-import { useMemo } from "react"
-import { autoSaveFetch } from "../../services/safeFetch"
+import { useMemo, useState } from "react"
 import { useAuthUserStore } from "../../store/useAuth"
-import { DataLoaderFromPromise } from "../loading/Loading"
-import BacketCard from "../basket/components/BacketCard"
 import { Box, Stack, Typography } from "@mui/material"
+import FavouriteCard from './components/FavouriteCard';
+import FavouriteDialog from "./components/FavouriteDialog"
 
 const FavouriteView = () => {
     const store = useAuthUserStore()
+
+    const [open, setOpen] = useState(false)
+
+    const [currentId, setCurrentId] = useState<string | null>(null)
+
+    const onClose = (value: 'no' | 'yes' | 'no-ask' | 'nothing') => {
+        setOpen(false)
+
+        if (value == 'yes' && currentId) {
+            store.addOrRemoveFavourite(currentId, false)
+        }
+    }
 
     const favourite = useMemo(() => {
         if (!store.user) {
@@ -15,12 +26,21 @@ const FavouriteView = () => {
         return store.user.favourite
 
 
-    }, [store.user?.favourite,store.user?.basketInfo])
+    }, [store.user?.favourite, store.user?.basketInfo])
+
+    const onDelete = (id: string) => {
+        setCurrentId(id)
+        setOpen(true)
+    }
 
     const page = store.user ? (
         <Stack>
-            {favourite.length > 0 ? favourite.map((item) => <BacketCard id={item} info={{liked:true,count:store.user?.basketInfo.find((v) => v.id === item)?.count ?? 0}} />) :
-                <Typography />}
+            {favourite.length > 0 ? favourite.map((item) => {
+                const countInBasket = store.user?.basketInfo?.find((v) => v.id === item)?.count ?? 0
+                return <FavouriteCard onDelete={onDelete} id={item} presentInBasket={countInBasket > 0} />
+            })
+                :
+                <Typography>is empty</Typography>}
         </Stack>
     ) :
         (
@@ -28,10 +48,13 @@ const FavouriteView = () => {
         )
 
     return (
-        <Box>
-            <Typography>Favourite</Typography>
-            {page}
-        </Box>
+        <>
+            <Box>
+                <Typography>Favourite</Typography>
+                {page}
+            </Box>
+            <FavouriteDialog open={open} onClose={onClose} />
+        </>
     )
 }
 

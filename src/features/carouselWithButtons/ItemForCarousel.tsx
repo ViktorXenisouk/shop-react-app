@@ -1,5 +1,4 @@
-import { Box,Button} from "@mui/material"
-import { Link } from "react-router-dom"
+import { Box} from "@mui/material"
 
 const ItemForCarousel = ({children,minWidth,height}: {children: React.ReactNode,minWidth:string|number,height:string|number}) => {
 

@@ -1,0 +1,41 @@
+import CountBlock from "./CountBlock";
+import { Box, Button } from "@mui/material"
+import { ShoppingBasket } from "@mui/icons-material"
+
+const BasketCountButton = ({ count, setCount, onChange, simple }: { count: number, setCount?: React.Dispatch<React.SetStateAction<number>>, onChange?: (count: number) => void, simple?: boolean }) => {
+
+    const bucketHandler = () => {
+        if (count <= 0) {
+            onChange?.(1)
+        }
+        else if (simple) {
+            onChange?.(0)
+        }
+    }
+
+    const changeHandler = (count: number) => {
+        onChange?.(count)
+    }
+
+    return (
+        <>
+            {
+                !count || count <= 0 ?
+                    <Button variant="outlined" startIcon={<ShoppingBasket />} onClick={bucketHandler} sx={{ width: '100%', m: '0px!important' }}>
+                        add to busket
+                    </Button>
+                    :
+                    simple ?
+                        <Button variant="outlined" startIcon={<ShoppingBasket />} onClick={bucketHandler} sx={{ width: '100%', m: '0px!important' }}>
+                            is added in basket
+                        </Button>
+                        :
+                        <Button component='div' sx={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
+                            <CountBlock onChange={changeHandler} count={count} setCount={setCount} />
+                        </Button>
+            }
+        </>
+    )
+}
+
+export default BasketCountButton

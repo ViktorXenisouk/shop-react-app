@@ -1,32 +1,28 @@
-import { Product } from "../../../types/ItemData"
+import { Product } from "../../../types/product"
 import { DataLoaderFromPromise } from "../../loading/Loading"
-import AdminProductsCard from "./components/AdminProductCard"
+import AdminProductsCard from "./features/AdminProductCard"
 import { useLocation } from "react-router-dom"
-import { safeFetch } from "../../../services/safeFetch"
-import { Box, Stack, TextField,Button } from "@mui/material"
-import Cookie from "../../../utils/cookie"
+import { autoSaveFetch } from "../../../services/safeFetch"
 import { useState, useEffect } from "react"
-import AdminProductsSearch from './components/AdminProductsSearch';
+import AdminProductsSearch from './features/AdminProductsSearch';
+import { useAdminAuthStore } from "../../../store/useAdmin"
 import { Link } from "react-router-dom"
+import { Box, Stack, Button } from "@mui/material"
+import { Create } from "@mui/icons-material"
 
 const MyAdminProducts = ({ data }: { data: Product[] }) => {
   const imgUrl = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRmqfYB4D3aqQcH4HpWAQKcD5Hgx4jbs7HCciF9-UlXn9VV6J28rAtu1W8emao&s';
 
   const [list, setList] = useState(data)
 
+  const store = useAdminAuthStore()
+
   useEffect(() => {
     setList(data)
   }, [data])
 
   const deleteProduct = async (id: string) => {
-    const requestInit: RequestInit = {}
-    requestInit.method = 'DELETE'
-    const token = Cookie.get('admin_token')
-    requestInit.headers = {
-      'Authorization': `Bearer ${token}`
-    }
-
-    const res = await safeFetch(`/products/delete/${id}`, requestInit)
+    const res = await autoSaveFetch(`/products/delete/${id}`, { method: 'DELETE', token: store.token || '' })
 
     console.log(res)
 
@@ -40,9 +36,9 @@ const MyAdminProducts = ({ data }: { data: Product[] }) => {
   }
 
   return (
-    <>
+    <Stack width='100%' spacing={1}>
       {list.map((item) => <AdminProductsCard id={item._id} name={item.name} discription={'discription'} imgUrl={imgUrl} handleDelete={deleteProduct} />)}
-    </>
+    </Stack>
   )
 
 }
@@ -57,20 +53,13 @@ const AdminProducts = () => {
   const fullPath = location.pathname; // /products/computers/notebook/mac
   const subPath = fullPath.replace(/^.*\/admin\/products\/search\//, '')
 
-  console.log('sub:' + subPath)
-
-  const requestInit: RequestInit = {}
-  requestInit.method = 'GET'
-
-  const res = safeFetch<Product[]>(`/products/search/${subPath}`, requestInit)
+  const res = autoSaveFetch<Product[]>(`/products/search/${subPath}`, { method: 'GET' })
 
   return (
     <Box>
-      <AdminProductsSearch/>
-      <Button component={Link} to='/admin/products/create'>Create</Button>
-      <Stack width={600}>
-        <DataLoaderFromPromise res={res} page={MyAdminProducts} />
-      </Stack>
+      <AdminProductsSearch />
+      <Button startIcon={<Create />} component={Link} to='/admin/products/create'>Create</Button>
+      <DataLoaderFromPromise res={res} page={MyAdminProducts} />
     </Box>
   )
 }

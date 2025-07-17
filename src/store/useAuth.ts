@@ -1,6 +1,5 @@
 import { create } from "zustand"
-import Cookie from "../utils/cookie";
-import { autoSaveFetch, safeFetch } from "../services/safeFetch"
+import { autoSaveFetch } from "../services/safeFetch"
 import type { User } from "../types/user";
 import { persist } from "zustand/middleware";
 import type { BasketItem } from "../types/basket";
@@ -12,8 +11,15 @@ type Set = {
 
 type Get = () => AuthUserState
 
+type Guest = {
+    basketInfo:BasketItem[]
+    favourite: string[];
+    username:string,
+    email?:undefined
+}
+
 type AuthUserState = {
-    user: User | null,
+    user: User | Guest,
     token: string | null;
     createOrChangeBasketItem: (basketItem: BasketItem) => void
     addOrRemoveFavourite: (id: string, value: boolean) => void
@@ -23,13 +29,13 @@ type AuthUserState = {
 
 const useAuthUserStore = create<AuthUserState>()(persist(
     (set, get) => ({
-        user: null,
+        user: {basketInfo:[],favourite:[],username:'guest'},
         token: null,
         login: async (email: string, password: string) => {
             return await login(email, password, set);
         },
         logout: () => {
-            set({ token: null })
+            set({ token: null,user:{basketInfo:[],favourite:[],username:'guest'} })
         },
         createOrChangeBasketItem: (basketItem: BasketItem) => {
             createOrUpdateBasketInfo(basketItem, set, get)
@@ -52,10 +58,8 @@ const login = async (email: string, password: string, set: Set): Promise<{ succe
             const token = response.data.token;
             const user = response.data.user
 
-            if (token) {
-                if (user)
-                    set({ user: user })
-                set({ token: token })
+            if (token && user) {
+                set({ token: token,user:user })
                 return { success: true, message: '' }
             }
             else {
@@ -99,7 +103,7 @@ const createOrUpdateBasketInfo = (basketItem: BasketItem, set: Set, get: Get) =>
         newItems = [...oldItems, basketItem];
     }
 
-    newItems = newItems.filter((v) => v.count > 0)
+    newItems = newItems.filter((v) => v.count > 0 && v.id !== '')
 
     console.log(newItems)
     set({

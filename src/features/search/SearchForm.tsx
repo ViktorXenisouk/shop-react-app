@@ -1,4 +1,3 @@
-import { Search as SearchIcon } from '@mui/icons-material';
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import type { SearchItem } from '../../types/searchItem';
@@ -13,6 +12,8 @@ import {
     IconButton,
     Stack
 } from '@mui/material';
+import { SearchSharp as SearchIcon } from '@mui/icons-material';
+
 
 const SearchForm = ({ onSubmit }: { onSubmit?: () => void }) => {
     const navigate = useNavigate();

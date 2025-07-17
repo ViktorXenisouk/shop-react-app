@@ -1,9 +1,9 @@
+import './App.css';
 import React from 'react';
 import { Routes, Route } from 'react-router-dom'
 import * as pages from './pages/index'
-import './App.css';
 import Navbar from './features/navigation/Navbar';
-import AdminProductsCreate from './features/admin/adminProducts/components/AdminProductCreate';
+import AdminProductsCreate from './features/admin/adminProducts/AdminProductCreate';
 import AdminNavigation from './features/admin/AdminNavigation';
 import { useAdminAuthStore } from './store/useAdmin';
 import Footer from './UI/Footer';
@@ -15,18 +15,19 @@ function App() {
   const store = useAdminAuthStore()
   console.log(store.token)
     const theme = useTheme();
-  const isXs = useMediaQuery(theme.breakpoints.down('sm'));
+  const isSmall = useMediaQuery(theme.breakpoints.down('sm'));
   return (
     <Box className="App" sx={{m:0,p:0}}>
       <Navbar />
       {store.token ? <AdminNavigation /> : null}
       <Container 
-      maxWidth={isXs ? false : undefined}  // 100% на XS, 'md' на других
-      disableGutters={isXs}  
-      component={'main'} sx={{minHeight: 1500,backgroundColor: grey[50],pl:'0px!important',pr:'0px!important',pt:0}}>
+      maxWidth={isSmall ? false : undefined}  // 100% на XS, 'md' на других
+      disableGutters={isSmall}
+      component={'main'} sx={{minHeight: 1500,backgroundColor: grey[50],pl:'0px!important',pr:'0px!important',pt:0,overflowY: 'hidden',pb:'60px'}}>
           <Routes>
             <Route index element={<pages.Main />} />
-            <Route path='/me/:page' element={<pages.MePage />} />
+            <Route path='/me/:page' element={<pages.Personal />} />
+            <Route path='/buy-process' element={<pages.BuyProcess/>}/>
             <Route path='/login' element={<pages.Login />} />
             <Route path='/register' element={<pages.Register />} />
             <Route path='/search/*' element={<pages.SearchPage />} />

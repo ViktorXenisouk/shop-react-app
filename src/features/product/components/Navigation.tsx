@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Box, Tabs, Tab } from "@mui/material"
+import { Box, Tabs, Tab, useMediaQuery, useTheme } from "@mui/material"
 import { Reviews, AddComment, ReadMore, PermMedia,Build } from "@mui/icons-material"
 
 type Props = {
@@ -8,18 +8,20 @@ type Props = {
 }
 
 const Navigation = ({value,onChange}:Props) => {
+    const theme = useTheme()
+    const isSmall = useMediaQuery(theme.breakpoints.only('xs'))
     const handleChange = (event: React.SyntheticEvent, newValue: number) => {
         onChange(newValue);
     };
 
     return (
-        <Box display='flex' justifyContent='center'>
-            <Tabs value={value} onChange={handleChange} aria-label="icon label tabs example">
-                <Tab icon={<Reviews />} label="Reviews" />
-                <Tab icon={<AddComment />} label="Add Comment" />
-                <Tab icon={<ReadMore />} label="Read More" />
-                <Tab icon={<PermMedia />} label="Media" />
-                <Tab icon={<Build />} label="Params" />
+        <Box display='flex' justifyContent='center' width='100%'>
+            <Tabs variant={isSmall? "scrollable" : "fullWidth"} value={value} onChange={handleChange} aria-label="icon label tabs example">
+                <Tab icon={<Reviews />} label={isSmall ? undefined : "Reviews"} />
+                <Tab icon={<AddComment />} label={isSmall ? undefined : "Add comment"} />
+                <Tab icon={<ReadMore />} label={isSmall ? undefined : "Read more"} />
+                <Tab icon={<PermMedia />} label={isSmall ? undefined : "Media"} />
+                <Tab icon={<Build />} label={isSmall ? undefined : "Params"} />
             </Tabs>
         </Box>
     )

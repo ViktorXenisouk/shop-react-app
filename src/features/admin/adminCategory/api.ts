@@ -1,5 +1,5 @@
 import { safeFetch } from "../../../services/safeFetch"
-import { Tags } from "./type"
+import { Tags } from "../../input/types"
 import { Tag } from "../../../types/Catalog";
 import { sanitizePayload } from "../../../utils/sanitizePayload";
 

@@ -1,4 +1,3 @@
-import React, { useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import {
     MenuItem,
@@ -15,7 +14,7 @@ import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
 type SortOption = 'price' | 'rating' | 'newest';
 type SortOrder = 'asc' | 'desc';
 
-const SortSwitcher: React.FC = () => {
+const SortSwitcher = ({fullWidth}:{fullWidth?:boolean}) => {
     const [searchParams, setSearchParams] = useSearchParams();
 
     const sortOption = (searchParams.get('sort') as SortOption) || 'price';
@@ -40,7 +39,7 @@ const SortSwitcher: React.FC = () => {
     };
 
     return (
-        <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+        <Box sx={{ display: 'flex', alignItems: 'center', gap: 2,justifyContent: fullWidth ? 'space-between' : 'flex-start' }}>
             <FormControl size="small">
                 <InputLabel sx={{minWidth:30}} id="sort-by-label">Сортировать по</InputLabel>
                 <Select

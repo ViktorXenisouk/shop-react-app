@@ -39,10 +39,12 @@ const CarouselWithButtons = ({ children,height = '300px' }: Props) => {
   return (
     <Box
       sx={{
+        backgroundColor:'secondary.main',
         position: 'relative',
         maxWidth: '100%',
         overflow: 'hidden',
         border: 'black solid 1px',
+        mx:'30px',
         height:height,
         alignContent:'center'
       }}
@@ -75,12 +77,11 @@ const CarouselWithButtons = ({ children,height = '300px' }: Props) => {
       >
         <Stack
           direction="row"
-          spacing={2}
+          spacing={0}
           sx={{
-            py: 2,
-            height:'100px',
+            height:'100%',
             display:'flex',
-            alignContent:'center'
+            alignContent:'flex-start'
           }}
         >
          {children}

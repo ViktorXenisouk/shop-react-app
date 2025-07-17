@@ -1,18 +1,19 @@
 import { useParams } from "react-router-dom"
 import { DataLoaderFromPromise } from "../loading/Loading"
-import { type Product } from "../../types/ItemData"
+import { type Product } from "../../types/product"
 import { useNavigate } from "react-router"
 import { Link as RouterLink } from "react-router-dom"
 import { autoSaveFetch } from "../../services/safeFetch"
 import ImageCarousel from "../../UI/ImageCarousel"
 import { useState } from "react"
 import { useAuthUserStore } from "../../store/useAuth"
-import BasketCountBlock from "../../UI/BasketCountBlock"
-import LikeButton from "../../UI/LikeButton"
-import { Box, Stack, Typography, Grid, ImageListItem, Breadcrumbs, Link, Container } from "@mui/material"
+import { Box, Typography, Grid, Container, Divider } from "@mui/material"
 import CategoryParser from "../../UI/CategoryParser"
 import Article from "../article/Article"
 import Params from "./components/Params"
+import BasketCountButton from "../basketForm/UI/BasketCountButton"
+import LikeButtonWithText from "../favourite/LikeButtonWithText"
+import TopItems from "../main/UI/TopItems"
 
 import { useMemo } from "react"
 
@@ -73,19 +74,6 @@ const MyProduct = ({ data }: { data: Product }) => {
         store.createOrChangeBasketItem({ id: data._id, count: count })
     }
 
-    const parse = (name: string) => {
-        const parts = name.split('/')
-
-        const allPaths: string[] = [];
-        for (let i = 1; i <= parts.length; i++) {
-            allPaths.push(parts.slice(0, i).join('/'));
-        }
-
-        const all = parts.map((item, i) => { return { name: parts[i], fullPath: allPaths[i] } })
-
-        return all
-    }
-
     return (
         <Box sx={{ display: 'flex', justifyContent: 'center' }}>
             <Grid container>
@@ -94,23 +82,36 @@ const MyProduct = ({ data }: { data: Product }) => {
                         <CategoryParser category={data.category} />
                     </Box>
                 </Grid>
-                <Grid size={{ xs: 6 }}>
+                <Grid size={{ xs: 12,md:6 }}>
                     <ImageCarousel imgs={data.imgs.map((v) => { return { url: v.url, name: v.name ?? '' } })} />
                 </Grid>
-                <Grid size={{ xs: 6 }}>
-                    <Container maxWidth='sm'>
-                        <Typography variant="h2">{data.name}</Typography>
-                        <Typography>{data.discription}</Typography>
-                        <BasketCountBlock id={data._id} onChange={changeHandler} count={count} setCount={setCount} />
-                        <LikeButton liked={liked} onClick={likeHandler} />
+                <Grid size={{ xs: 12,md:6 }}>
+                    <Container maxWidth='sm' sx={{ display: 'flex', justifyContent: 'space-between', flexDirection: 'column', height: '100%' }}>
+                        <Box>
+                            <Typography variant="h2">{data.name}</Typography>
+                            <Typography>{data.discription}</Typography>
+                        </Box>
+                        <Box>
+                            <LikeButtonWithText liked={liked} onClick={likeHandler} />
+                            <BasketCountButton onChange={changeHandler} count={count} setCount={setCount} />
+                        </Box>
                     </Container>
                 </Grid>
                 <Grid size={{ xs: 12 }}>
-                    <Typography>Tags: {data.tags?.map((item) => <Typography sx={{color:'black'}} component={RouterLink} to={`/products/?tag=${item}`}>{item}, </Typography>)}</Typography>
+                    <Typography>Tags: {data.tags?.map((item) => <Typography sx={{
+                        color: 'black', '&:hover': {
+                            colot: 'rgb(60, 60, 60)',
+                            textDecoration: 'underline',
+                        }
+                    }} component={RouterLink} to={`/products/?tag=${item}`}>{item}, </Typography>)}</Typography>
                 </Grid>
                 <Grid size={{ xs: 12 }}>
                     <Navigation onChange={(v) => setValue(v)} value={value} />
                     {component}
+                </Grid>
+                <Grid size={{ xs: 12 }}>
+                    <Divider sx={{ mt: '10px' }} />
+                    <TopItems />
                 </Grid>
             </Grid>
         </Box>

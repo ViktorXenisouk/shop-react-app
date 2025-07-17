@@ -48,4 +48,4 @@ const MultipleChoice = ({ defaultValue, onChange,freeSolo,options }: Props) => {
   );
 };
 
-export default MultipleChoice;
+//export default MultipleChoice;

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
-import { NavigationDesktop } from "./features/NavigationDesktop"
-import { NavigationMobile } from "./features/NavigationMobile"
+import { NavigationDesktop } from "./components/NavigationDesktop"
+import { NavigationMobile } from "./components/NavigationMobile"
 import Search from "../search/SearchModal"
 import { AppBar, Toolbar, useMediaQuery, useTheme, Slide, useScrollTrigger } from '@mui/material';
 

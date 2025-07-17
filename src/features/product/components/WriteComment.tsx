@@ -1,4 +1,4 @@
-import { Box, TextareaAutosize, Icon, Typography, Button, IconButton, Rating } from "@mui/material"
+import { Box, TextareaAutosize, Icon, Typography, Button, IconButton, Rating,TextField } from "@mui/material"
 import { Link } from "react-router-dom"
 import { useAuthUserStore } from "../../../store/useAuth"
 import { Send, Person } from "@mui/icons-material"
@@ -6,18 +6,6 @@ import { useEffect, useRef } from "react"
 
 const WriteComment = () => {
     const store = useAuthUserStore()
-
-    const ref = useRef<HTMLTextAreaElement>(null)
-
-    useEffect(() => {
-        const minH = '400px'
-        const w = '600px'
-        if (ref.current) {
-            ref.current.style.maxWidth = w
-            ref.current.style.minWidth = w
-            ref.current.style.minHeight = minH
-        }
-    }, [ref])
 
     if (!store.user) {
         return (
@@ -37,7 +25,7 @@ const WriteComment = () => {
                 </Box>
                 <Rating />
                 <Box sx={{ display: 'flex', alignContent: 'flex-start' }}>
-                    <TextareaAutosize minRows={5} ref={ref} />
+                    <TextField multiline minRows={10} sx={{width:{xs:'300px',md:'600px'}}}/>
                     <IconButton sx={{ width: '50px', height: '50px' }}><Send /></IconButton>
                 </Box>
             </Box>

@@ -103,5 +103,4 @@ const ArticleEditor = ({ onChange, defaultValue }: { onChange?: (blocks: Block[]
   );
 };
 
-
 export default ArticleEditor

@@ -44,18 +44,12 @@ const login = async (email: string, password: string) : Promise<{success:boolean
     }
 }
 
-const register = async (name: string,email:string ,password: string): Promise<{success:boolean,message?:string}> => {
-    if (!name || !password || !email) return { success:false, message: 'no name or password' }
+const register = async (payload :{username: string,email:string ,password: string}): Promise<{success:boolean,message?:string}> => {
+    if (!payload.username || !payload.password || !payload.email) return { success:false, message: 'no name or password' }
 
     if (!url) return { success:false, message: 'no server' }
 
-    const body = {
-        username: name,
-        password: password,
-        email:email,
-    }
-
-    const options = { body: JSON.stringify(body),
+    const options = { body: JSON.stringify(payload),
         method:"POST",
         headers: {
         'Content-Type': 'application/json'

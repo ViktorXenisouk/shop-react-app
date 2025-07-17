@@ -1,71 +1,27 @@
-import { useEffect, useState } from "react"
-import style from "./UI/FilterBlock.module.css"
-import { DataLoaderSimple } from "../loading/Loading"
-import { type FilterData } from "./types"
+import { useMemo, useState } from "react"
+import { type FilterData, type FilterParams } from "./types"
 import FilterList from "./UI/FilterList"
-import { safeFetch } from "../../services/safeFetch"
 import { useLocation, useSearchParams } from "react-router-dom"
+import { Box, ButtonGroup, Button, Stack, Skeleton } from '@mui/material';
+import { useRequest } from "../../hooks/useRequest"
+import FilterModal from "./UI/FilterModal";
 
-import { Box, ButtonGroup, Button, Stack, Skeleton } from "@mui/material"
 
-
-const MyFilter = ({ data }: { data: any | null }) => {
-    const [searchParams, setSearchParams] = useSearchParams()
-    const [event] = useState(new Event('restart-filter'))
-
-    const onResetClick = () => {
-        document.dispatchEvent(event)
-    }
-
-    const onSearchClick = () => {
-        const tags = [] as string[]
-        const elements = document.querySelectorAll(`input[type="radio"]`)
-        console.log(elements)
-        for (let i = 0; i < elements.length; i++) {
-            const el = elements.item(i) as HTMLInputElement | null
-            if (!el || el.checked === false || !el.classList.contains(style.input))
-                continue
-            const value = el.value
-            console.log(el)
-            tags.push(value)
-        }
-        searchParams.set('tags', tags.join(','))
-        setSearchParams(searchParams)
-    }
-
-    const getFilters = () => {
-        if (!data) {
-            return (
-                <Skeleton variant="rectangular" width={190} height={42} />
-            )
-        }
-        const arr = []
-        for (const key in data) {
-            arr.push({ name: key, isHor: data[key].isHor, tags: data[key].tags })
-        }
-        return arr.map((item) => !item.isHor ?
-            <FilterList name={item.name} tags={item.tags} direction="column" /> :
-            <FilterList name={item.name} tags={item.tags} direction="row" />)
-    }
-
-    return (
-        <Box sx={{ minWidth: "112px" }}>
-            <Stack>
-                {getFilters()}
-            </Stack>
-            <ButtonGroup>
-                <Button onClick={onSearchClick}>
-                    Show
-                </Button>
-                <Button onClick={onResetClick}>
-                    Reset Filter
-                </Button>
-            </ButtonGroup>
-        </Box>
-    )
+type FilterTags = {
+    id: string,
+    type: string,
+    min?: number,
+    max?: number,
+    value: any,
+    name: any,
+    enabled: boolean,
 }
 
-const Filter = () => {
+const Filter = ({ modalOnly }: { modalOnly?: boolean }) => {
+    const [filterParams, setFilterParams] = useState<FilterParams>({ tags: [] })
+    const [searchParams, setSearchParams] = useSearchParams()
+    const [open, setOpen] = useState(false)
+
     const location = useLocation()
 
     const queryParams = new URLSearchParams(location.search);
@@ -75,10 +31,81 @@ const Filter = () => {
     const fullPath = location.pathname; // /products/computers/notebook/mac
     const subPath = fullPath.replace(/^\/products\//, '')
 
-    const res = safeFetch<FilterData[]>(`/category/filter/${subPath}`, { method: 'GET' })
+    const [isLoaded, data, error] = useRequest<FilterData>(`/category/filter/${subPath}`, { method: 'GET' })
+
+    const addOrRemoveTag = (tag: string) => {
+        setFilterParams((prev) => {
+            const isThere = prev.tags.includes(tag);
+
+            return {
+                ...prev,
+                tags: isThere
+                    ? prev.tags.filter((v) => v !== tag)
+                    : [...prev.tags, tag],
+            };
+        });
+    }
+
+    const onResetClick = () => {
+        setFilterParams((prev) => ({
+            ...prev,
+            tags: [],
+        }));
+    }
+
+    const onSearchClick = () => {
+        searchParams.set('tags', filterParams.tags.join(','))
+        setSearchParams(searchParams)
+    }
+
+    const tags = useMemo(() => {
+        if (!data) {
+            return []
+        }
+        const arr = [] as { name: string, isHor: boolean, tags: string[] }[]
+        for (const key in data) {
+            arr.push({ name: key, isHor: data[key].isHor, tags: data[key].tags })
+        }
+        return arr
+    }, [data])
+
+    const array = useMemo(() => {
+        if (tags.length <= 0) {
+            return (
+                <Skeleton variant="rectangular" width={190} height={42} />
+            )
+        }
+        const t = tags.slice(0, 9)
+        return t.map((item) =>
+            <FilterList name={item.name} tags={item.tags} direction={item.isHor ? "column" : "row"} filterParams={filterParams} addOrRemoveTag={addOrRemoveTag} />
+        )
+
+    }, [tags, filterParams, filterParams.tags])
+
+    if (modalOnly)
+        return (
+            <Box>
+                <FilterModal onReset={onResetClick} onSearchClick={onSearchClick} tags={tags} addOrRemoveTag={addOrRemoveTag} filterParams={filterParams} />
+            </Box>
+        )
 
     return (
-        <DataLoaderSimple page={MyFilter} res={res} />
+        <>
+            <Box sx={{ minWidth: "112px" }}>
+                <Stack>
+                    {array}
+                    <FilterModal onReset={onResetClick} onSearchClick={onSearchClick} tags={tags} addOrRemoveTag={addOrRemoveTag} filterParams={filterParams} />
+                </Stack>
+                <ButtonGroup>
+                    <Button onClick={onSearchClick}>
+                        Show
+                    </Button>
+                    <Button onClick={onResetClick}>
+                        Reset Filter
+                    </Button>
+                </ButtonGroup>
+            </Box>
+        </>
     )
 }
 

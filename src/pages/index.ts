@@ -1,11 +1,11 @@
 import ErrorPage from "./ErrorPage";
-import Basket from "../features/basket/Basket";
+import Basket from "../features/basketForm/BasketForm";
 import Main from "../features/main/Main";
 import Product from "../features/product/Product"
 import Products from "../features/productList/Products";
-import Login from "../features/login/Login";
+import Login from "./Login";
 import Register from "./Register";
-import MePage from "./MePage"
+import Personal from "./Personal"
 import SearchPage from "./SearchPage";
 
 import AdminLogin from "./AdminLogin";
@@ -13,7 +13,7 @@ import AdminUsers from "../features/admin/adminUsers/AdminUsers";
 import AdminUsersEdit from "../features/admin/adminUsers/AdminUsersEdit";
 
 import AdminProducts from "../features/admin/adminProducts/AdminProducts";
-import AdminProductsEdit from "../features/admin/adminProducts/components/AdminProductEdit";
+import AdminProductsEdit from "../features/admin/adminProducts/AdminProductEdit";
 
 import AdminCategories from "../features/admin/adminCategory/AdminCategory";
 import AdminCategoryCreate from "../features/admin/adminCategory/AdminCategoryCreate";
@@ -26,8 +26,11 @@ import AdminAdminsEdit from "../features/admin/adminAdmins/AdminAdminsEdit";
 import AdminEditMe from "../features/admin/adminMe/AdminEditMe";
 import AdminMe from "../features/admin/adminMe/AdminMe";
 
+import BuyProcess from "./BuyProcess";
+
 export {
-    MePage,SearchPage,
+    BuyProcess,
+    Personal,SearchPage,
     Basket, Main, ErrorPage, Products, Product,
     Login, Register,
     AdminLogin, AdminMe, AdminEditMe,

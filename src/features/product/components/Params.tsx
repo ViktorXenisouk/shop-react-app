@@ -12,7 +12,7 @@ const rows: Par =
 
 const Params = () => {
 
-    const getRoes = () => {
+    const getRows = () => {
         let array = []
         for (let row in rows) {
             array.push(
@@ -30,7 +30,7 @@ const Params = () => {
             <Table sx={{width:'500px'}} component={Paper}>
                 <TableBody>
                     {
-                        getRoes()
+                        getRows()
                     }
                 </TableBody>
             </Table>

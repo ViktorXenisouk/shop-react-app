@@ -1,10 +1,10 @@
 import { Box, Stack, TextField, Button } from "@mui/material"
 import { useParams } from "react-router-dom"
 import { useState } from "react"
-import { Tags } from "./type"
+import { Tags } from "../../input/types"
 import { createCategory } from "./api"
 import { useAdminAuthStore } from "../../../store/useAdmin"
-import CategoryListTagsManager from "./UI/CategoryListTagsManager"
+import CategoryListTagsManager from "../../input/CategoryListTagsManager"
 import { Link } from "react-router-dom"
 
 const AdminCategoryCreate = () => {

@@ -41,7 +41,9 @@ const DataLoaderFromHookSimple = <T,>({ res, page }: HookDataLoaderProps<T> & { 
       if (error) {
         setCurrentPage(<ErrorPage status={error.status} message={error.message} />);
       } else {
+        setTimeout(()=>{
         setCurrentPage(React.createElement(page, { data }));
+        },500)
       }
     }
     else{

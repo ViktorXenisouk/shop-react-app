@@ -1,6 +1,6 @@
 import CarouselWithButtons from "../../carouselWithButtons/CarouselWithButtons"
 import ItemForCarousel from "../../carouselWithButtons/ItemForCarousel"
-import TopItemCard from "../../TopItemCard"
+import TopItemCard from "./TopItemCard"
 import { Box, Typography } from "@mui/material"
 import { TopItem } from "../../../types/topItem"
 
@@ -17,7 +17,7 @@ const TopCarousel = ({ items, title }: Props) => {
                 items ?
                     <CarouselWithButtons>
                         {items && items.map((v) =>
-                            <ItemForCarousel minWidth='250px' height='100px'>
+                            <ItemForCarousel minWidth='250px' height='300px'>
                                 <TopItemCard {...v} />
                             </ItemForCarousel>)}
                     </CarouselWithButtons>
