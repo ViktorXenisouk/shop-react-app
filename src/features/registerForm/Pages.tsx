@@ -35,7 +35,7 @@ const FirstPage = (props: childrenProps) => {
 
     const continueHandler = async () => {
         setLoading(true)
-        const res = await autoSaveFetch<boolean>('/users/email', { method: 'PUT', body: { email: body.email } })
+        const res = await autoSaveFetch<boolean>('/auth/email', { method: 'PUT', body: { email: body.email } })
         if (!res.data) {
             props.next()
         }

@@ -6,7 +6,7 @@ import { editCategory } from './api';
 import { DataLoaderFromPromise } from '../../loading/Loading';
 import { safeFetch } from '../../../services/safeFetch';
 import { Tags } from '../../input/types';
-import { Catalog, Tag } from '../../../types/Catalog';
+import { Catalog, Tag } from '../../../types/catalog';
 import { Link } from 'react-router-dom';
 import { Box, TextField, Button, Stack, Accordion, AccordionDetails, AccordionSummary } from '@mui/material';
 import { inputBodyHandler } from '../../../utils/inputHandler';

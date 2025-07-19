@@ -53,10 +53,10 @@ const SearchForm = ({ onSubmit }: { onSubmit?: () => void }) => {
         <Stack direction="row" sx={{ mt: 10 }}>
             <Autocomplete
                 fullWidth
-                freeSolo // 👈 разрешаем произвольный ввод
+                freeSolo
                 inputValue={inputValue}
                 onInputChange={(e, value) => setInputValue(value)}
-                onChange={(e, value) => setCurrent(value)} // выбор из подсказки
+                onChange={(e, value) => setCurrent(value)}
                 options={options ?? []}
                 getOptionLabel={(option) => (typeof option === 'string' ? option : option.name)}
                 noOptionsText="Ничего не найдено"

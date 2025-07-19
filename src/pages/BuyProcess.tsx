@@ -2,9 +2,7 @@ import { Box, Stack, Button } from "@mui/material"
 import { useState } from "react"
 import React from "react"
 import BuyProcessStepper from "../features/buyProcess/BuyProcessStepper"
-import PersonalInfo from '../features/buyProcess/pages/PersonalInfo';
-import ConfirmBakset from "../features/buyProcess/pages/ConfirmBasket";
-import ConfirmAdress from "../features/buyProcess/pages/ConfirmAdress";
+import {PersonalInfo,ConfirmBakset,ConfirmAdress} from '../features/buyProcess/components/index';
 import { Body } from "../features/buyProcess/types";
 
 const stepsCount = 4

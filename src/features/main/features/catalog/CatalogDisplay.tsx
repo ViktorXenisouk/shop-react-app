@@ -2,7 +2,7 @@ import CatalogDisplayCard from "./UI/CatalogDisplayCard"
 import { Grid, Box, Fade, IconButton, useScrollTrigger, useTheme, useMediaQuery } from '@mui/material';
 import { useCatalogStorage } from "./hooks/useCatalog";
 import { useEffect, useState } from 'react';
-import { Catalog } from "../../../../types/Catalog";
+import { Catalog } from "../../../../types/catalog";
 import { Close } from "@mui/icons-material"
 import { grey } from "@mui/material/colors";
 import React from "react";

@@ -1,5 +1,5 @@
 import { Box, Paper, Typography, ButtonGroup, Button, Stack } from "@mui/material"
-import { Catalog } from "../../../types/Catalog"
+import { Catalog } from "../../../types/catalog"
 import { Link } from "react-router-dom"
 import {ArrowForward,Delete,EditDocument} from "@mui/icons-material"
 

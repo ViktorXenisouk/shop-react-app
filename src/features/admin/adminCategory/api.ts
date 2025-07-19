@@ -1,6 +1,6 @@
 import { safeFetch } from "../../../services/safeFetch"
 import { Tags } from "../../input/types"
-import { Tag } from "../../../types/Catalog";
+import { Tag } from "../../../types/catalog";
 import { sanitizePayload } from "../../../utils/sanitizePayload";
 
 const createCategory = async (payload: { tags: Tags[], parentPath: string, name: string, discription: string, path: string }, token?: string | null) => {

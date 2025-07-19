@@ -1,5 +1,5 @@
 import { create } from "zustand"
-import { Catalog } from "../../../../../types/Catalog";
+import { Catalog } from "../../../../../types/catalog";
 import { safeFetch } from "../../../../../services/safeFetch";
 
 type CatalogStorage = {

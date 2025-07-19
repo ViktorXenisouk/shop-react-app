@@ -1,7 +1,7 @@
 import { Box, Grid, Typography, useMediaQuery, useTheme, } from "@mui/material"
 import { DataLoaderSimple } from "../loading/Loading"
 import { autoSaveFetch } from "../../services/safeFetch"
-import type { Catalog } from "../../types/Catalog"
+import type { Catalog } from "../../types/catalog"
 import { Link, useSearchParams } from "react-router-dom"
 import CategoryParser from "../../UI/CategoryParser"
 import ViewSwitcher from "./UI/ViewSwitcher"

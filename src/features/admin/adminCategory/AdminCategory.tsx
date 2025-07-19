@@ -1,7 +1,7 @@
 import { useLocation, useNavigate, useSearchParams } from 'react-router-dom';
 import { DataLoaderFromPromise } from "../../loading/Loading";
 import { safeFetch } from "../../../services/safeFetch";
-import { Catalog } from "../../../types/Catalog";
+import { Catalog } from "../../../types/catalog";
 import { parseParams } from "../../../utils/parseParams";
 import { useState } from "react";
 import AdminCategoryCard from "./AdminCategoryCard";

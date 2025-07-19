@@ -2,7 +2,7 @@ import { useState, Fragment } from 'react';
 import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
 import CircularProgress from '@mui/material/CircularProgress';
-import type { Catalog } from '../../types/Catalog';
+import type { Catalog } from '../../types/catalog';
 import { autoSaveFetch } from '../../services/safeFetch';
 import { useRequest } from '../../hooks/useRequest';
 
