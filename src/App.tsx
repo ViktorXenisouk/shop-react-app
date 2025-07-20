@@ -1,12 +1,10 @@
 import './App.css';
-import React from 'react';
 import { Routes, Route } from 'react-router-dom'
 import * as pages from './pages/index'
-import Navbar from './features/navigation/Navbar';
-import AdminProductsCreate from './features/admin/adminProducts/AdminProductCreate';
-import AdminNavigation from './features/admin/AdminNavigation';
+import AdminNavigation from './features/admin/UI/AdminNavigation';
 import { useAdminAuthStore } from './store/useAdmin';
-import Footer from './UI/Footer';
+import Navbar from './widgets/header/Navbar';
+import Footer from './widgets/footer/Footer';
 import { grey } from '@mui/material/colors';
 import { Box,Container, useMediaQuery, useTheme } from '@mui/material';
 
@@ -23,7 +21,7 @@ function App() {
       <Container 
       maxWidth={isSmall ? false : undefined}  // 100% на XS, 'md' на других
       disableGutters={isSmall}
-      component={'main'} sx={{minHeight: 1500,backgroundColor: grey[50],pl:'0px!important',pr:'0px!important',pt:0,overflowY: 'hidden',pb:'60px'}}>
+      component={'main'} sx={{minHeight: 1500,backgroundColor: grey[50],pl:'0px!important',pr:'0px!important',pt:0,overflowY: 'hidden'}}>
           <Routes>
             <Route index element={<pages.Main />} />
             <Route path='/me/:page' element={<pages.Personal />} />
@@ -44,7 +42,7 @@ function App() {
                 <Route path='/admin/users/edit/:id' element={<pages.AdminUsersEdit />} />
               </Route>
               <Route path='/admin/categories'>
-                <Route path='/admin/categories/search/*' element={<pages.AdminCategories />} />
+                <Route path='/admin/categories/search/*' element={<pages.AdminCategory />} />
                 <Route path='/admin/categories/create/:id' element={<pages.AdminCategoryCreate />} />
                 <Route path='/admin/categories/edit/:id' element={<pages.AdminCategoryEdit />} />
               </Route>
@@ -56,7 +54,7 @@ function App() {
               <Route path='/admin/products'>
                 <Route path='/admin/products/search/*' element={<pages.AdminProducts />} />
                 <Route path='/admin/products/edit/:id' element={<pages.AdminProductsEdit />} />
-                <Route path='/admin/products/create' element={<AdminProductsCreate />} />
+                <Route path='/admin/products/create' element={<pages.AdminProductCreate />} />
               </Route>
             </Route>
           </Routes>

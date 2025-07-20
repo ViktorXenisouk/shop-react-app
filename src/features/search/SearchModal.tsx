@@ -1,6 +1,6 @@
 import React from 'react';
 import { Box, Modal, IconButton,} from '@mui/material';
-import { Close as CloseIcon, Search as SearchIcon } from '@mui/icons-material';
+import { Close as CloseIcon } from '@mui/icons-material';
 import SearchForm from './SearchForm';
 
 type Props = {

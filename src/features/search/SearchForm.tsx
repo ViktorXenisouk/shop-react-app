@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import type { SearchItem } from '../../types/searchItem';
+import type { SearchItem } from '../../types/search-item';
 import { useRequest } from '../../hooks/useRequest';
 import {
     Autocomplete,

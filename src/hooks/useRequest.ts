@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { FetchHookResponse } from "../types/fetch";
-import { autoSaveFetch, AutoSafeFetch } from "../services/safeFetch";
+import { autoSaveFetch, AutoSafeFetch } from "../services/safe-fetch";
 
 const useRequest = <T>(url: string, options: AutoSafeFetch): FetchHookResponse<T> => {
   const [isLoaded, setIsLoaded] = useState(false);

@@ -7,7 +7,7 @@ import { CSS } from '@dnd-kit/utilities';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { ArticleBlock } from '../../../types/article';
 import { DragIndicator } from "@mui/icons-material"
-import ImagePickerModal from '../../imagePickerModal/ImagePickerModal';
+import ImagePickerModal from '../../image-picker-modal/ImagePickerModal';
 
 type Block = ArticleBlock & { id: string }
 

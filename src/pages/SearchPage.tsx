@@ -1,7 +1,7 @@
 import { useLocation } from "react-router-dom";
 import { Box, Typography, Avatar } from "@mui/material"
-import { autoSaveFetch } from "../services/safeFetch";
-import type { SearchItem } from "../types/searchItem"
+import { autoSaveFetch } from "../services/safe-fetch";
+import type { SearchItem } from "../types/search-item"
 import { DataLoaderFromPromise } from "../features/loading/Loading";
 import { Link } from "react-router-dom";
 import SearchForm from "../features/search/SearchForm";

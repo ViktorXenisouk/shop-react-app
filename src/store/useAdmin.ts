@@ -1,7 +1,7 @@
 import { create } from "zustand"
 import { persist } from 'zustand/middleware'
 import Cookie from "../utils/cookie";
-import { safeFetch } from "../services/safeFetch";
+import { safeFetch } from "../services/safe-fetch";
 import type { Admin } from "../types/admin";
 
 type AdminAuthState = {

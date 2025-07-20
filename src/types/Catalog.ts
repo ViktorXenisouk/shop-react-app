@@ -1,4 +1,4 @@
-type Tag ={[categoryName: string]: string[]};
+import {Tag,Tags} from "./tags"
 
 type Catalog = {
     _id:string;
@@ -8,8 +8,8 @@ type Catalog = {
     parentPath?: string;
     catalogs?: Catalog[];
     subCategories?:Catalog[];
-    tags?:Tag;
+    tags?:Tags;
     discription?:string
 }
 
-export type { Catalog ,Tag}
+export type { Catalog}

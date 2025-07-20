@@ -1,6 +1,6 @@
 import { useAuthUserStore } from '../../store/useAuth';
 import { Link } from 'react-router-dom';
-import BasketForm from '../basketForm/BasketForm';
+import BasketForm from '../basket/BasketDisplay';
 import { Box, Button } from "@mui/material"
 
 const Basket = () => {

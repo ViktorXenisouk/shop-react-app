@@ -1,5 +1,5 @@
 import { create } from "zustand"
-import { autoSaveFetch } from "../services/safeFetch"
+import { autoSaveFetch } from "../services/safe-fetch"
 import type { User } from "../types/user";
 import { persist } from "zustand/middleware";
 import type { BasketItem } from "../types/basket";

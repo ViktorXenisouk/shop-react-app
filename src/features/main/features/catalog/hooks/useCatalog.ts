@@ -1,6 +1,6 @@
 import { create } from "zustand"
 import { Catalog } from "../../../../../types/catalog";
-import { safeFetch } from "../../../../../services/safeFetch";
+import { safeFetch } from "../../../../../services/safe-fetch";
 
 type CatalogStorage = {
     catalog: Catalog[] | null | undefined;

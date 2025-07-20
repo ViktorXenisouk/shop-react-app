@@ -1,4 +1,4 @@
-import FavouriteView from "../favourite/FavouriteView"
+import FavouriteView from "../favourite/FavouriteDisplay"
 
 const Favourite = () => {
 return <FavouriteView/>

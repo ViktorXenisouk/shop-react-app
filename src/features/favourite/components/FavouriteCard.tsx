@@ -1,12 +1,10 @@
 import { Link as RouterLink } from "react-router-dom"
-import CountBlock from "../../basketForm/UI/CountBlock";
 import { useAuthUserStore } from "../../../store/useAuth";
 import { Box, Card, CardContent, CardActions, Stack, Typography, Avatar, Button, IconButton } from "@mui/material";
 import { useRequest } from "../../../hooks/useRequest";
 import { Product } from "../../../types/product";
-import { Favorite, ShoppingBasket } from "@mui/icons-material"
-import BasketCountButton from '../../basketForm/UI/BasketCountButton';
-import { useState } from "react";
+import { Favorite } from "@mui/icons-material"
+import BasketCountButton from '../../basket/UI/BasketCountButton';
 
 const FavouriteCard = ({ id, presentInBasket, onDelete }: { id: string, presentInBasket: boolean, onDelete: (id: string) => void }) => {
     const store = useAuthUserStore()

@@ -1,6 +1,6 @@
 import {Box } from '@mui/material';
 
-import RegisterForm from "../features/registerForm/RegisterForm"
+import RegisterForm from "../features/auth/register/RegisterForm"
 
 const Register = () => {
 
