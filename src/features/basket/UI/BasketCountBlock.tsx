@@ -1,7 +1,5 @@
 import CountBlock from "./CountBlock";
-import { IconButton, Box, Button } from "@mui/material"
-import { ShoppingBasket, FavoriteBorder, Favorite } from "@mui/icons-material"
-import { useAuthUserStore } from "../../../store/useAuth";
+import { Paper} from "@mui/material"
 
 const BasketCountBlock = ({ count, onChange, id }: { count: number, onChange?: (count: number) => void, id: string }) => {
 
@@ -10,9 +8,9 @@ const BasketCountBlock = ({ count, onChange, id }: { count: number, onChange?: (
     }
 
     return (
-        <Button component={'div'} sx={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
+        <Paper component={'div'} sx={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
             <CountBlock onChange={changeHandler} count={count} />
-        </Button>
+        </Paper>
     )
 }
 

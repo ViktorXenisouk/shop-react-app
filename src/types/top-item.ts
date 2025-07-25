@@ -16,13 +16,12 @@ const getItems = () => {
         category: '',
         url: '/products/computers/notebook',
         id:'6858146d17dd6b4a8d0726eb',
-        imageUrl: 'https://images.unsplash.com/photo-1551963831-b3b1ca40c98e',
+        imageUrl: 'https://res.cloudinary.com/djdxksokm/image/upload/v1753359255/my-pet-project/whooqmb8vkdtsw7dqxrh.png',
         shortDescription: 'some good fefjj',
         priority: 0,
     }
-    return [
-        mac,mac,mac,mac,mac
-    ]
+    return Array(15).fill(mac)
+
 }
 
 const getCategories = () => {
@@ -31,12 +30,12 @@ const getCategories = () => {
         type: 'category',
         category: '',
         url: '/products/computers/notebook',
-        imageUrl: 'https://images.unsplash.com/photo-1551963831-b3b1ca40c98e',
+        imageUrl: 'https://res.cloudinary.com/djdxksokm/image/upload/v1753359255/my-pet-project/whooqmb8vkdtsw7dqxrh.png',
         shortDescription: 'some good fefjj',
         priority: 0,
     }
 
-    return [computers,computers,computers,computers,computers]
+    return Array(15).fill(computers)
 }
 
 const getArticles = () => {
@@ -45,7 +44,7 @@ const getArticles = () => {
         type: 'article',
         category: '',
         url: '/products/computers/notebook',
-        imageUrl: 'https://images.unsplash.com/photo-1551963831-b3b1ca40c98e',
+        imageUrl: 'https://res.cloudinary.com/djdxksokm/image/upload/v1753359255/my-pet-project/whooqmb8vkdtsw7dqxrh.png',
         shortDescription: 'some good fefjj',
         priority: 0,
     }

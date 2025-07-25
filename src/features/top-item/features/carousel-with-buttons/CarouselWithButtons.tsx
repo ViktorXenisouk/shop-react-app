@@ -1,14 +1,15 @@
 import React, { useRef, useState, useEffect } from 'react';
-import { Box, IconButton, Stack, Typography,Button } from '@mui/material';
+import { Box, IconButton, Stack, Typography, Button } from '@mui/material';
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
+import CarouselButton from '../UI/CarouselButton';
 
 type Props = {
   children: React.ReactNode,
-  height?:string,
+  height?: string,
 }
 
-const CarouselWithButtons = ({ children,height = '300px' }: Props) => {
+const CarouselWithButtons = ({ children, height = '300px' }: Props) => {
   const scrollRef = useRef<HTMLDivElement>(null);
   const [atStart, setAtStart] = useState(true);
   const [atEnd, setAtEnd] = useState(false);
@@ -37,30 +38,17 @@ const CarouselWithButtons = ({ children,height = '300px' }: Props) => {
   return (
     <Box
       sx={{
-        backgroundColor:'secondary.main',
+        backgroundColor: 'secondary.main',
         position: 'relative',
         maxWidth: '100%',
         overflow: 'hidden',
-        border: 'black solid 1px',
-        mx:'30px',
-        height:height,
-        alignContent:'center'
+        mx: '30px',
+        height: height,
+        alignContent: 'center'
       }}
     >
-      <Button
-        onClick={() => scrollBy(-300)}
-        sx={{
-          position: 'absolute',
-          top: '0px',
-          bottom:'0px',
-          left: '0px',
-          zIndex: 1,
-          color: atStart ? 'grey.400' : 'primary.main',
-          bgcolor: 'white',
-        }}
-      >
-        <ArrowBackIosNewIcon />
-      </Button>
+      <CarouselButton onClick={() => scrollBy(-300)} disabled={atStart} left='0px' icon={<ArrowBackIosNewIcon />} />
+
       <Box
         ref={scrollRef}
         sx={{
@@ -69,38 +57,29 @@ const CarouselWithButtons = ({ children,height = '300px' }: Props) => {
           scrollBehavior: 'smooth',
           whiteSpace: 'nowrap',
           '&::-webkit-scrollbar': { display: 'none' },
-          height:'100%',
-          alignContent:'center',
-          mx:'68px'
+          height: '100%',
+          alignContent: 'center',
+          mx: '80px',
+          borderRadius: '3px',
+          backgroundColor: 'transparent'
         }}
       >
         <Stack
           direction="row"
           spacing={0}
           sx={{
-            height:'100%',
-            display:'flex',
-            alignContent:'center'
+            height: '100%',
+            display: 'flex',
+            alignContent: 'center',
+            alignItems:'center',
+            backgroundColor: 'transparent'
           }}
         >
-         {children}
+          {children}
         </Stack>
       </Box>
 
-      <Button
-        onClick={() => scrollBy(300)}
-        sx={{
-          position: 'absolute',
-          top: '0px',
-          bottom:'0px',
-          right: '0px',
-          zIndex: 1,
-          color: atEnd ? 'grey.400' : 'primary.main',
-          bgcolor: 'white',
-        }}
-      >
-        <ArrowForwardIosIcon />
-      </Button>
+      <CarouselButton onClick={() => scrollBy(300)} disabled={atEnd} right='0px' icon={<ArrowForwardIosIcon />} />
     </Box>
   );
 };

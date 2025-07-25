@@ -69,7 +69,9 @@ const ReadComments = () => {
                 <Grid container spacing={4}>
                     {c.map((v) => <Grid size={{ xs: 12, md: 4, lg: 3 }}><CommentCard {...v} /></Grid>)}
                 </Grid>
+                <Box sx={{display:'flex', justifyContent:'center'}}>
                 <Button sx={{ mt: '40px', textDecoration: 'underline' }} variant="text" onClick={() => setOpen(true)}>See All of {commments.length} comments</Button>
+                </Box>
             </Box>
             <ReadCommentsModal open={open} onClose={closeHandler} />
         </>

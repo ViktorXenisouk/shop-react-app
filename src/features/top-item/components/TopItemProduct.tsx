@@ -1,4 +1,4 @@
-import { Box, Card, CardContent, CardMedia, Typography, CardActions } from '@mui/material';
+import { Box, Card, Stack, CardMedia, Typography, CardActions } from '@mui/material';
 import { Link } from "react-router-dom"
 import { TopItem } from "../../../types/top-item"
 import BasketCountButton from "../../basket/UI/BasketCountButton"
@@ -27,28 +27,36 @@ const TopItemCard = (props: TopItem & { id: string }) => {
     }, [store.user?.basketInfo])
 
     return (
-        <Card
+        <Box
             sx={{
                 borderRadius: '0px',
                 p: '0px',
                 m: '0px',
                 height: '100%',
-                width: '100%',
+                width: '200px',
+                flexShrink:0,
+                display:'flex',
+                justifyContent:'space-between',
+                flexDirection:'column',
+                alignItems:'center',
+             '&:hover': {
+                    boxShadow: 5,                // можно добавить тень
+                },
             }}>
-            <CardMedia
+            <Box
                 component="img"
-                height="140"
-                image={props.imageUrl}
+                height="auto"
+                width="150px"
                 src={props.imageUrl} />
-            <CardContent component={Link}
+            <Stack component={Link}
                 to={props.url}>
                 <Typography sx={{ color: 'text.primary' }} variant="h3">{props.title}</Typography>
                 <Typography sx={{ color: 'text.primary' }} variant="subtitle1">{props.shortDescription}</Typography>
-            </CardContent>
-            <CardActions>
+            </Stack>
+            <Box sx={{mb:'12px',mx:'8px'}}>
                 <BasketCountButton simple onChange={bucketHandler} setCount={setCount} count={count} />
-            </CardActions>
-        </Card>
+            </Box>
+        </Box>
     )
 }
 

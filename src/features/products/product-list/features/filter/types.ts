@@ -1,12 +1,6 @@
-type FilterTags = {
+type MyFilter = {
     tags:string[],
-    isHor:boolean,
+    other:any
 }
 
-type FilterParams = {
-    tags: string[]
-}
-
-type FilterData = {[key: string]: FilterTags;}
-
-export {type FilterData,type FilterParams}
+export type {MyFilter}

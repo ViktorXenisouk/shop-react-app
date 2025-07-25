@@ -4,10 +4,10 @@ import { useAuthUserStore } from "../../../store/useAuth"
 
 import ButtonLink from "../../../UI/ButtonLink"
 import TextField from '@mui/material/TextField';
-import { Button } from "@mui/material"
-import Stack from "@mui/material/Stack"
+import { Button,Stack,Paper } from "@mui/material"
 
 import { inputBodyHandler } from "../../../utils/inputHandler"
+import HeaderText from "../../../UI/HeaderText";
 
 const Login = () => {
 
@@ -33,7 +33,8 @@ const Login = () => {
         }
     }
     return (
-        <>
+        <Paper sx={{width:'500px'}}>
+                        <HeaderText>Login Form</HeaderText>
             <Stack
                 component="form"
                 sx={{ '& .MuiTextField-root': { m: 1, width: '25ch' } }}
@@ -73,7 +74,7 @@ const Login = () => {
                 </Button>
                 <ButtonLink to='/register'>create new acount</ButtonLink>
             </Stack>
-        </>
+        </Paper>
     )
 }
 

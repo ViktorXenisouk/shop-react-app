@@ -14,7 +14,7 @@ import {
 import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate';
 import CloseIcon from '@mui/icons-material/Close';
 import type { ImageItem } from '../../types/Image';
-import { autoSaveFetch } from '../../services/safe-fetch';
+import { autoSaveFetch, safeFetch } from '../../services/safe-fetch';
 
 type Props = {
   open: boolean;
@@ -48,14 +48,18 @@ const ImagePickerModal: React.FC<Props> = ({ open, onClose, onSelect, folder, de
     const formData = new FormData();
     formData.append('image', file);
 
+    console.log(formData)
+
     setUploading(true);
-    const result = await autoSaveFetch<{ url: string }>(`http://localhost:3000/images/upload/${folder}`, {
+    const result = await safeFetch<{ url: string }>(`/images/upload/${folder}`, {
       method: 'POST',
       body: formData,
     });
 
-    if (!result.data) {
+    console.log(result)
+    if (!result.success || !result.data) {
       alert('some error during')
+      setUploading(false);
       return
     }
 
@@ -110,7 +114,7 @@ const ImagePickerModal: React.FC<Props> = ({ open, onClose, onSelect, folder, de
                 <Typography variant="caption" noWrap>{img.name}</Typography>
               </Box>
             </Grid>)}
-      </Grid>
+        </Grid>
         <Typography variant="h6" gutterBottom>Доступные изображения</Typography>
         <Grid container spacing={2}>
           {availableImages.length > 0 ? availableImages.map((img) => (

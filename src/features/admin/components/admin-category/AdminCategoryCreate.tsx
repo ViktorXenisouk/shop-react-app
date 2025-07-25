@@ -6,6 +6,7 @@ import { createCategory } from "./api"
 import { useAdminAuthStore } from "../../../../store/useAdmin"
 import CategoryListTagsManager from "../../UI/CategoryListTagsManager"
 import { Link } from "react-router-dom"
+import { Filter,FilterItem } from "../../../../types/catalog"
 
 const AdminCategoryCreate = () => {
     const params = useParams()
@@ -16,7 +17,7 @@ const AdminCategoryCreate = () => {
 
     const parentPathString = parentPath === '#root' ? 'root' : parentPath;
 
-    const [body, setBody] = useState<{ tags: Tag[], parentPath: string, name: string, discription: string, path: string }>({ tags: [], parentPath: parentPath, name: '', discription: '', path: '' })
+    const [body, setBody] = useState<{ filter: FilterItem[], parentPath: string, name: string, discription: string, path: string }>({ filter: [], parentPath: parentPath, name: '', discription: '', path: '' })
 
     const submitHandler = () => {
         createCategory(body, store.token);
@@ -36,9 +37,9 @@ const AdminCategoryCreate = () => {
         })
     }
 
-    const tagsHandler = (value: Tag[]) => {
+    const tagsHandler = (filter: FilterItem[]) => {
         setBody((prev) => {
-            prev.tags = value
+            prev.filter = filter
             return prev
         })
     }

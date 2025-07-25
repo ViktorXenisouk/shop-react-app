@@ -24,7 +24,7 @@ const ProductCardView = (props: ItemCardProps) => {
 
     if (isSmall) {
         return (
-            <Box sx={{ width: "100%", height: '100%', display: 'flex', justifyContent: 'flex-start', flexDirection: 'column',backgroundColor:'paper',mb:'30px'}}>
+            <Box sx={{ width: "100%", height: '100%', display: 'flex', justifyContent: 'flex-start', flexDirection: 'column', backgroundColor: 'paper', mb: '30px' }}>
                 <Typography sx={{ display: 'block', mt: 1, fontWeight: 'bold', color: 'GrayText', textDecoration: 'underline', minHeight: '3em' }}>
                     {props.title}
                 </Typography >
@@ -40,42 +40,42 @@ const ProductCardView = (props: ItemCardProps) => {
                 </Typography>
                 <PriceBlock price={2000} />
                 <ButtonGroup orientation='vertical'>
-                    <Button sx={{width:'100%'}} variant="outlined" component={RouterLink} to={`/product/${props.id}`}>Show More</Button>
-                    <BasketCountButton simple onChange={props.onChangeHandlerCount} count={props.count}/>
+                    <Button sx={{ width: '100%' }} variant="outlined" component={RouterLink} to={`/product/${props.id}`}>Show More</Button>
+                    <BasketCountButton simple onChange={props.onChangeHandlerCount} count={props.count} />
                     <LikeButtonWithText liked={props.liked} onClick={props.onLikeClick} />
                 </ButtonGroup>
             </Box>
         )
     }
-
+    //background: 'linear-gradient(to bottom,rgb(195, 195, 195),rgb(255, 255, 255))'
     if (props.view === 'grid') {
         return (
-            <Box sx={{ width: "100%", height: '100%', display: 'flex', justifyContent: 'space-between', flexDirection: 'column', background: 'linear-gradient(to bottom,rgb(195, 195, 195),rgb(255, 255, 255))', }}>
-                <Box>
-                    <Box
-                        component="img"
-                        alt={props.img.name ?? ''}
-                        height="140px"
-                        width='100%'
-                        src={props.img.url}
-                    />
-                    <CardContent component={RouterLink} to={`/product/${props.id}`}>
-                        <Typography sx={{ display: 'block', mt: 1, fontWeight: 'bold', color: 'GrayText', textDecoration: 'underline', minHeight: '3em' }}>
-                            {props.title}
-                        </Typography >
-                        <Typography sx={{ display: 'block', mt: 1, color: 'GrayText', maxHeight: '8em' }}>
-                            {props.discription.slice(0, 70).length === props.discription.length ? props.discription : props.discription.slice(0, 70) + '....'}
-                        </Typography>
-                    </CardContent>
+                <Box sx={{ width: "100%", height: '100%', display: 'flex', justifyContent: 'space-between', flexDirection: 'column', backgroundColor: 'transparent'}}>
+                    <Box>
+                        <Box
+                            component="img"
+                            alt={props.img.name ?? ''}
+                            height="auto"
+                            width='100%'
+                            src={props.img.url}
+                        />
+                        <CardContent component={RouterLink} to={`/product/${props.id}`}>
+                            <Typography sx={{ display: 'block', mt: 1, fontWeight: 'bold', color: 'GrayText', textDecoration: 'underline', minHeight: '3em',mx:'5px' }}>
+                                {props.title}
+                            </Typography >
+                            <Typography sx={{ display: 'block', mt: 1, color: 'GrayText', maxHeight: '8em',mx:'5px' }}>
+                                {props.discription.slice(0, 70).length === props.discription.length ? props.discription : props.discription.slice(0, 70) + '....'}
+                            </Typography>
+                        </CardContent>
+                    </Box>
+                    <Box>
+                        <PriceBlock price={2000} />
+                        <CardActions sx={{ display: 'flex', flexDirection: 'column' }}>
+                            <BasketCountButton simple onChange={props.onChangeHandlerCount} count={props.count} />
+                            <LikeButtonWithText liked={props.liked} onClick={props.onLikeClick} />
+                        </CardActions>
+                    </Box>
                 </Box>
-                <Box>
-                    <PriceBlock price={2000} />
-                    <CardActions sx={{ display: 'flex', flexDirection: 'column' }}>
-                        <BasketCountButton simple onChange={props.onChangeHandlerCount} count={props.count} />
-                        <LikeButtonWithText liked={props.liked} onClick={props.onLikeClick} />
-                    </CardActions>
-                </Box>
-            </Box>
         )
     }
     else

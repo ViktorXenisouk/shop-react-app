@@ -3,7 +3,11 @@ import { Box } from '@mui/material';
 
 const SelectedButton = styled(Box, {
     shouldForwardProp: (prop) => prop !== 'isActive',
-})<{ isActive: boolean }>(({ theme, isActive }) => ({
+})
+
+<{ isActive: boolean }>
+
+(({ theme, isActive }) => ({
     padding: theme.spacing(1),
     border: '1px solid',
     borderColor: isActive ? theme.palette.primary.dark : 'transparent',

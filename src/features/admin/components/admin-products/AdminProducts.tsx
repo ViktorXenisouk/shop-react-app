@@ -1,14 +1,15 @@
 import { Product } from "../../../../types/product"
-import { DataLoaderFromPromise } from "../../../loading/Loading"
+import { DataLoaderFromHook, DataLoaderFromPromise } from "../../../loading/Loading"
 import AdminProductsCard from "./components/AdminProductCard"
-import { useLocation } from "react-router-dom"
+import { useSearchParams } from "react-router-dom"
 import { autoSaveFetch } from "../../../../services/safe-fetch"
 import { useState, useEffect } from "react"
 import AdminProductsSearch from './components/AdminProductsSearch';
 import { useAdminAuthStore } from "../../../../store/useAdmin"
 import { Link } from "react-router-dom"
-import { Box, Stack, Button } from "@mui/material"
+import { Box, Stack, Button, Pagination } from "@mui/material"
 import { Create } from "@mui/icons-material"
+import { useRequest } from "../../../../hooks/useRequest"
 
 const MyAdminProducts = ({ data }: { data: Product[] }) => {
   const imgUrl = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRmqfYB4D3aqQcH4HpWAQKcD5Hgx4jbs7HCciF9-UlXn9VV6J28rAtu1W8emao&s';
@@ -44,22 +45,24 @@ const MyAdminProducts = ({ data }: { data: Product[] }) => {
 }
 
 const AdminProducts = () => {
-  const location = useLocation()
+  const [searchParams, setSearchParams] = useSearchParams()
 
-  const queryParams = new URLSearchParams(location.search);
-  const tagsParam = queryParams.get('tags'); // строка или null
+  const res = useRequest<Product[]>(`/products/search/?${searchParams.toString()}`, { method: 'GET' })
 
-  // 2. Получаем путь после /products/
-  const fullPath = location.pathname; // /products/computers/notebook/mac
-  const subPath = fullPath.replace(/^.*\/admin\/products\/search\//, '')
-
-  const res = autoSaveFetch<Product[]>(`/products/search/${subPath}`, { method: 'GET' })
+  const onChangePage = (ev: any, page: number) => {
+    searchParams.set('limit', `${searchParams.get('limit') ?? 10}`)
+    searchParams.set('page', `${page}`)
+    setSearchParams(searchParams)
+  }
 
   return (
     <Box>
       <AdminProductsSearch />
       <Button startIcon={<Create />} component={Link} to='/admin/products/create'>Create</Button>
-      <DataLoaderFromPromise res={res} page={MyAdminProducts} />
+      <DataLoaderFromHook res={res} page={MyAdminProducts} />
+      <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+        <Pagination sx={{ my: '10px' }} page={parseInt(searchParams.get('page') ?? '1') ?? undefined} onChange={onChangePage} count={res[3]?.totalPages} />
+      </Box>
     </Box>
   )
 }

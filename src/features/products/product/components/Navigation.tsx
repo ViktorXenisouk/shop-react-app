@@ -18,7 +18,7 @@ const Navigation = ({value,onChange}:Props) => {
         <Box display='flex' justifyContent='center' width='100%'>
             <Tabs variant={isSmall? "scrollable" : "fullWidth"} value={value} onChange={handleChange} aria-label="icon label tabs example">
                 <Tab icon={<Reviews />} label={isSmall ? undefined : "Reviews"} />
-                <Tab icon={<AddComment />} label={isSmall ? undefined : "Add comment"} />
+                <Tab icon={<AddComment />} label={isSmall ? undefined : "Write comment"} />
                 <Tab icon={<ReadMore />} label={isSmall ? undefined : "Read more"} />
                 <Tab icon={<PermMedia />} label={isSmall ? undefined : "Media"} />
                 <Tab icon={<Build />} label={isSmall ? undefined : "Params"} />

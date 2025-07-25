@@ -7,7 +7,7 @@ import { autoSaveFetch } from "../../../services/safe-fetch"
 import ImageCarousel from "../../../UI/ImageCarousel"
 import { useState } from "react"
 import { useAuthUserStore } from "../../../store/useAuth"
-import { Box, Typography, Grid, Container, Divider } from "@mui/material"
+import { Box, Typography, Grid, Container, Divider, Paper } from "@mui/material"
 import CategoryParser from "../../../UI/CategoryParser"
 import Article from "../../article/Article"
 import Params from "./components/Params"
@@ -20,6 +20,26 @@ import { useMemo } from "react"
 import Navigation from "./components/Navigation"
 import WriteComment from "./components/WriteComment"
 import ReadComments from "./components/ReadComments"
+
+
+
+const TagsViewer = ({ tags }: { tags?: string[] }) => {
+    return (
+        <Typography>Tags: {tags?.map((item) =>
+            <Typography
+                component={RouterLink} to={`/products/?tag=${item}`}
+                sx={{
+                    color: 'black',
+                    '&:hover': {
+                        colot: 'rgb(60, 60, 60)',
+                        textDecoration: 'underline',
+                    }
+                }}>
+                {item},
+            </Typography>)}
+        </Typography>)
+}
+
 
 const MyProduct = ({ data }: { data: Product }) => {
     const navigate = useNavigate();
@@ -39,13 +59,13 @@ const MyProduct = ({ data }: { data: Product }) => {
         }
     }, [value])
 
-    const [count, setCount] = useState<number>(() => {
+    const getCnt = () => {
         if (data._id && store.user) {
             const cnt = store.user?.basketInfo.find((v) => v.id == data._id)?.count ?? 0
             return cnt
         }
         return 0
-    })
+    }
 
     const [liked, setLiked] = useState<boolean>(
         () => {
@@ -75,43 +95,43 @@ const MyProduct = ({ data }: { data: Product }) => {
     }
 
     return (
-        <Box sx={{ display: 'flex', justifyContent: 'center' }}>
-            <Grid container>
+        <Box sx={{ display: 'flex', justifyContent: 'center',flexDirection:'column' }}>
+            <Typography 
+            variant="h2"
+            sx={{textAlign:'center', textDecoration:'underline', mt:'30px'}}>
+                {data.name}
+                </Typography>
+            <Grid container spacing={3}>
                 <Grid size={{ xs: 12 }}>
                     <Box sx={{ display: 'flex', justifyContent: 'flex-start', ml: '20px', mt: '20px' }}>
                         <CategoryParser category={data.category} />
                     </Box>
                 </Grid>
-                <Grid size={{ xs: 12,md:6 }}>
+                <Grid size={{ xs: 12, md: 6 }}>
                     <ImageCarousel imgs={data.imgs.map((v) => { return { url: v.url, name: v.name ?? '' } })} />
                 </Grid>
-                <Grid size={{ xs: 12,md:6 }}>
-                    <Container maxWidth='sm' sx={{ display: 'flex', justifyContent: 'space-between', flexDirection: 'column', height: '100%' }}>
-                        <Box>
-                            <Typography variant="h2">{data.name}</Typography>
+                <Grid size={{ xs: 12, md: 6 }}>
+                    <Paper sx={{ display: 'flex', justifyContent: 'space-between', flexDirection: 'column', height: '100%' }}>
+                        <Box sx={{p:'12px'}}>
+                            <TagsViewer tags={data.tags} />
+                            <Divider sx={{ mt: '10px', mb: '20px' }} />
                             <Typography>{data.discription}</Typography>
                         </Box>
-                        <Box>
+                        <Box sx={{p:'12px'}}>
                             <LikeButtonWithText liked={liked} onClick={likeHandler} />
-                            <BasketCountButton onChange={changeHandler} count={count} setCount={setCount} />
+                            <BasketCountButton onChange={changeHandler} count={getCnt()} />
                         </Box>
-                    </Container>
-                </Grid>
-                <Grid size={{ xs: 12 }}>
-                    <Typography>Tags: {data.tags?.map((item) => <Typography sx={{
-                        color: 'black', '&:hover': {
-                            colot: 'rgb(60, 60, 60)',
-                            textDecoration: 'underline',
-                        }
-                    }} component={RouterLink} to={`/products/?tag=${item}`}>{item}, </Typography>)}</Typography>
+                    </Paper>
                 </Grid>
                 <Grid size={{ xs: 12 }}>
                     <Navigation onChange={(v) => setValue(v)} value={value} />
                     {component}
                 </Grid>
                 <Grid size={{ xs: 12 }}>
-                    <Divider sx={{ mt: '10px' }} />
-                    <TopItems />
+                    <Box sx={{ mb: '50px' }}>
+                        <Divider sx={{ mt: '30px', mb: '50px' }} />
+                        <TopItems />
+                    </Box>
                 </Grid>
             </Grid>
         </Box>

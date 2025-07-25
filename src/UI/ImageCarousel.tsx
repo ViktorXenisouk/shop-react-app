@@ -18,7 +18,7 @@ const ImageCarousel = ({ imgs }: { imgs: { url: string, name: string }[] }) => {
   };
 
   return (
-    <Box sx={{ width: '100%', flexGrow: 1, pt: '30px' }}>
+    <Box sx={{ width: '100%', flexGrow: 1 }}>
       <Box sx={{width:'100%',display:'flex' , justifyContent:'center',}}>
         <ZoomOnHoverImage
           src={imgs[activeStep].url}
@@ -29,7 +29,7 @@ const ImageCarousel = ({ imgs }: { imgs: { url: string, name: string }[] }) => {
       </Box>
 
       <MobileStepper
-      sx={{width:'100%'}}
+      sx={{width:'100%',px:'0px !important'}}
         steps={maxSteps}
         position="static"
         activeStep={activeStep}

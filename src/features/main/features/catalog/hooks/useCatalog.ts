@@ -18,6 +18,7 @@ const useCatalogStorage = create<CatalogStorage>((set) => ({
     
         const result = await safeFetch<Catalog[]>('/category',requestInit)
 
+
         set({catalog:result.data,isLoading:false})
     },
 }));

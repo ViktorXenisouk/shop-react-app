@@ -1,6 +1,10 @@
 import CountBlock from "./CountBlock";
-import { Box, Button } from "@mui/material"
+import { Box, Button, Paper, styled } from "@mui/material"
 import { ShoppingBasket } from "@mui/icons-material"
+
+const StyledPaper = styled(Paper)(({theme}) => ({
+    border:'rgba(0, 113, 227, 0.5) solid 1px'
+}))
 
 const BasketCountButton = ({ count, setCount, onChange, simple }: { count: number, setCount?: React.Dispatch<React.SetStateAction<number>>, onChange?: (count: number) => void, simple?: boolean }) => {
 
@@ -30,9 +34,9 @@ const BasketCountButton = ({ count, setCount, onChange, simple }: { count: numbe
                             is added in basket
                         </Button>
                         :
-                        <Button component='div' sx={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
+                        <StyledPaper sx={{ width: '100%', display: 'flex', justifyContent: 'center',border:'rgba(0, 113, 227, 0.5) solid 1px',py:'1px' }}>
                             <CountBlock onChange={changeHandler} count={count} setCount={setCount} />
-                        </Button>
+                        </StyledPaper>
             }
         </>
     )

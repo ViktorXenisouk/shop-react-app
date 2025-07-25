@@ -26,8 +26,8 @@ const Params = () => {
     }
 
     return (
-        <Box >
-            <Table sx={{width:'500px'}} component={Paper}>
+        <Box sx={{display:'flex' , justifyContent:'center'}}>
+            <Table sx={{width:'500px',mt:'10px'}} component={Paper}>
                 <TableBody>
                     {
                         getRows()

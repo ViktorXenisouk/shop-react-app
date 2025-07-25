@@ -1,12 +1,12 @@
 import { Box } from "@mui/material"
 
-const Image = ({imgURL,weight,height}:{imgURL:string,weight:number|string|null,height:number|string|null}) => {
+const Image = ({imgURL,width,height}:{imgURL:string,width?:number|string,height?:number|string}) => {
 
     return (
         <Box
         sx={{
-            height: weight,
-            weight:height,
+            height: height,
+            width:width,
             backgroundImage: `url(${imgURL})`,
             backgroundSize: 'cover',
             backgroundPosition: 'center',

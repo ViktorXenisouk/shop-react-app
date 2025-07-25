@@ -13,6 +13,7 @@ const Render = ({ data }: { data: Product }) => {
 
   const save = async (body: ProductBody) => {
     const res = await autoSaveFetch(`/products/${data._id}`, { token: store.token || '', body: body, method: 'PATCH' })
+    console.log(res)
   }
 
   return (

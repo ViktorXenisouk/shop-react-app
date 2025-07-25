@@ -8,14 +8,13 @@ const TopItems = () => {
     const categories = getItems()
    return (
         <Box sx={{ width: '100%' }}>
-            <Typography variant="h3" align='center'>Top Products</Typography>
+            <Typography variant="h3" align='center' sx={{textDecoration:'underline', mt:'30px', mb:'12px'}}>Top Products</Typography>
             {
                 categories ?
-                    <CarouselWithButtons>
+                    <CarouselWithButtons height="350px">
                         {categories && categories.map((v) =>
-                            <ItemForCarousel minWidth='250px' height='300px'>
                                 <TopItemProduct {...v} />
-                            </ItemForCarousel>)}
+                         )}
                     </CarouselWithButtons>
                     :
                     null

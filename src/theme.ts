@@ -68,6 +68,7 @@ const theme = createTheme({
         },
         containedPrimary: {
           backgroundColor: '#0071e3',
+          border: 'rgba(0, 113, 227, 0.5) solid 1px',
           color: '#fff',
           '&:hover': {
             backgroundColor: '#005bb5',
@@ -79,7 +80,7 @@ const theme = createTheme({
       styleOverrides: {
         root: {
           boxShadow: 'none',
-          borderRadius: 12,
+          borderRadius: 8,
         },
       },
     },

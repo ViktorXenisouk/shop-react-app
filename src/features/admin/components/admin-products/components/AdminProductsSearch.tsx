@@ -1,19 +1,20 @@
 import { Box, Stack, TextField, Button } from "@mui/material"
 import TagsInput from "../../../UI/TagsInput"
-import { useNavigate } from "react-router-dom"
+import { useSearchParams } from "react-router-dom"
+import CategorieInput from "../../../UI/CategorieInput"
 import { useState } from "react"
 
 const AdminProductsSearch = () => {
-    const navigate = useNavigate();
     const [body, setBody] = useState<{ search: string, tags: string[], category: string }>({ search: '', tags: [], category: '' })
+    const [searchParams, setSearchParams] = useSearchParams()
 
     const searchHandler = (event: React.ChangeEvent<HTMLInputElement>) => setBody((prev) => {
         prev.search = event.target.value
         return prev
     })
 
-    const categoryHandler = (event: React.ChangeEvent<HTMLInputElement>) => setBody((prev) => {
-        prev.category = event.target.value
+    const categoryHandler = (value?: string) => setBody((prev) => {
+        prev.category = value ?? ''
         return prev
     })
 
@@ -23,26 +24,38 @@ const AdminProductsSearch = () => {
     })
 
     const clickHandler = () => {
-        let url = '/admin/products/search/'
         if (body.category) {
-            url += body.category
-            url += '?'
+            searchParams.set('category', body.category)
         }
-        /*
-        if (body.tags) {
-            url +=  `?params=${encodeURIComponent(body.tags.join(','))}`
-        }*/
-        navigate(url)
+        else{
+            searchParams.delete('category')
+        }
+
+        if (body.search) {
+            searchParams.set('search', body.search)
+        }
+        else{
+            searchParams.delete('search')
+        }
+
+        if (body.tags && body.tags.length > 0) {
+            searchParams.set('tags', body.tags.join(','))
+        }
+        else{
+            searchParams.delete('tags')
+        }
+
+        setSearchParams(searchParams)
     }
 
 
     return (
-        <Box>
-            <Stack direction='column'>
-                <TextField onChange={searchHandler} label='search' />
+        <Box sx={{display:'flex',justifyContent:'center'}}>
+            <Stack direction='column' spacing={3} sx={{width:'300px'}}>
+                <TextField onChange={searchHandler} label='search'/>
                 <TagsInput onChange={tagsHandler} />
-                <TextField onChange={categoryHandler} label='category' />
-                <Button onClick={clickHandler}>Search</Button>
+                <CategorieInput onChange={categoryHandler} />
+                <Button variant="contained" onClick={clickHandler}>Search</Button>
             </Stack>
         </Box>
     )

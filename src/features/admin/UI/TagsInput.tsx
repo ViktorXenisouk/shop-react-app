@@ -11,17 +11,19 @@ const TagsInput = ({ onChange, defaultValue }: { onChange?: (value?: string[]) =
 
     const [isLoaded, data, errors] = useRequest<Catalog[]>('/category/find/', { method: "GET" })
 
-    const options = [] as { group: string, sub: string, tag: string }[]
+    let options = [] as { group: string, tag: string }[]
 
     data?.forEach(cat => {
-        if (cat.tags) {
-            for (let tag in cat.tags) {
-                for (let t in cat.tags[tag]) {
-                    options.push({ group: cat.name, sub: tag, tag: t })
+        if (cat.filter) {
+            for (let categoryName in cat.filter) {
+                for (let tagName in cat.filter[categoryName].props.tags) {
+                    options.push({ group: cat.name, tag: tagName })
                 }
             }
         }
     })
+
+    options = options.filter((item) => item.tag !== 'horizontal')
 
     const handleOpen = () => {
         setOpen(true);
@@ -54,7 +56,7 @@ const TagsInput = ({ onChange, defaultValue }: { onChange?: (value?: string[]) =
             renderInput={(params) => (
                 <TextField
                     {...params}
-                    label="categorie"
+                    label="tags"
                     slotProps={{
                         input: {
                             ...params.InputProps,

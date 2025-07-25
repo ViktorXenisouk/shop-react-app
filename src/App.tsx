@@ -17,11 +17,10 @@ function App() {
   return (
     <Box className="App" sx={{m:0,p:0}}>
       <Navbar />
-      {store.token ? <AdminNavigation /> : null}
       <Container 
       maxWidth={isSmall ? false : undefined}  // 100% на XS, 'md' на других
       disableGutters={isSmall}
-      component={'main'} sx={{minHeight: 1500,backgroundColor: grey[50],pl:'0px!important',pr:'0px!important',pt:0,overflowY: 'hidden'}}>
+      component={'main'} sx={{minHeight: 1500,backgroundColor: grey[50],pl:'0px!important',pr:'0px!important',pt:0,overflowY: 'hidden',mb:isSmall?"60px":undefined}}>
           <Routes>
             <Route index element={<pages.Main />} />
             <Route path='/me/:page' element={<pages.Personal />} />

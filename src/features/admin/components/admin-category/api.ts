@@ -1,19 +1,18 @@
 import { safeFetch } from "../../../../services/safe-fetch"
-import { Tags,Tag } from "../../../../types/tags"
 import { sanitizePayload } from "../../../../utils/sanitizePayload";
+import { Filter,FilterItem } from "../../../../types/catalog";
 
-const createCategory = async (payload: { tags: Tag[], parentPath: string, name: string, discription: string, path: string }, token?: string | null) => {
-    const obj = {} as any;
-    if (payload.tags && payload.tags.length > 0) {
-        payload.tags.forEach((value) => {
-            obj[value.name] = value.tags
-        })
-        payload.tags = obj
-    }
-    else {
-        payload.tags = {} as []
-    }
-    payload.tags = obj
+const ParseFilterItem = (items : FilterItem[]) => {
+const filter = {} as Filter
+items.forEach((item) => {
+    filter[item.title] = {props:item.props,variant:item.variant}
+})
+return filter
+}
+
+const createCategory = async (payload: { filter: FilterItem[], parentPath: string, name: string, discription: string, path: string }, token?: string | null) => {
+    const updatedPayload = payload as any
+    updatedPayload.filter = ParseFilterItem(payload.filter)
     const options: RequestInit = {}
     options.body = JSON.stringify(payload);
     options.method = "POST"
@@ -25,7 +24,9 @@ const createCategory = async (payload: { tags: Tag[], parentPath: string, name: 
     console.log(res)
 }
 
-const editCategory = async (payload: { tags: Tags, name: string, discription: string, path: string },id:string, token?: string | null) => {
+const editCategory = async (payload: { filter: FilterItem[], name: string, discription: string, path: string },id:string, token?: string | null) => {
+     const updatedPayload = payload as any
+    updatedPayload.filter = ParseFilterItem(payload.filter)
     const options: RequestInit = {}
     options.body = JSON.stringify(sanitizePayload(payload));
     options.method = "PATCH"

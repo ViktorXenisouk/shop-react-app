@@ -2,17 +2,18 @@ import { Modal,Paper,Button,Box,IconButton,ListItemButton,List,Grid } from "@mui
 import CustomRadio from "./CustomRadio"
 import { Cancel } from "@mui/icons-material"
 import { useState } from "react"
-import { FilterParams } from "../types"
+import { MyFilter } from "../types"
+import { FilterItem } from "../../../../../../types/catalog"
 
 type Props = {
-    tags: { name: string, tags: string[] }[];
+    data: FilterItem[];
     addOrRemoveTag: (tag: string) => void,
-    filterParams: FilterParams,
+    filter: MyFilter,
     onSearchClick: () => void,
     onReset: () => void,
 }
 
-const FilterModal = ({ tags, addOrRemoveTag, filterParams, onSearchClick, onReset }: Props) => {
+const FilterModal = ({ data, addOrRemoveTag, filter, onSearchClick, onReset }: Props) => {
     const [id, setId] = useState(0)
     const [open, setOpen] = useState(false)
 
@@ -34,16 +35,16 @@ const FilterModal = ({ tags, addOrRemoveTag, filterParams, onSearchClick, onRese
                         </Box>
                         <Box sx={{ width: '100%', display: 'flex', flexDirection: 'row', position: 'relative' }}>
                             <List sx={{ borderRight: '#ccc solid 1px', overflowY: 'scroll', overflowX: 'hidden', height: '600px', width: '200px' }}>
-                                {tags.map((item, i) =>
+                                {data.map((item, i) =>
                                     <ListItemButton selected={id == i} onClick={() => setId(i)}>
-                                        {item.name}
+                                        {item.title}
                                     </ListItemButton>)}
                             </List>
                             <Box sx={{ width: '100%', ml: '20px', height: '100%' }}>
                                 <Grid container>
-                                    {tags[id] && tags[id].tags.map((value) =>
+                                    {data[id] && data[id].props.tags.map((value) =>
                                         <Grid size={{ sm: 4 }}>
-                                            <CustomRadio label={value} value={value} isSelected={filterParams.tags.includes(value)} addOrRemoveTag={addOrRemoveTag} />
+                                            <CustomRadio label={value} value={value} isSelected={filter.tags.includes(value)} addOrRemoveTag={addOrRemoveTag} />
                                         </Grid>)}
                                 </Grid>
                                 <Box sx={{ position: 'absolute', bottom: '10px', right: '10px' }}>

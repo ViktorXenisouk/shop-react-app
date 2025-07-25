@@ -3,6 +3,7 @@ import { useAuthUserStore } from "../../store/useAuth"
 import { Box, Typography, Stack, Dialog, DialogTitle, DialogActions, Button } from "@mui/material";
 import { useMemo, useState } from "react"
 import { useLocalStorage } from "../../store/useLocalStorage";
+import HeaderText from "../../UI/HeaderText";
 
 type Props = {
     onClose: (value: 'no' | 'yes' | 'no-ask' | 'nothing') => void
@@ -87,7 +88,7 @@ const BasketDisplay = () => {
     return (
         <>
             <Box>
-                <Typography>Basket</Typography>
+                <HeaderText>Basket</HeaderText>
                 <Stack>
                     {basket.length > 0 ? 
                     basket.map((item) =>

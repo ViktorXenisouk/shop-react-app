@@ -5,19 +5,36 @@ import { useAdminAuthStore } from '../../../../store/useAdmin';
 import { editCategory } from './api';
 import { DataLoaderFromPromise } from '../../../loading/Loading';
 import { safeFetch } from '../../../../services/safe-fetch';
-import { Tag,Tags } from '../../../../types/tags';
-import { Catalog } from '../../../../types/catalog';
+import { Tag, Tags } from '../../../../types/tags';
+import { Catalog, Filter, CategoryProps, Variant } from '../../../../types/catalog';
 import { Link } from 'react-router-dom';
 import { Box, TextField, Button, Stack, Accordion, AccordionDetails, AccordionSummary } from '@mui/material';
 import { inputBodyHandler } from '../../../../utils/inputHandler';
-import {Save} from "@mui/icons-material"
+import { Save } from "@mui/icons-material"
+
+type FilterItem = {
+    title: string,
+    props: CategoryProps,
+    variant: Variant
+}
 
 
 const A = ({ data }: { data: Catalog }) => {
     const store = useAdminAuthStore()
 
-    const [loading,setLoading] = useState(false)
-    const [body, setBody] = useState<{ tags: Tags, name: string, discription: string, path: string }>({ tags: data.tags || {}, name: data.name || '', discription: data.discription || '', path: data.path || '' })
+    const [loading, setLoading] = useState(false)
+    const getFilter = () => {
+        if (data.filter) {
+            const array = [] as FilterItem[]
+            for (const field in data.filter) {
+                const { props, variant } = data.filter[field]
+                array.push({ props, variant, title: field })
+            }
+            return array
+        }
+        return []
+    }
+    const [body, setBody] = useState<{ filter: FilterItem[], name: string, discription: string, path: string }>({ filter: getFilter(), name: data.name || '', discription: data.discription || '', path: data.path || '' })
 
     const submitHandler = async () => {
         setLoading(true)
@@ -25,38 +42,18 @@ const A = ({ data }: { data: Catalog }) => {
         setLoading(false)
     }
 
-    const pathHandler = inputBodyHandler(setBody,(prev,v) => prev.path = v)
+    const pathHandler = inputBodyHandler(setBody, (prev, v) => prev.path = v)
 
-    const parseTags = (tag: Tags) => {
-        const arr = [] as Tag[]
-        for (let name in tag) {
-            arr.push({ name: name, tags: tag[name] })
-        }
-        return arr
-    }
-
-    const tagsHandler = (value: Tag[]) => {
+    const tagsHandler = (filterItem:FilterItem[]) => {
         setBody((prev) => {
-
-            let obj = {} as any
-            if (value && value.length > 0) {
-                value.forEach((v) => {
-                    obj[v.name] = v.tags
-                })
-                value = obj
-            }
-            else {
-                value = {} as []
-            }
-
-            prev.tags = obj
+            prev.filter = filterItem
             return prev
         })
     }
 
-    const nameHandler = inputBodyHandler(setBody,(prev,v) => prev.name = v)
+    const nameHandler = inputBodyHandler(setBody, (prev, v) => prev.name = v)
 
-    const discriptionHandler = inputBodyHandler(setBody,(prev,v) => prev.discription = v)
+    const discriptionHandler = inputBodyHandler(setBody, (prev, v) => prev.discription = v)
 
     return (
         <Box sx={{ mt: '80px' }}>
@@ -72,11 +69,11 @@ const A = ({ data }: { data: Catalog }) => {
                         Tags
                     </AccordionSummary>
                     <AccordionDetails>
-                        <CategoryListTagsManager onChange={tagsHandler} defaultValue={parseTags(body.tags)} />
+                        <CategoryListTagsManager onChange={tagsHandler} defaultValue={body.filter} />
                     </AccordionDetails>
                 </Accordion>
             </Stack>
-            <Button loading={loading} startIcon={<Save/>} onClick={submitHandler}>Save</Button>
+            <Button loading={loading} startIcon={<Save />} onClick={submitHandler}>Save</Button>
         </Box>
     )
 }

@@ -6,6 +6,9 @@ import ProductCard from "./product-card/ProductCard"
 import { Grid, Box } from "@mui/material"
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTheme } from '@mui/material/styles';
+import { grey } from "@mui/material/colors"
+
+const border = `${grey[200]} solid 2px`
 
 const ProductsLoader = ({ data }: { data?: Product[] | null }) => {
 
@@ -21,7 +24,7 @@ const ProductsLoader = ({ data }: { data?: Product[] | null }) => {
 
             const getStyleBySize = () => {
             if (isXs || searchParams.get('view') === 'list') {
-                return { borderTop: 'black solid 1px', borderRight: 'none',height:'auto', }
+                return { borderTop: 'border', borderRight: 'none',height:'auto', }
             }
             else if (isSm) {
                 return {
@@ -91,9 +94,9 @@ const ProductsLoader = ({ data }: { data?: Product[] | null }) => {
                 <Grid component='div' size={getSize()}
                     sx={{
                         flexGrow: 0, minWidth: { md: 200 },
-                        height: '500px',
-                        borderRight: 'black solid 1px',
-                        borderTop: 'black solid 1px',
+                        height: '600px',
+                        borderRight: border,
+                        borderTop: border,
                         ...getStyleBySize()
                     }}>
                     <ProductCard discription={item.discription} count={count} isLiked={liked} id={item._id} title={item.name} img={item.imgs[0]} view={searchParams.get('view')} />

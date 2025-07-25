@@ -9,6 +9,8 @@ import CatalogMenu from './features/catalog/CatalogMenu';
 import CatalogModal from './features/catalog/CatalogModal';
 import MyImageList from './components/MyImageList';
 
+import MyCarousel from './components/MyCarousel';
+
 type Props = {
     currentId: number,
     onClose: () => void,
@@ -21,7 +23,6 @@ const MainView = ({ currentId, onClose, setIsCatalogMouseOver, setCurrentId }: P
     const theme = useTheme()
     const wWithotDisplay = `200px ${width - 200}px`
     const isSmall = useMediaQuery(theme.breakpoints.down('md'))
-
 
     return (
         <>
@@ -45,7 +46,7 @@ const MainView = ({ currentId, onClose, setIsCatalogMouseOver, setCurrentId }: P
                                     onMouseOut={setIsCatalogMouseOver}
                                 />
                             </Box>
-                            <Stack sx={{ width: '100%' }}>
+                            <Stack>
                                 <MyImageList />
                                 <TopCategories />
                                 <TopItems />

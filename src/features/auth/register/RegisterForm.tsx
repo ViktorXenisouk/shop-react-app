@@ -1,6 +1,6 @@
 import { useState } from "react"
 import React from "react";
-import { Box, Stack } from '@mui/material';
+import { Box, Stack,Paper } from '@mui/material';
 import { type Body } from "./types";
 import RegisterStepper from './components/RegisterStepper';
 import { FirstPage, SecondPage, ThirdPage, FourthPage } from "./components/Pages"
@@ -23,14 +23,12 @@ const Register = () => {
 
     const page = React.createElement(pages[activeStep], { index: activeStep, body: body, setBody: bodyChange, next: next })
     return (
-        <Box sx={{ display: 'flex', justifyContent: 'center' }}>
-            <Box sx={{ width: '600px', display: 'flex', justifyContent: 'center', flexDirection: 'column' }}>
-                <RegisterStepper activeStep={activeStep} />
-                <Stack spacing={2}>
-                    {page}
-                </Stack>
-            </Box>
-        </Box>
+        <Paper sx={{ width: '600px', display: 'flex', justifyContent: 'center', flexDirection: 'column',p:'12px' }}>
+            <RegisterStepper activeStep={activeStep} />
+            <Stack spacing={2}>
+                {page}
+            </Stack>
+        </Paper>
     )
 }
 
