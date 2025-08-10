@@ -6,7 +6,7 @@ const ParagraphBlock = ({ variant, text }: ArticleBlock) => {
   if (variant == 'center')
     return (
       <Box sx={{ display: 'grid', alignContent: 'center', justifyContent: 'center' }}>
-        <Typography variant="body1" align='center'>
+        <Typography variant="body1" align='center' sx={{whiteSpace:'pre-line'}}>
           {text}
         </Typography>
       </Box>
@@ -21,7 +21,7 @@ const ParagraphBlock = ({ variant, text }: ArticleBlock) => {
 
   return (
     <Box sx={{ display: 'grid', gridTemplateColumns: 'repeat(2, 50%)',justifyContent:'center' }}>
-      <Typography variant="body1" align={align} sx={{gridColumn: columnPos}}>
+      <Typography align={align} variant="body1" sx={{gridColumn: columnPos,whiteSpace: 'pre-line'}}>
         {text}
       </Typography>
     </Box>

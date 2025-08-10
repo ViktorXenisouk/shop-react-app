@@ -27,10 +27,10 @@ const Me = () => {
                                 <Stack spacing={2}>
                                     <Typography>username: {user.username}</Typography>
                                     <Typography>email: {user.email}</Typography>
-                                    <Typography>tel: + 7 777 880 960</Typography>
+                                    <Typography>tel: {user.email ? '+ 203 403 431' : ''}</Typography>
                                 </Stack>
                                 <Divider sx={{ my: '15px' }} />
-                                <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                                <Box sx={{ display: 'flex', justifyContent: 'start',gap:4, alignItems: 'center' }}>
                                     {
                                         store.token ?
                                             <>

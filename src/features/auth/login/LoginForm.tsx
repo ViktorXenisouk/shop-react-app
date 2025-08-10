@@ -1,13 +1,15 @@
 import { useState, ChangeEventHandler } from "react"
-import { useNavigate } from "react-router-dom"
+import { useNavigate, Link } from 'react-router-dom';
 import { useAuthUserStore } from "../../../store/useAuth"
 
 import ButtonLink from "../../../UI/ButtonLink"
 import TextField from '@mui/material/TextField';
-import { Button,Stack,Paper } from "@mui/material"
+import { Button, Stack, Paper, Box } from "@mui/material"
 
 import { inputBodyHandler } from "../../../utils/inputHandler"
 import HeaderText from "../../../UI/HeaderText";
+
+import { Email, Password, Login as LoginIcon } from "@mui/icons-material";
 
 const Login = () => {
 
@@ -15,13 +17,16 @@ const Login = () => {
 
     const navigate = useNavigate()
 
-    const [body,setBody] = useState<{email:string,password:string}>({email:'abcd@gmail.com',password:'admin'})
+    const [loading, setLoading] = useState(false)
 
-    const emailHandler = inputBodyHandler(setBody,(prev,v) => prev.email = v)
-    const passwordHandler = inputBodyHandler(setBody,(prev,v) => prev.password = v)
+    const [body, setBody] = useState<{ email: string, password: string }>({ email: 'abcd@gmail.com', password: 'admin' })
+
+    const emailHandler = inputBodyHandler(setBody, (prev, v) => prev.email = v)
+    const passwordHandler = inputBodyHandler(setBody, (prev, v) => prev.password = v)
 
     const onClick = async (event: any) => {
         event.preventDefault()
+        setLoading(true)
 
         const data = await login(body.email, body.password)
 
@@ -31,10 +36,12 @@ const Login = () => {
         else if (data.message) {
             alert(data.message)
         }
+
+        setLoading(false)
     }
     return (
-        <Paper sx={{width:'500px'}}>
-                        <HeaderText>Login Form</HeaderText>
+        <Paper sx={{ width: '500px', p: '50px' }}>
+            <HeaderText>Login Form</HeaderText>
             <Stack
                 component="form"
                 sx={{ '& .MuiTextField-root': { m: 1, width: '25ch' } }}
@@ -46,14 +53,13 @@ const Login = () => {
 
             >
                 <TextField
-                    required
-                    label="email"
+                    label={<Box sx={{ display: 'flex', alignItems: 'center' }}><Email sx={{ mx: '10px' }} /> email</Box>}
                     type="email"
                     onChange={emailHandler}
                     defaultValue={'abcd@gmail.com'}
                 />
                 <TextField
-                    label="Password"
+                    label={<Box sx={{ display: 'flex', alignItems: 'center' }}><Password sx={{ mx: '10px' }} /> password</Box>}
                     type="password"
                     autoComplete="current-password"
                     defaultValue={'admin'}
@@ -66,13 +72,23 @@ const Login = () => {
                     forgot password
                 </Button>
                 <Button
+                component={Link}
+                to='/register'
+                    variant='text'
+                    onClick={onClick}
+                    loading={loading}
+                >
+                    create new acount
+                </Button>
+                 <Button
+                    startIcon={<LoginIcon />}
                     variant="contained"
                     type="submit"
                     onClick={onClick}
+                    loading={loading}
                 >
-                    Submit
+                    Login
                 </Button>
-                <ButtonLink to='/register'>create new acount</ButtonLink>
             </Stack>
         </Paper>
     )

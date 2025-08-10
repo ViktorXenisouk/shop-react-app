@@ -3,41 +3,42 @@ import { Box, Grid, Typography } from "@mui/material"
 
 
 const ImageWithTextBlock = ({ text, image, variant }: ArticleBlock) => {
-  const img = (
+  const imgJSX = (
     <Box
       component="img"
       src={image}
       alt={`gallery-${image}`}
-      sx={{ width: '160px', height: '160px', objectFit: 'cover', borderRadius: 1, gridColumn: '2' }}
+      sx={{ width: 'auto', height: '200px', objectFit: 'cover', borderRadius: 1 }}
     />
+  )
+
+  const textJSX = (
+    <Typography variant="body1" sx={{ whiteSpace: 'pre-line' }}>
+      {text}
+    </Typography>
   )
 
   if (variant == 'center')
     return (
-      <Box my={4}>
-        <Typography variant="body1">
-          {text}
-        </Typography>
-        {img}
+      <Box my={4} sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+        {textJSX}
+        {imgJSX}
       </Box>
     )
   else if (variant == 'left')
     return (
       <Box display="grid" sx={{ gridTemplateColumns: 'repeat(2, 50%)', justifyContent: 'center' }}>
-        {img}
+        {textJSX}
+        {imgJSX}
       </Box>
     )
   else
-  return (
-    <Box display="grid" sx={{ gridTemplateColumns: 'repeat(2,  50%)', justifyContent: 'center' }}>
-      <Box
-        component="img"
-        src={image}
-        alt={`gallery-${image}`}
-        sx={{ width: '160px', height: '160px', objectFit: 'cover', borderRadius: 1, gridColumn: '2' }}
-      />
-    </Box>
-  )
+    return (
+      <Box display="grid" sx={{ gridTemplateColumns: 'repeat(2,  50%)', justifyContent: 'center' }}>
+        {imgJSX}
+
+      </Box>
+    )
 
   const imageFirst = variant === 'left';
 

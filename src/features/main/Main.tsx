@@ -11,7 +11,7 @@ const Main = () => {
         setCurrentId(-1)
     }
 
-    const timer = useTimer(() => setCurrentId(-1), 10000000);
+    const timer = useTimer(() => setCurrentId(-1), 1500);
 
     useEffect(() => {
         if (!isCatalogMouseOver) {

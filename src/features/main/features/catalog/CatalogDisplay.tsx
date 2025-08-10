@@ -7,6 +7,7 @@ import { Close } from "@mui/icons-material"
 import { grey } from "@mui/material/colors";
 import React from "react";
 import { useWindowWidth } from "../../../../hooks/useWindowWidth";
+import { PlayList } from "../../../../types/play-list";
 
 const CatalogDisplay = ({ currentId, onClose, onMouseOut }: { currentId: number, onClose?: () => void, onMouseOut?: React.Dispatch<React.SetStateAction<boolean>> }) => {
     const trigger = useScrollTrigger({ threshold: 60 });
@@ -34,8 +35,12 @@ const CatalogDisplay = ({ currentId, onClose, onMouseOut }: { currentId: number,
 
     useEffect(() => {
         const catalog = store.catalog
+
+        if(!catalog)
+            return
+
         if (catalog)
-            setCatalogs(catalog[currentId]?.catalogs || [])
+            setCatalogs(catalog[currentId]?.subCategories || [])
     }, [currentId])
 
     useEffect(() => {
@@ -44,7 +49,7 @@ const CatalogDisplay = ({ currentId, onClose, onMouseOut }: { currentId: number,
         }
     }, [])
 
-    const [catalogs, setCatalogs] = useState<Catalog[]>([])
+    const [catalogs, setCatalogs] = useState<((Catalog | PlayList)&{isPlayList?:boolean})[]>([])
 
     const store = useCatalogStorage()
 
@@ -82,13 +87,14 @@ const CatalogDisplay = ({ currentId, onClose, onMouseOut }: { currentId: number,
                         container
                         sx={{ backgroundColor: grey[200] }}
                         spacing={2}>
-                        {catalogs.map((item) => (
+                        {catalogs?.map((item) => (
                             <Grid size={4}>
                                 <CatalogDisplayCard
+                                isPlaylist={item.isPlayList}
                                     key={item.path}
                                     name={item.name}
                                     path={item.fullPath}
-                                    subCataloge={item.catalogs}
+                                    subCataloge={item.subCategories}
                                 />
                             </Grid>
                         ))}

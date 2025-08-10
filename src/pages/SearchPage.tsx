@@ -1,20 +1,20 @@
-import { useLocation } from "react-router-dom";
-import { Box, Typography, Avatar } from "@mui/material"
+import { useLocation, useSearchParams } from "react-router-dom";
+import { Box, Typography, Avatar, Paper, TextField } from "@mui/material"
 import { autoSaveFetch } from "../services/safe-fetch";
 import type { SearchItem } from "../types/search-item"
 import { DataLoaderFromPromise } from "../features/loading/Loading";
 import { Link } from "react-router-dom";
 import SearchForm from "../features/search/SearchForm";
+import NoFoundErrorPage from "./NoFoundErrorPage";
 
 const Page = ({ data }: { data: SearchItem[] }) => {
 
     return (
         <Box>
-            {data.length>0 ? data.map((item) =>
+            {data.length > 0 ? data.map((item) =>
                 <Box
-                    component={Link}
-                    to={item.url}
-                    sx={{ display: 'flex', alignItems: 'center', gap: 1 }}
+                    component="li"
+                    sx={{ display: 'flex', alignItems: 'center', gap: 1, borderBottom: 'solid 2px', borderColor: 'primary.main', height: '70px' }}
                 >
                     <Avatar src={item.icon} alt={item.name} sx={{ width: 32, height: 32 }} />
                     <Box>
@@ -23,29 +23,30 @@ const Page = ({ data }: { data: SearchItem[] }) => {
                             {item.type}
                         </Typography>
                     </Box>
-                </Box>) : 
-                <Typography>no find</Typography>}
+                </Box>) :
+                <NoFoundErrorPage/>}
         </Box>
     )
 }
 
 const SearchPage = () => {
+    const [searchParams, setSearchParams] = useSearchParams()
 
-    const location = useLocation()
+    const search = searchParams.get('s')
 
-    const queryParams = new URLSearchParams(location.search);
-
-    const fullPath = location.pathname; // /products/computers/notebook/mac
-    const subPath = fullPath.replace(/^\/search\//, '')
-
-    const res = autoSaveFetch<SearchItem[]>(`/search/find/${subPath}`, { method: 'GET' })
+    const res = autoSaveFetch<SearchItem[]>(`/search/find/${search}`, { method: 'GET' })
 
     return (
         <Box>
-            <Box sx={{ width: '100%' }}>
-                <SearchForm />
+            <Box sx={{ display: 'flex', justifyContent: 'center', minHeight: '600px', mt: {xs:'0px',md:'50px'} }}>
+                <Paper sx={{ width: {xs:'100%',md:'700px'}, px: '40px' }}>
+                    <Typography align="center" variant="h3" sx={{fontWeight:'bold'}}>{search}</Typography>
+                    {
+                        search !== '' &&
+                        <DataLoaderFromPromise res={res} page={Page} />
+                    }
+                </Paper>
             </Box>
-            <DataLoaderFromPromise res={res} page={Page} />
         </Box>
     )
 }

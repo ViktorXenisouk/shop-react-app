@@ -10,8 +10,8 @@ const AdminLogin = () => {
 
     const navigate = useNavigate()
 
-    const [name, setName] = useState('')
-    const [password, setPassword] = useState('')
+    const [name, setName] = useState('admin')
+    const [password, setPassword] = useState('admin')
     const [message, setMessage] = useState<{message:string,status:'error'|'success'} | null>(null)
 
     const onChangeName: ChangeEventHandler<HTMLInputElement> = (event) => setName(event.target.value)
@@ -29,11 +29,12 @@ const AdminLogin = () => {
 
     return (
         <Box sx={{display:'flex',justifyContent:'center'}}>
-            <FormGroup>
+            <Stack spacing={3} sx={{bgcolor:'background.paper',p:'40px'}}>
+                <Typography align='center' variant="h3">Admin Login Form</Typography>
                 <Input autoFocus type="text" placeholder="user" value={name} onChange={onChangeName} />
                 <Input type="password" placeholder="password" value={password} onChange={onChangePassword} />
                 <Button onClick={onClick} variant="contained">Submit</Button>
-            </FormGroup>
+            </Stack>
             <Typography color={message?.status}>{message?.message}</Typography>
         </Box>
     )

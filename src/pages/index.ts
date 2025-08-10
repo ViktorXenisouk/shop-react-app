@@ -7,12 +7,13 @@ import Login from "./Login";
 import Register from "./Register";
 import Personal from "./Personal"
 import SearchPage from "./SearchPage";
-import BuyProcess from "../features/buy-process/BuyProcess";
-
+import BuyProccess from "./BuingProccess";
+import PlayListPage from "./PlayListPage";
 import AdminLogin from "./AdminLogin";
+import NoFoundErrorPage from "./NoFoundErrorPage";
 
 import {
- AdminAdmins, AdminArticle, AdminCategory, AdminProducts, AdminUsers,
+ AdminAdmins, AdminArticle, AdminCategory, AdminProducts, AdminUsers,AdminPlayList,AdminPlayListCreate,AdminPlayListEdit,
     AdminAdminsCreate, AdminArticleCreate, AdminCategoryCreate, AdminProductCreate,
     AdminAdminsEdit, AdminArticleEdit, AdminCategoryEdit, AdminProductsEdit, AdminUsersEdit,
     AdminMe, AdminEditMe
@@ -20,14 +21,15 @@ import {
 from "../features/admin/index"
 
 export {
-    BuyProcess,
+    BuyProccess,
     Personal,SearchPage,
     Basket, Main, ErrorPage, Products, Product,
-    Login, Register,
+    Login, Register,PlayListPage,NoFoundErrorPage,
 
     AdminLogin, AdminMe, AdminEditMe,
     AdminUsers, AdminUsersEdit,
     AdminProducts, AdminProductsEdit,AdminProductCreate,
     AdminCategory, AdminCategoryCreate, AdminCategoryEdit, 
-    AdminAdmins, AdminAdminsCreate,AdminAdminsEdit
+    AdminAdmins, AdminAdminsCreate,AdminAdminsEdit,
+    AdminPlayList,AdminPlayListCreate,AdminPlayListEdit
 }

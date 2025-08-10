@@ -1,22 +1,21 @@
 import { MyFilter } from "../types"
 import { CategoryProps } from "../../../../../../types/catalog"
 import { Box, Typography, TextField } from "@mui/material"
+import RangeInput from "../../../../../../UI/RangeInput"
 
 type Props = {
     title: string,
     props: CategoryProps
     filter: MyFilter,
     id: string
-    addOrRemoveField: (field: string, value: string) => void
+    addOrRemoveField: (field: string, value: any) => void
 }
 const FilterNumber = ({ title, props, filter, id, addOrRemoveField }: Props) => {
 
     return (
-        <Box sx={{ display: 'flex', flexDirection: 'row', justifyContent:'center',alignItems:'center'}}>
-            <Typography>{title}:</Typography>
-            <TextField value={filter.other[id] ?? ''} onChange={(ev) => {
-                addOrRemoveField(id, ev.target.value)
-            }} />
+        <Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'flex-start', alignItems: 'center',mx:'8px',pb:'20px' }}>
+            <Typography variant="caption">{title}</Typography>
+            <RangeInput min={filter.other[title.replace(' ','_')]?.min || 0} max={filter.other[title.replace(' ','_')]?.max || 0} onChange={(range) => addOrRemoveField(title.replace(' ','_'), range)} />
         </Box>
     )
 }

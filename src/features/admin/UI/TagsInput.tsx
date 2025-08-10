@@ -1,4 +1,4 @@
-import { useState, Fragment } from 'react';
+import { useState, Fragment, useMemo } from 'react';
 import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
 import CircularProgress from '@mui/material/CircularProgress';
@@ -11,19 +11,28 @@ const TagsInput = ({ onChange, defaultValue }: { onChange?: (value?: string[]) =
 
     const [isLoaded, data, errors] = useRequest<Catalog[]>('/category/find/', { method: "GET" })
 
-    let options = [] as { group: string, tag: string }[]
+    let options = useMemo(() => {
+        if (!data)
+            return []
 
-    data?.forEach(cat => {
-        if (cat.filter) {
-            for (let categoryName in cat.filter) {
-                for (let tagName in cat.filter[categoryName].props.tags) {
-                    options.push({ group: cat.name, tag: tagName })
+        let arr = [] as { group: string, tag: string }[]
+
+        data?.forEach(cat => {
+            if (cat.filter) {
+                for (let categoryName in cat.filter) {
+                    if (!('tags' in cat.filter[categoryName].props))
+                        continue
+                    for (let i = 0; i < cat.filter[categoryName].props.tags.length; i++) {
+                        arr.push({ group: cat.name, tag: cat.filter[categoryName].props.tags[i] })
+                    }
                 }
             }
-        }
-    })
+        })
 
-    options = options.filter((item) => item.tag !== 'horizontal')
+        arr = arr.filter((item) => item.tag !== 'horizontal')
+
+        return arr
+    }, [data])
 
     const handleOpen = () => {
         setOpen(true);

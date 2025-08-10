@@ -6,8 +6,6 @@ const TopItemCard = (props: TopItem) => {
 
     return (
         <Box
-            component={Link}
-            to={props.url}
             sx={{
                 borderRadius: '0px',
                 p: '0px',
@@ -15,7 +13,7 @@ const TopItemCard = (props: TopItem) => {
                 height: '100%',
                 width: '350px',
                 '&:hover': {
-                    boxShadow: 5,                // можно добавить тень
+                    boxShadow: 5,
                 },
                 display: 'flex',
                 justifyContent: 'space-between',
@@ -27,12 +25,18 @@ const TopItemCard = (props: TopItem) => {
                     component="img"
                     height="auto"
                     width="300px"
-                    src={props.imageUrl} 
-                    />
+                    src={props.imageUrl}
+                />
                 <Typography align="center" color="black" variant="h3">{props.title}</Typography>
             </Box>
-            <Box sx={{mx:'12px',mb:'30px'}}>
+            <Box sx={{ mx: '12px', mb: '30px' }}>
                 <Typography color="black" variant="subtitle1">{props.shortDescription}</Typography>
+                <Button
+                    component={Link}
+                    to={props.url}
+                    variant="contained">
+                    Show More
+                </Button>
             </Box>
         </Box>
     )

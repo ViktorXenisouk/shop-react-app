@@ -4,6 +4,7 @@ const baseUrl = process.env.REACT_APP_API_URL as string
 
 const safeFetch = async <T>(url: string, requestInit: RequestInit): Promise<FetchResponse<T>> => {
     try {
+        console.log(baseUrl+url)
         const response = await fetch((baseUrl + url), requestInit);
 
         if (!response.ok) {

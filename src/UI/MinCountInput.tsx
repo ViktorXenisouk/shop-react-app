@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { TextField } from "@mui/material";
+import React from "react";
 
 const validateCount = (value:string,count:number) => {
 return value.length >= count
@@ -9,7 +10,7 @@ type Props = {
     value:string,
     onChange:(value:string)=>void,
     min:number,
-label:string,
+label:React.ReactNode,
     setIsValid?:(value:boolean)=>void
 }
 

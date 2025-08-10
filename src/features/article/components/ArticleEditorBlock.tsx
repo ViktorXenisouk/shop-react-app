@@ -27,8 +27,6 @@ const [open,setOpen] = useState(false)
 const onModalClose = () => {
 setOpen(false)
 }
-
-
   return (
     <Box key={block.id} id={block.id} ref={setNodeRef} style={style}>
       <Box {...attributes}{...listeners} ><DragIndicator /></Box>

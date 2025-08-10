@@ -18,9 +18,13 @@ const useRequest = <T>(url: string, options: AutoSafeFetch): FetchHookResponse<T
       try {
         const res = await autoSaveFetch<T>(url, options);
         if (isActive) {
-          setData(res.data);
-          setError(undefined);
-          setPaginationInfo(res.paginationInfo ?? null)
+          if (res.success) {
+            setData(res.data);
+            setPaginationInfo(res.paginationInfo ?? null)
+          }
+          else {
+            setError({ status: res?.status || 0, message: res?.message ?? 'some error' });
+          }
         }
       } catch (err: any) {
         if (isActive) {
@@ -38,7 +42,7 @@ const useRequest = <T>(url: string, options: AutoSafeFetch): FetchHookResponse<T
     };
   }, [url, JSON.stringify(options)]);
 
-  return [isLoaded, data, error,paginationInfo];
+  return [isLoaded, data, error, paginationInfo];
 };
 
 export { useRequest };

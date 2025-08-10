@@ -2,13 +2,13 @@ import { DataLoaderFromHookSimple } from "../../loading/Loading"
 import { type Product } from "../../../types/product"
 import Filter from "./features/filter/Filter";
 import { useLocation, useSearchParams } from "react-router-dom";
-import ProductsHeader from "./features/products-header/ProductsHeader";
+import ProductsHeader from "../features/header/ProductsHeader";
 import { useRequest } from "../../../hooks/useRequest";
-import ProductsLoader from "./components/ProductsLoader";
+import ProductsLoader from "../components/ProductsLoader";
 import { Box, Pagination, Divider } from "@mui/material"
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTheme } from "@mui/material";
-
+import { ErrorPage } from "../../../pages";
 
 
 const Products = () => {
@@ -19,15 +19,21 @@ const Products = () => {
     const location = useLocation()
 
     const fullPath = location.pathname; // /products/computers/notebook/mac
-    const subPath =  fullPath.replace(/^\/products\//, '')
+    const subPath = fullPath.replace(/^\/products\//, '')
 
     const [searchParams, setSearchParams] = useSearchParams()
 
-    const url = `/products/search/?category=${encodeURIComponent(subPath)}${searchParams.toString()}`
-
-    console.log(url)
+    const url = `/products/search/?category=${encodeURIComponent(subPath)}&${searchParams.toString()}`
 
     const res = useRequest<Product[]>(url, { method: 'GET' })
+
+    console.log(res)
+
+    if (res[2]) {
+        return (
+           <ErrorPage status={res[2].status} message={res[2].message}/>
+        )
+    }
 
     const onChangePage = (ev: any, page: number) => {
         searchParams.set('limit', `${searchParams.get('limit') ?? 10}`)
@@ -41,7 +47,7 @@ const Products = () => {
                 <ProductsHeader subPath={subPath} />
                 <Filter modalOnly />
                 <Box>
-                <DataLoaderFromHookSimple res={res} page={ProductsLoader} />
+                    <DataLoaderFromHookSimple res={res} page={ProductsLoader} />
                 </Box>
                 <Divider sx={{ mt: '20px', mb: '10px' }} />
                 <Box sx={{ display: 'flex', justifyContent: 'center' }}>
@@ -70,7 +76,7 @@ const Products = () => {
             </Box>
 
             <Box sx={{
-                gridArea: 'filter', pt: 3, maxWidth:'300px'
+                gridArea: 'filter', pt: 3, maxWidth: '300px'
             }}>
                 <Filter />
             </Box>

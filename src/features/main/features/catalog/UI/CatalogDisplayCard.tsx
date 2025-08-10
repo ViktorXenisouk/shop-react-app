@@ -2,8 +2,10 @@ import { useState } from 'react';
 import { Box, Typography, Button, Collapse, Link as MuiLink, Stack, Grid, Avatar, Paper, AccordionSummary, Accordion, AccordionDetails, Divider } from '@mui/material';
 import { Link as RouterLink } from 'react-router-dom';
 import { ExpandMore, ExpandLess } from '@mui/icons-material'
+import { Catalog } from '../../../../../types/catalog';
+import { PlayList } from '../../../../../types/play-list';
 
-const CatalogDisplayCard = ({ name, path, subCataloge }: { name: string, path: string, subCataloge?: any[] }) => {
+const CatalogDisplayCard = ({ name, path, subCataloge, isPlaylist }: { name: string, path: string, subCataloge?: (Catalog | PlayList)[], isPlaylist?: boolean }) => {
     const [expanded, setExpanded] = useState(false);
 
     const toggleExpanded = () => setExpanded((prev) => !prev);
@@ -13,11 +15,11 @@ const CatalogDisplayCard = ({ name, path, subCataloge }: { name: string, path: s
 
     return (
         <Paper sx={{ width: '100%', height: '100%' }}>
-            <Box sx={{ display: 'flex', py: '10px',alignItems:'center' }}>
+            <Box sx={{ display: 'flex', py: '10px', alignItems: 'center' }}>
                 <Avatar sx={{ ml: '10px' }} src={imgURL}></Avatar>
                 <MuiLink
                     component={RouterLink}
-                    to={`/products/${path}`}
+                    to={`/${isPlaylist ? 'play-list' : 'products'}/${path}`}
                     underline="hover"
                     color="primary"
                     sx={{ display: 'block', ml: '10px', fontWeight: 'bold' }}>
@@ -31,7 +33,7 @@ const CatalogDisplayCard = ({ name, path, subCataloge }: { name: string, path: s
                         {
                             expanded ?
                                 <>
-                                    <Box sx={{borderBottom:'#ccc solid 1px',width:'100%',pb:'20px'}}><ExpandLess /> less</Box>
+                                    <Box sx={{ borderBottom: '#ccc solid 1px', width: '100%', pb: '20px' }}><ExpandLess /> less</Box>
                                 </>
                                 :
                                 <Box><ExpandMore /> more</Box>
@@ -43,7 +45,7 @@ const CatalogDisplayCard = ({ name, path, subCataloge }: { name: string, path: s
                                 <MuiLink
                                     key={item.path}
                                     component={RouterLink}
-                                    to={`/products/${item.fullPath}`}
+                                    to={`/${isPlaylist ? 'play-list' : 'products'}/${item.fullPath}`}
                                     underline="hover"
                                 >
                                     {item.name}

@@ -1,6 +1,8 @@
 import { Body, PropsCnd } from "../types";
 import { useAuthUserStore } from "../../../store/useAuth";
 import { TextField,Button } from "@mui/material";
+import PhoneInput from "../../../UI/PhoneInput";
+import { EmailLabel,UserNameLabel } from "../../../components/labels";
 
 const PersonalInfo = (props: PropsCnd) => {
     const store = useAuthUserStore()
@@ -37,9 +39,9 @@ const PersonalInfo = (props: PropsCnd) => {
 
         return (
             <>
-                <TextField focused={isCompleted ? true : undefined} color={isCompleted ? 'success' : 'info'} onChange={textHandle} value={props.body.username} label='username' />
-                <TextField focused={isCompleted ? true : undefined} color={isCompleted ? 'success' : 'info'} onChange={emailHandle} value={props.body.email} label='email' />
-                <TextField onChange={emailHandle} />
+                <TextField focused={isCompleted ? true : undefined} color={isCompleted ? 'success' : 'info'} onChange={textHandle} value={props.body.username} label={UserNameLabel} />
+                <TextField focused={isCompleted ? true : undefined} color={isCompleted ? 'success' : 'info'} onChange={emailHandle} value={props.body.email} label={EmailLabel} />
+                <PhoneInput value={props.body.tel} onChange={(value) => props.setBody({tel:value})}/>
                 <Button onClick={onClick}>
                     Continue
                 </Button>

@@ -12,7 +12,6 @@ import {
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import Article from './Article';
 
-
 type A = "imageWithText" | "paragraph" | "gallery"
 
 type Block = ArticleBlock & { id: string }

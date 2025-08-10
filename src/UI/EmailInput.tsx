@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { TextField } from "@mui/material";
+import { TextField,Box } from "@mui/material";
+import { Email } from "@mui/icons-material";
 
 const validateEmail = (email: string): boolean => {
   const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -24,7 +25,7 @@ const EmailInput = ({value,onChange,setIsValid}:Props) => {
   const isValid = validateEmail(value);
     return (
  <TextField
-        label="Email"
+                    label={<Box sx={{ display: 'flex', alignItems: 'center' }}><Email sx={{ mx: '10px' }} /> email</Box>}
         variant="outlined"
         fullWidth
         value={value}

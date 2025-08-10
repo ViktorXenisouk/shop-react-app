@@ -3,7 +3,7 @@ import { Link as RouterLink, useSearchParams } from "react-router-dom"
 import { Home } from "@mui/icons-material"
 
 
-const CategoryParser = ({ category,renderMain }: { category: string,renderMain?:boolean }) => {
+const CategoryParser = ({ category,renderMain,root='products' }: { category: string,root?:string,renderMain?:boolean }) => {
     const [searchParams, setSearchParams] = useSearchParams()
 
     const parse = (name: string) => {
@@ -28,7 +28,7 @@ const CategoryParser = ({ category,renderMain }: { category: string,renderMain?:
             </Link>
         }
             {parse(category).map((item) =>
-                <Link component={RouterLink} to={`/products/${item.fullPath}?${searchParams.toString()}`}>
+                <Link component={RouterLink} to={`/${root}/${item.fullPath}?${searchParams.toString()}`}>
                     {item.name}
                 </Link>)}
         </Breadcrumbs>

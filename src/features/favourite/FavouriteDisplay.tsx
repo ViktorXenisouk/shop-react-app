@@ -3,6 +3,8 @@ import { useAuthUserStore } from "../../store/useAuth"
 import { Box, Stack, Typography } from "@mui/material"
 import FavouriteCard from './components/FavouriteCard';
 import FavouriteDialog from "./components/FavouriteDialog"
+import FavouriteEmpty from "./components/FavouriteEmpty";
+import HeaderText from "../../UI/HeaderText";
 
 const FavouriteDisplay = () => {
     const store = useAuthUserStore()
@@ -40,7 +42,7 @@ const FavouriteDisplay = () => {
                 return <FavouriteCard onDelete={onDelete} id={item} presentInBasket={countInBasket > 0} />
             })
                 :
-                <Typography>is empty</Typography>}
+                <FavouriteEmpty/>}
         </Stack>
     ) :
         (
@@ -50,7 +52,7 @@ const FavouriteDisplay = () => {
     return (
         <>
             <Box>
-                <Typography>Favourite</Typography>
+                                <HeaderText>Favourite</HeaderText>
                 {page}
             </Box>
             <FavouriteDialog open={open} onClose={onClose} />

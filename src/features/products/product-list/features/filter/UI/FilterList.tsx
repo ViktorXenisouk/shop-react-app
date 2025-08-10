@@ -8,7 +8,7 @@ const FilterList = ({ name, tags ,direction,filterParams,addOrRemoveTag}: { name
     console.log('render new Filter List:'+name)
     return (
         <Box>
-            <Typography variant='h6'>{name}</Typography>
+            <Typography variant='body2' sx={{fontWeight:'bold',ml:'2px'}}>{name}</Typography>
             <Grid container direction={direction}>
                 {tags.map((item,i) => <CustomRadio label={item} value={item} isSelected={filterParams.tags.includes(item)} addOrRemoveTag={addOrRemoveTag} />)}
             </Grid>

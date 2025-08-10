@@ -6,18 +6,8 @@ const HeaderText = styled(Typography)(({ theme }) => ({
     textDecoration: 'underline',
     color: theme.palette.text.primary,
     fontSize: '30px',
-    marginTop:'40px',
-    marginBottom:'30px',
+    marginTop: '40px',
+    marginBottom: '30px',
 }))
-
-const Head = () => {
-
-    return (
-        <Typography
-            variant="h2">
-
-        </Typography>
-    )
-}
 
 export default HeaderText

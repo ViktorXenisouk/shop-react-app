@@ -4,8 +4,14 @@ import React from 'react';
 import { JSX } from 'react'
 import { HookDataLoaderProps, ResponseDataLoaderProps, PaginationDataLoaderProps } from './types';
 import { ComponentType } from 'react';
+import { CircularProgress,Box } from '@mui/material';
 
-const DataLoaderSimple = <T,>({ res, page }: ResponseDataLoaderProps<T> & { page: ComponentType<{ data: T | null }> }) => {
+const simpleProgres = 
+    <Box sx={{display:'flex',justifyContent:'center',alignItems:'center',height:'100%',width:'100%'}}>
+<CircularProgress/>
+    </Box>
+
+const DataLoaderSimple = <T,>({ res, page}: ResponseDataLoaderProps<T> & { page: ComponentType<{ data: T | null }> }) => {
   const [data, setData] = useState<T | null>(null)
   const [error, setError] = useState<{ status: number; message: string } | null>(null)
 
@@ -54,8 +60,8 @@ const DataLoaderFromHookSimple = <T,>({ res, page }: HookDataLoaderProps<T> & { 
   return currentPage;
 }
 
-const DataLoaderFromHook = <T,>({ res, page }: HookDataLoaderProps<T>) => {
-  const [currentPage, setCurrentPage] = useState<JSX.Element>(<div>Loading...</div>);
+const DataLoaderFromHook = <T,>({ res, page,loadingComponent = simpleProgres}: HookDataLoaderProps<T>) => {
+  const [currentPage, setCurrentPage] = useState<JSX.Element>(loadingComponent);
 
   const [isLoaded, data, error] = res;
 
@@ -72,7 +78,7 @@ const DataLoaderFromHook = <T,>({ res, page }: HookDataLoaderProps<T>) => {
   return currentPage;
 };
 
-const DataLoaderFromPromise = <T,>({ res, page }: ResponseDataLoaderProps<T>) => {
+const DataLoaderFromPromise = <T,>({ res, page,loadingComponent = simpleProgres }: ResponseDataLoaderProps<T>) => {
   const [data, setData] = useState<T | null>(null)
   const [error, setError] = useState<{ status: number; message: string } | null>(null)
   const [loading, setLoading] = useState(true)
@@ -96,26 +102,26 @@ const DataLoaderFromPromise = <T,>({ res, page }: ResponseDataLoaderProps<T>) =>
     fetch()
   }, [res, page])
 
-  if (loading) return <div>Loading...</div>
+  if (loading) return loadingComponent
   if (error) return <ErrorPage status={error.status} message={error.message} />
   if (data) return React.createElement(page, { data })
 
   return null
 }
 
-const DataLoaderFromHookWithPagination = <T,>({ isLoaded, data, error, page }: PaginationDataLoaderProps<T>) => {
-  const [currentPage, setCurrentPage] = useState<JSX.Element>(<div>Loading...</div>);
+const DataLoaderFromHookWithPagination = <T,>({ isLoaded, data, error, page, loadingComponent = simpleProgres,errorElement=ErrorPage }: PaginationDataLoaderProps<T>) => {
+  const [currentPage, setCurrentPage] = useState<JSX.Element>(loadingComponent);
 
   useEffect(() => {
     if (isLoaded) {
       if (error) {
-        setCurrentPage(<ErrorPage status={error?.status || 500} message={error?.message || 'some mistake'} />);
+        setCurrentPage(React.createElement(errorElement,{message:error.message||'',status:error.status||500}));
       } else if (data) {
         setCurrentPage(React.createElement(page, { data }));
       }
     }
     else {
-      setCurrentPage(<div>Loading...</div>)
+      setCurrentPage(loadingComponent)
     }
   }, [isLoaded, data, error, page]);
 

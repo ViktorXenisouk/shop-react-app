@@ -3,6 +3,7 @@ import { Box, IconButton, Stack, Typography, Button } from '@mui/material';
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import CarouselButton from '../UI/CarouselButton';
+import {useTheme,useMediaQuery} from '@mui/material';
 
 type Props = {
   children: React.ReactNode,
@@ -10,6 +11,8 @@ type Props = {
 }
 
 const CarouselWithButtons = ({ children, height = '300px' }: Props) => {
+  const theme = useTheme()
+  const isMobile = useMediaQuery(theme.breakpoints.down('md'))
   const scrollRef = useRef<HTMLDivElement>(null);
   const [atStart, setAtStart] = useState(true);
   const [atEnd, setAtEnd] = useState(false);
@@ -34,6 +37,52 @@ const CarouselWithButtons = ({ children, height = '300px' }: Props) => {
   const scrollBy = (offset: number) => {
     scrollRef.current?.scrollBy({ left: offset, behavior: 'smooth' });
   };
+
+  if(isMobile){
+    return (
+       <Box
+      sx={{
+        backgroundColor: 'secondary.main',
+        position: 'relative',
+        maxWidth: '100%',
+        overflow: 'hidden',
+        mx: '30px',
+        height: height,
+        alignContent: 'center'
+      }}
+    >
+<Box
+        ref={scrollRef}
+        sx={{
+          overflowX: 'auto',
+          overflowY: 'hidden',
+          scrollBehavior: 'smooth',
+          whiteSpace: 'nowrap',
+          '&::-webkit-scrollbar': { display: 'none' },
+          height: '100%',
+          alignContent: 'center',
+          mx: '10px',
+          borderRadius: '3px',
+          backgroundColor: 'transparent'
+        }}
+      >
+        <Stack
+          direction="row"
+          spacing={0}
+          sx={{
+            height: '100%',
+            display: 'flex',
+            alignContent: 'center',
+            alignItems:'center',
+            backgroundColor: 'transparent'
+          }}
+        >
+          {children}
+        </Stack>
+      </Box>
+    </Box>
+    )
+  }
 
   return (
     <Box

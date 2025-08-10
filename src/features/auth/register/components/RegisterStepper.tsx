@@ -1,38 +1,38 @@
-import { Stepper,Step,StepLabel,Typography } from "@mui/material"
+import { Stepper, Step, StepLabel, Typography, StepButton } from "@mui/material"
+import React from "react"
 
-const steps = ['your data','create password','more info','confirm email']
+const steps = ['your data', 'create password', 'more info', 'confirm email']
 
-type Props1 = {
+type Props = {
     activeStep: number,
+    step: number,
+    setActiveStep: (index: number) => void
 }
 
-const RegisterStepper = ({ activeStep }: Props1) => {
+const RegisterStepper: React.FC<Props> = ({ activeStep, step, setActiveStep }) => {
     const isStepOptional = (step: number) => {
-        return step === 0
+        return false
     }
 
-    const isCompletedStep = (step: number) => {
-        return activeStep > step;
+    const isCompletedStep = (s: number) => {
+        return activeStep > s;
     }
 
     return (
         <Stepper nonLinear activeStep={activeStep}>
             {steps.map((label, index) => {
-                const stepProps: { completed?: boolean } = {};
-                const labelProps: {
-                    optional?: React.ReactNode;
-                } = {};
-                if (isStepOptional(index)) {
-                    labelProps.optional = (
-                        <Typography variant="caption">Optional</Typography>
-                    );
-                }
+                const stepProps: { unselectable: 'on' | 'off', completed?: boolean } = { unselectable: 'on' };
+               
                 if (isCompletedStep(index)) {
                     stepProps.completed = true;
+                    stepProps.unselectable = 'off'
                 }
+
                 return (
-                    <Step key={label} {...stepProps}>
-                        <StepLabel {...labelProps}>{label}</StepLabel>
+                    <Step>
+                        <StepLabel key={label} {...stepProps}>
+                            {label}
+                        </StepLabel>
                     </Step>
                 );
             })}

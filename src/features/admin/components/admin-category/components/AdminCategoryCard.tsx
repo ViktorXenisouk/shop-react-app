@@ -18,7 +18,7 @@ const ButtonLink = ({ children, to, onClick }: { children: any, to: string, onCl
 
 const AdminCategoryCard = ({ body }: { body: Catalog, onSelect: (path: string) => void }) => {
 
-    const { name, fullPath, path, parentPath, catalogs, filter, _id } = body
+    const { name, fullPath, path, parentPath, subCategories, filter, _id } = body
 
     const deleteHandler = () => {
 

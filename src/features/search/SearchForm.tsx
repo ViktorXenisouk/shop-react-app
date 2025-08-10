@@ -10,7 +10,11 @@ import {
     Typography,
     Avatar,
     IconButton,
-    Stack
+    Stack,
+    Divider,
+    InputBase,
+    Button,
+    Paper
 } from '@mui/material';
 import { SearchSharp as SearchIcon } from '@mui/icons-material';
 
@@ -28,7 +32,7 @@ const SearchForm = ({ onSubmit }: { onSubmit?: () => void }) => {
     const submitHandler = () => {
         const searchTerm = inputValue.trim();
         if (searchTerm) {
-            const url = `/search/${encodeURIComponent(searchTerm)}`;
+            const url = `/search/?s=${encodeURIComponent(searchTerm)}`;
             console.log(url);
             navigate(url);
             onSubmit?.();
@@ -39,7 +43,7 @@ const SearchForm = ({ onSubmit }: { onSubmit?: () => void }) => {
         if (current) {
             if (typeof current === 'string') {
                 console.log(`is string ${current}`)
-                navigate(current);
+                navigate(`/search/?s=${encodeURIComponent(current)}`);
             }
             else if (typeof current == 'object') {
                 console.log(`is object ${current.url}`)
@@ -50,11 +54,11 @@ const SearchForm = ({ onSubmit }: { onSubmit?: () => void }) => {
     }, [current]);
 
     return (
-        <Stack direction="row" sx={{ mt: 10 }}>
             <Autocomplete
                 fullWidth
                 freeSolo
                 inputValue={inputValue}
+                slotProps={{ paper: { sx: { border: 'none' } },popper:{sx:{boxShadow:5}} }}
                 onInputChange={(e, value) => setInputValue(value)}
                 onChange={(e, value) => setCurrent(value)}
                 options={options ?? []}
@@ -62,23 +66,19 @@ const SearchForm = ({ onSubmit }: { onSubmit?: () => void }) => {
                 noOptionsText="Ничего не найдено"
                 loading={!isLoaded}
                 renderInput={(params) => (
-                    <TextField
-                        {...params}
-                        label="Поиск"
-                        variant="outlined"
-                        fullWidth
-                        slotProps={{
-                            input: {
-                                ...params.InputProps,
-                                endAdornment: (
-                                    <>
-                                        {!isLoaded && <CircularProgress color="inherit" size={20} />}
-                                        {params.InputProps.endAdornment}
-                                    </>
-                                ),
-                            }
-                        }}
-                    />
+                    <>
+                        <Paper ref={params.InputProps.ref} sx={{ p: '4px 8px', display: 'flex', alignItems: 'center', width: '100%',boxShadow:5 }}>
+                            <InputBase
+                                {...params}
+                                slotProps={{ input: { ...params.inputProps } }}
+                                placeholder="Search"
+                            />
+                            <Divider sx={{ height: 28, m: 0.5 }} orientation="vertical" />
+                            <IconButton onClick={submitHandler} sx={{ width: 50, height: 50 }}>
+                                <SearchIcon />
+                            </IconButton>
+                        </Paper>
+                    </>
                 )}
                 renderOption={(props, option) =>
                     typeof option === 'string' ? null : (
@@ -86,7 +86,7 @@ const SearchForm = ({ onSubmit }: { onSubmit?: () => void }) => {
                             component="li"
                             {...props}
                             key={option.url}
-                            sx={{ display: 'flex', alignItems: 'center', gap: 1 }}
+                            sx={{ display: 'flex', alignItems: 'center', gap: 1, borderBottom: 'solid 2px', borderColor: 'primary.main' }}
                         >
                             <Avatar src={option.icon} alt={option.name} sx={{ width: 32, height: 32 }} />
                             <Box>
@@ -99,12 +99,34 @@ const SearchForm = ({ onSubmit }: { onSubmit?: () => void }) => {
                     )
                 }
             />
-
-            <IconButton onClick={submitHandler} sx={{ width: 50, height: 50 }}>
-                <SearchIcon />
-            </IconButton>
-        </Stack>
     );
 };
 
 export default SearchForm;
+
+
+/*
+
+ <Box>
+                            <TextField
+                                {...params}
+                                label="Search"
+                                variant="outlined"
+                                fullWidth
+                                slotProps={{
+                                    input: {
+                                        ...params.InputProps,
+                                        endAdornment: (
+                                            <>
+                                                {!isLoaded && <CircularProgress color="inherit" size={20} />}
+                                                {params.InputProps.endAdornment}
+                                            </>
+                                        ),
+                                    }
+                                }}
+                            />
+                            <Divider variant='fullWidth' />
+                            <Button />
+                        </Box>
+
+                        */

@@ -10,7 +10,7 @@ const TopCategories = () => {
             <Typography variant="h3" align='center' sx={{textDecoration:'underline', mt:'30px', mb:'12px'}}>Top Categories</Typography>
             {
                 categories ?
-                    <CarouselWithButtons height="400px">
+                    <CarouselWithButtons height="500px">
                         {categories && categories.map((v) =>
                                 <TopItemCard {...v} />
                          )}

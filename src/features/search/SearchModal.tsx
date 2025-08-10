@@ -41,9 +41,9 @@ const SearchModal = ({ isActive, setIsActive }: Props) => {
             position: 'relative',
           }}
         >
-          <IconButton
+ <IconButton
             onClick={handleClose}
-            sx={{ position: 'absolute', top: 0, left: 0 }}
+            sx={{ position: 'absolute', top: 0, right: 0 }}
             aria-label="Закрыть"
           >
             <CloseIcon />

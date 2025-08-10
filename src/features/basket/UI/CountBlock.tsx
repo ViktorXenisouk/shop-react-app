@@ -87,7 +87,7 @@ const CountBlock = ({ count = 0, setCount, onChange, }: Props) => {
                 <RemoveIcon />
             </IconButton>
             <TextField
-                sx={{ maxWidth: '1000px', minWidth: '40px', '& input': { MozAppearance: 'textfield' }, alignItems: 'center', textAlign: 'center' }}
+                sx={{ maxWidth: '100px', minWidth: '40px', '& input': { MozAppearance: 'textfield' }, alignItems: 'center', textAlign: 'center' }}
                 onBlur={onBlur}
                 onKeyDown={onKeyDown}
                 value={inputValue !== '0' ? inputValue : count.toString()}

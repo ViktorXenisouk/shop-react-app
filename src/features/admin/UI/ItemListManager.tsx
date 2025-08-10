@@ -19,6 +19,8 @@ type ItemData<T> = {
 }
 
 const ItemListManager = <T,>({ onChange, itemComponent, initialData,title }: Props<T>) => {
+
+    
     const [items, setItems] = useState<ItemData<T>[]>(() =>
         initialData?.map((data, index) => ({
             id: Date.now() + index,

@@ -30,7 +30,7 @@ const BasketCountButton = ({ count, setCount, onChange, simple }: { count: numbe
                     </Button>
                     :
                     simple ?
-                        <Button variant="outlined" startIcon={<ShoppingBasket />} onClick={bucketHandler} sx={{ width: '100%', m: '0px!important' }}>
+                        <Button color="success" variant="outlined" startIcon={<ShoppingBasket />} onClick={bucketHandler} sx={{ width: '100%', m: '0px!important' }}>
                             is added in basket
                         </Button>
                         :

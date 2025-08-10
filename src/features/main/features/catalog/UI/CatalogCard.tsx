@@ -8,13 +8,14 @@ type Props = {
   catalogIndex: number;
   setCurrentId: (id: number) => void;
   fullPath: string;
+  isPlaylist?:boolean
 };
 
-const CatalogCard = ({ children, isActive, catalogIndex, setCurrentId, fullPath }: Props) => {
+const CatalogCard = ({ children, isActive, catalogIndex, setCurrentId, fullPath,isPlaylist }: Props) => {
   return (
       <Typography
         component={Link}
-        to={`/products/${fullPath}`}
+        to={`/${isPlaylist ? 'play-list' : 'products'}/${fullPath}`}
         onMouseOver={() => setCurrentId(catalogIndex)}
         sx={{
           pt: 1,

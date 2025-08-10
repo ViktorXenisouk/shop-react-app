@@ -33,7 +33,7 @@ const Filter = ({ modalOnly }: { modalOnly?: boolean }) => {
         });
     }
 
-    const addOrRemoveField = (field: string, value: string) => {
+    const addOrRemoveField = (field: string, value: any) => {
         setFilterParams((prev) => {
             const isNull = !value || value === ''
 
@@ -87,7 +87,7 @@ const Filter = ({ modalOnly }: { modalOnly?: boolean }) => {
             item.variant === 'tags-vertical' || item.variant=== 'tags-horizontal' ?
                 <FilterList name={item.title} tags={item.props.tags} direction={item.variant === 'tags-horizontal' ? "row" : "column"} filterParams={filterParams} addOrRemoveTag={addOrRemoveTag} />
                 :
-                <FilterNumber id='qqfwfqw' props={item.props} title={item.title} filter={filterParams} addOrRemoveField={addOrRemoveField} />
+                <FilterNumber id={item.title.replace(' ','_')} props={item.props} title={item.title} filter={filterParams} addOrRemoveField={addOrRemoveField} />
         )
 
     }, [tags, filterParams, filterParams.tags])
@@ -95,7 +95,7 @@ const Filter = ({ modalOnly }: { modalOnly?: boolean }) => {
     if (modalOnly)
         return (
             <Box>
-                <FilterModal onReset={onResetClick} onSearchClick={onSearchClick} data={tags} addOrRemoveTag={addOrRemoveTag} filter={filterParams} />
+                <FilterModal addOrRemoveField={addOrRemoveField} onReset={onResetClick} onSearchClick={onSearchClick} data={tags} addOrRemoveTag={addOrRemoveTag} filter={filterParams} />
             </Box>
         )
 
@@ -104,13 +104,13 @@ const Filter = ({ modalOnly }: { modalOnly?: boolean }) => {
             <Box sx={{ minWidth: "112px", dispaly: 'flex', flexDirection: 'column', height: '100%', justifyContent: 'flex-start', borderRight: 'black solid 1px' }}>
                 <Stack>
                     {array}
-                    <FilterModal onReset={onResetClick} onSearchClick={onSearchClick} data={tags} addOrRemoveTag={addOrRemoveTag} filter={filterParams} />
+                    <FilterModal addOrRemoveField={addOrRemoveField} onReset={onResetClick} onSearchClick={onSearchClick} data={tags} addOrRemoveTag={addOrRemoveTag} filter={filterParams} />
                 </Stack>
-                <ButtonGroup>
-                    <Button onClick={onSearchClick}>
+                <ButtonGroup sx={{width:'100%'}}>
+                    <Button sx={{width:'50%'}} onClick={onSearchClick}>
                         Show
                     </Button>
-                    <Button onClick={onResetClick}>
+                    <Button sx={{width:'50%'}} onClick={onResetClick}>
                         Reset Filter
                     </Button>
                 </ButtonGroup>

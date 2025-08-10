@@ -1,37 +1,40 @@
 import { isValidPhoneNumber } from 'libphonenumber-js';
 import { useState } from 'react';
-import { TextField} from '@mui/material';
+import { TextField } from '@mui/material';
+import { PhoneLabel } from '../components/labels';
 
 type Props = {
-    value:string,
-    onChange:(value:string)=>void,
-    setIsValid?:(value:boolean)=>void
+  value: string,
+  onChange: (value: string) => void,
+  setIsValid?: (value: boolean) => void,
 }
 
-const PhoneInput = ({value,onChange,setIsValid}:Props) => {
+const PhoneInput : React.FC<Props> = ({ value, onChange, setIsValid }) => {
   const [touched, setTouched] = useState(false);
 
   const isValid = isValidPhoneNumber(value || '');
 
-   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    onChange(e.target.value)
-    setIsValid?.(isValidPhoneNumber(value || ''))
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const v = e.target.value
+    onChange(v)
+    setIsValid?.(isValidPhoneNumber(v || ''))
     if (!touched) setTouched(true);
   };
 
   return (
     <TextField
-        label="Телефон"
-        variant="outlined"
-        fullWidth
-        value={value}
-        onChange={handleChange}
-        onBlur={() => setTouched(true)}
-        error={touched && !isValid}
-        helperText={
-          touched && !isValid ? 'Введите корректный номер телефона (например, +420123456789)' : ' '
-        }
-      />
+      label={PhoneLabel}
+      variant="outlined"
+      fullWidth
+      value={value}
+      onChange={handleChange}
+      onBlur={() => setTouched(true)}
+      color={(isValid) ? 'success' : 'error'}
+      error={touched && !isValid}
+      helperText={
+        touched && !isValid ? 'Please enter a valid phone number (eg +420423456789)' : ' '
+      }
+    />
   )
 }
 

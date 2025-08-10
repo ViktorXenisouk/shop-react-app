@@ -1,4 +1,4 @@
-import { Box } from "@mui/material"
+import { Box, Grid } from "@mui/material"
 import { DataLoaderFromPromise } from "../../../loading/Loading"
 import { safeFetch } from "../../../../services/safe-fetch"
 import { useAdminAuthStore } from "../../../../store/useAdmin"
@@ -12,9 +12,13 @@ const A = ({ data }: { data: User[] }) => {
     console.log(data)
 
     return (
-        <Box>
-            {data.map((item) => <AdminUserCard {...item} />)}
-        </Box>
+            <Grid container spacing={1}>
+                {data.map((item) =>
+                    <Grid size={4}>
+                        <AdminUserCard {...item} />
+                    </Grid>
+                )}
+            </Grid>
     )
 }
 
@@ -33,11 +37,10 @@ const AdminUsers = () => {
 
     console.log(url)
 
-    const res = safeFetch<User[]>(url,requestInit)
+    const res = safeFetch<User[]>(url, requestInit)
 
     return (
         <Box>
-
             <DataLoaderFromPromise res={res} page={A} />
         </Box>
     )

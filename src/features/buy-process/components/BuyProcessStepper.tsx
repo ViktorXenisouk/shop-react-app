@@ -1,4 +1,7 @@
 import { Step,Stepper,Typography,StepButton } from '@mui/material';
+import {ShoppingBasketOutlined,FolderSharedOutlined,Business,AddCard} from "@mui/icons-material"
+
+import MyLabel from '../../../components/labels/MyLabel';
 
 type Props = {
     activeStep: number,
@@ -6,12 +9,14 @@ type Props = {
     setActiveStep: (value: number) => void
 }
 
-const steps = ['log into your account', 'confirmed items', 'set place to recive', 'set payment method']
+const steps : {icon:React.ReactNode,title:string}[] = [
+{icon:<FolderSharedOutlined/>, title:'personal info'}, 
+{icon:<ShoppingBasketOutlined/>, title:'confirmed items'}, 
+{icon:<Business/>, title:'set place to recive'}, 
+{icon:<AddCard/>, title:'set payment method'}, 
+]
 
 const BuyProcessStepper = ({ activeStep, completed, setActiveStep }: Props) => {
-    const isStepOptional = (step: number) => {
-        return step === 0
-    }
 
     const isCompletedStep = (step: number) => {
         return completed.has(step);
@@ -19,22 +24,22 @@ const BuyProcessStepper = ({ activeStep, completed, setActiveStep }: Props) => {
 
     return (
         <Stepper nonLinear activeStep={activeStep}>
-            {steps.map((label, index) => {
+            {steps.map((item, index) => {
                 const stepProps: { completed?: boolean } = {};
-                const labelProps: {
-                    optional?: React.ReactNode;
-                } = {};
-                if (isStepOptional(index)) {
-                    labelProps.optional = (
-                        <Typography variant="caption">Optional</Typography>
-                    );
-                }
-                if (isCompletedStep(index)) {
+
+                const completed = isCompletedStep(index)
+                if (completed) {
                     stepProps.completed = true;
                 }
+
+                const activeStepProps = (activeStep === index || completed) ? {
+                    color:'primary.main'
+                } : {}
+
+                console.log(stepProps)
                 return (
-                    <Step key={label} {...stepProps}>
-                        <StepButton onClick={() => setActiveStep(index)} {...labelProps}>{label}</StepButton>
+                    <Step {...stepProps}>
+                        <StepButton sx={{position:'relative'}} onClick={() => setActiveStep(index)}>{<MyLabel other={activeStepProps} {...item} end/>}</StepButton>
                     </Step>
                 );
             })}

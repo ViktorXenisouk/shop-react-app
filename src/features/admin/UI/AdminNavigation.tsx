@@ -13,6 +13,7 @@ const AdminNavigation = () => {
                         <Button component={Link} to="/admin/categories/search/?parentPath=%23root">Categories</Button>
                         <Button component={Link} to="/admin/users/search/">Users</Button>
                         <Button component={Link} to="/admin/admins/search/">Admins</Button>
+                        <Button component={Link} to="/admin/play-list/search/?parentPath=%23root">PlayLists</Button>
                     </Stack>
                 </Box>
             </Toolbar>

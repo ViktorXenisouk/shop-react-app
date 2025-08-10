@@ -1,17 +1,19 @@
 import BasketCard from "./UI/BacketCard"
 import { useAuthUserStore } from "../../store/useAuth"
-import { Box, Typography, Stack, Dialog, DialogTitle, DialogActions, Button } from "@mui/material";
+import { Box, Typography, Stack, Dialog, DialogTitle, DialogActions, Button, Divider } from "@mui/material";
 import { useMemo, useState } from "react"
 import { useLocalStorage } from "../../store/useLocalStorage";
 import HeaderText from "../../UI/HeaderText";
+import TopItems from "../top-item/TopItems";
+import RecentlyViewedProducts from "../top-item/RecentlyViewedProducts";
+import BasketEmpty from "./components/BasketEmpty"
 
 type Props = {
     onClose: (value: 'no' | 'yes' | 'no-ask' | 'nothing') => void
     open: boolean
 }
 
-const CustomDialog = ({ onClose, open }: Props) => {
-
+const CustomDialog: React.FC<Props> = ({ onClose, open }) => {
     return (
         <Dialog open={open} onClose={() => onClose('nothing')}>
             <DialogTitle>Are you sure to remove this item from basket</DialogTitle>
@@ -89,17 +91,17 @@ const BasketDisplay = () => {
         <>
             <Box>
                 <HeaderText>Basket</HeaderText>
-                <Stack>
-                    {basket.length > 0 ? 
-                    basket.map((item) =>
-                        <BasketCard onChange={onChange} id={item.id} info={{ count: item.count, liked: (user.favourite.includes(item.id) ?? false) }} />)
-                        :
-                        <Typography>your basket is empty</Typography>
-                    }
-                    <Box>
-                        <Typography>Total:{total}</Typography>
-                    </Box>
-                </Stack>
+                <Box sx={{ display: 'flex', justifyContent: 'center', flexDirection: 'column', }}>
+                    <Stack sx={{ width: '600px', p: '16px', bgcolor: 'background.paper' }}>
+                        {basket.length > 0 ?
+                            <>
+                                {basket.map((item) => <BasketCard onChange={onChange} id={item.id} info={{ count: item.count, liked: (user.favourite.includes(item.id) ?? false) }} />)}
+                            </>
+                            :
+                            <BasketEmpty />
+                        }
+                    </Stack>
+                </Box>
             </Box>
             <CustomDialog onClose={onClose} open={open} />
         </>

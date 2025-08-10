@@ -22,6 +22,7 @@ const CatalogMenu = ({ currentId, onCurrentIndexUpdate, onMouseOut }: { currentI
         >
             {!store.isLoading && store.catalog ? store.catalog.map((item, i) => (
                 <CatalogCard
+                isPlaylist={item.isPlaylist}
                 fullPath={item.fullPath}
                     key={item.fullPath}
                     isActive={currentId === i}

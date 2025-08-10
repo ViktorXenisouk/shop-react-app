@@ -15,7 +15,7 @@ const GalleryBlock = ({ variant, image }: ArticleBlock) => {
         component="img"
         src={image}
         alt={`gallery-${image}`}
-        sx={{ width: '160px', height: '160px', objectFit: 'cover', borderRadius: 1, gridColumn: columnPos, justifyContent: align }}
+        sx={{ width: 'auto', height: '200px', objectFit: 'cover', borderRadius: 1, gridColumn: columnPos, justifyContent: align }}
       />
     )
   }
@@ -27,14 +27,16 @@ const GalleryBlock = ({ variant, image }: ArticleBlock) => {
           component="img"
           src={image}
           alt={`gallery-${image}`}
-          sx={{ width: '160px', height: '160px', objectFit: 'cover', borderRadius: 1 }}
+          sx={{ width: 'auto', height: '200px', objectFit: 'cover', borderRadius: 1 }}
         />
       </Box>
     )
   else if (variant == 'left')
     return (
-      <Box display="grid" sx={{ gridTemplateColumns: 'repeat(2,  50%)', justifyContent: 'center' }}>
-        <Img />
+      <Box display="grid" sx={{ gridTemplateColumns: 'repeat(2,  50%)', justifyContent: 'flex-end' }}>
+        <Box sx={{width:'100%',display:'flex',justifyContent:'flex-end'}}>
+                  <Img />
+        </Box>
       </Box>
     )
   else

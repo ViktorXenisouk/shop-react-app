@@ -15,12 +15,17 @@ import AdminCategoryEdit from "./components/admin-category/AdminCategoryEdit";
 import AdminProductsEdit from "./components/admin-products/AdminProductEdit";
 import AdminUsersEdit from "./components/admin-users/AdminUsersEdit";
 
+import AdminPlayListCreate from "./components/admin--play-list/AdminPlayListCreate";
+import AdminPlayListEdit from "./components/admin--play-list/AdminPlayListEdit";
+import AdminPlayList from "./components/admin--play-list/AdminPlayList"
+
+
 import AdminMe from "./components/admin-me/AdminMe";
 import AdminEditMe from "./components/admin-me/AdminEditMe";
 
 export {
-    AdminAdmins, AdminArticle, AdminCategory, AdminProducts, AdminUsers,
-    AdminAdminsCreate, AdminArticleCreate, AdminCategoryCreate, AdminProductCreate,
-    AdminAdminsEdit, AdminArticleEdit, AdminCategoryEdit, AdminProductsEdit, AdminUsersEdit,
+    AdminAdmins, AdminArticle, AdminCategory, AdminProducts, AdminUsers,AdminPlayList,
+    AdminAdminsCreate, AdminArticleCreate, AdminCategoryCreate, AdminProductCreate,AdminPlayListCreate,
+    AdminAdminsEdit, AdminArticleEdit, AdminCategoryEdit, AdminProductsEdit, AdminUsersEdit,AdminPlayListEdit,
     AdminMe, AdminEditMe
 }

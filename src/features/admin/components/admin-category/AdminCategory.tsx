@@ -13,6 +13,8 @@ const A = ({ data }: { data: Catalog[] }) => {
     const [params, setParams] = useSearchParams()
     const parentPath = params.get('parentPath');
 
+    console.log(data)
+
     const selectHandler = (path: string) => {
         params.set('parentPath', path)
         setParams(params)

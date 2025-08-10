@@ -9,7 +9,7 @@ import CatalogMenu from './features/catalog/CatalogMenu';
 import CatalogModal from './features/catalog/CatalogModal';
 import MyImageList from './components/MyImageList';
 
-import MyCarousel from './components/MyCarousel';
+import BillboardMainCarousel from './UI/BillboardMainCarousel';
 
 type Props = {
     currentId: number,
@@ -47,6 +47,7 @@ const MainView = ({ currentId, onClose, setIsCatalogMouseOver, setCurrentId }: P
                                 />
                             </Box>
                             <Stack>
+                              <BillboardMainCarousel/>
                                 <MyImageList />
                                 <TopCategories />
                                 <TopItems />

@@ -1,13 +1,6 @@
 import { styled } from "@mui/material/styles";
 import { Button } from "@mui/material";
 
-const Wrapper = styled('div')(({ theme }) => ({
-    display: 'flex',
-    gap: theme.spacing(2),
-    padding: theme.spacing(3),
-    backgroundColor: theme.palette.background.default,
-}))
-
 type Props = {
     onClick: () => void,
     disabled: boolean,
@@ -32,9 +25,11 @@ const CarouselButton = ({ onClick, disabled, left, right, icon }: Props) => {
                 border: '#ccc solid 1px',
                 color: disabled ? 'grey.400' : 'primary.main',
                 bgcolor: 'transparent',
+                borderWidth: '1px',
+                borderStyle:'double',
 
                 ':hover': {
-                    border: 'black solid 1px',
+                    borderColor: 'grey.500',
                     backgroundColor: 'grey.200'
                 },
             }}

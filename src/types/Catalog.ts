@@ -18,7 +18,6 @@ type Catalog = {
     fullPath: string;
     path: string;
     parentPath?: string;
-    catalogs?: Catalog[];
     subCategories?:Catalog[];
     filter?:Filter
     discription?:string

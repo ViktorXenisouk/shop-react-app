@@ -14,7 +14,11 @@ import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
 type SortOption = 'price' | 'rating' | 'newest';
 type SortOrder = 'asc' | 'desc';
 
-const SortSwitcher = ({fullWidth}:{fullWidth?:boolean}) => {
+type Props = {
+    fullWidth?:boolean
+}
+
+const SortSwitcher : React.FC<Props> = ({fullWidth}) => {
     const [searchParams, setSearchParams] = useSearchParams();
 
     const sortOption = (searchParams.get('sort') as SortOption) || 'price';
@@ -40,13 +44,13 @@ const SortSwitcher = ({fullWidth}:{fullWidth?:boolean}) => {
 
     return (
         <Box sx={{ display: 'flex', alignItems: 'center', gap: 2,justifyContent: fullWidth ? 'space-between' : 'flex-start' }}>
-            <FormControl size="small">
-                <InputLabel sx={{minWidth:30}} id="sort-by-label">Сортировать по</InputLabel>
+            <FormControl sx={{width:'150px'}} size="small">
+                <InputLabel sx={{minWidth:50}} id="sort-by-label">Sort By</InputLabel>
                 <Select
                     labelId="sort-by-label"
                     value={sortOption}
                     onChange={handleSortOptionChange}
-                    label="Сортировать по"
+                    label="sort-by"
                 >
                     <MenuItem value="name">Name</MenuItem>
                     <MenuItem value="price">Цене</MenuItem>

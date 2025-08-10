@@ -1,0 +1,18 @@
+.animated-strokes svg * {
+  stroke: #999;
+  stroke-width: 2;
+  fill: none;
+  stroke-dasharray: 1000;
+  stroke-dashoffset: 1000;
+  animation: draw 3.5s ease forwards;
+}
+
+.animated-strokes svg path {
+  stroke: #E57373;
+}
+
+@keyframes draw {
+  to {
+    stroke-dashoffset: 0;
+  }
+}

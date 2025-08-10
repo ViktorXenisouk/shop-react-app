@@ -1,29 +1,22 @@
-import { Radio, FormControlLabel } from '@mui/material';
+import React from 'react';
+import CheckboxWithLabel from '../../../../../../UI/CheckboxWithLabel';
 
-type CustomRadioProps = {
+type Props = {
   isSelected: boolean;
   label: string;
   addOrRemoveTag: (tag: string) => void;
   value: string;
 };
 
-const CustomRadio = ({ label, value,isSelected,addOrRemoveTag }: CustomRadioProps) => {
+const CustomRadio : React.FC<Props> = ({ label, value,isSelected,addOrRemoveTag }) => {
 
   const handleChange = () => {
     addOrRemoveTag(value)
   };
 
   return (
-    <FormControlLabel
-      control={
-        <Radio
-          checked={isSelected}
-          onClick={handleChange}
-        />
-      }
-      label={label}
-    />
-  );
+    <CheckboxWithLabel onClick={handleChange} isSelected={isSelected} label={label}/>
+  )
 }
 
 export default CustomRadio
