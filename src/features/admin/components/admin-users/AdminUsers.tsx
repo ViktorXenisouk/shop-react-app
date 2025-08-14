@@ -1,3 +1,4 @@
+import React from "react"
 import { Box, Grid } from "@mui/material"
 import { DataLoaderFromPromise } from "../../../loading/Loading"
 import { safeFetch } from "../../../../services/safe-fetch"
@@ -8,21 +9,21 @@ import { useLocation } from 'react-router-dom';
 import AdminUserCard from "./components/AdminUserCard"
 
 
-const A = ({ data }: { data: User[] }) => {
+const Loader : React.FC<{data:User[]}> = ({ data }) => {
     console.log(data)
 
     return (
-            <Grid container spacing={1}>
-                {data.map((item) =>
-                    <Grid size={4}>
-                        <AdminUserCard {...item} />
-                    </Grid>
-                )}
-            </Grid>
+        <Grid container spacing={1}>
+            {data.map((item) =>
+                <Grid size={4}>
+                    <AdminUserCard {...item} />
+                </Grid>
+            )}
+        </Grid>
     )
 }
 
-const AdminUsers = () => {
+const AdminUsers : React.FC = () => {
     const store = useAdminAuthStore()
 
     const location = useLocation()
@@ -41,7 +42,7 @@ const AdminUsers = () => {
 
     return (
         <Box>
-            <DataLoaderFromPromise res={res} page={A} />
+            <DataLoaderFromPromise res={res} page={Loader} />
         </Box>
     )
 }

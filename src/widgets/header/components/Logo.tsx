@@ -8,6 +8,3 @@ const Logo = () => {
 }
 
 export { Logo }
-
-
-//style={{ display: isHidden ? 'none' : 'inline' }}

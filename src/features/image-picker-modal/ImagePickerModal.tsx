@@ -1,20 +1,14 @@
 import React, { useEffect, useState } from 'react';
-import {
-  Dialog,
-  DialogTitle,
-  DialogContent,
-  DialogActions,
-  Button,
-  Grid,
-  Typography,
-  IconButton,
-  Box,
-  Avatar,
-} from '@mui/material';
-import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate';
+import { AddPhotoAlternate } from '@mui/icons-material';
 import CloseIcon from '@mui/icons-material/Close';
 import type { ImageItem } from '../../types/Image';
-import { autoSaveFetch, safeFetch } from '../../services/safe-fetch';
+import { autoSaveFetch, safeFetch }
+  from '../../services/safe-fetch';
+import {
+  Dialog, DialogTitle, DialogContent, DialogActions, Button,
+  Grid, Typography, IconButton, Box, Avatar,
+} from '@mui/material';
+import ImagePickerCard from './components/ImagePickerCard';
 
 type Props = {
   open: boolean;
@@ -46,17 +40,18 @@ const ImagePickerModal: React.FC<Props> = ({ open, onClose, onSelect, folder, de
     setUploadPreview(URL.createObjectURL(file));
 
     const formData = new FormData();
+
     formData.append('image', file);
 
-    console.log(formData)
-
     setUploading(true);
-    const result = await safeFetch<{ url: string }>(`/images/upload/${folder}`, {
-      method: 'POST',
-      body: formData,
-    });
 
-    console.log(result)
+    const result = await safeFetch<{ url: string }>(
+      `/images/upload/${folder}`,
+      {
+        method: 'POST',
+        body: formData,
+      });
+
     if (!result.success || !result.data) {
       alert('some error during')
       setUploading(false);
@@ -86,56 +81,37 @@ const ImagePickerModal: React.FC<Props> = ({ open, onClose, onSelect, folder, de
   return (
     <Dialog fullScreen open={open} onClose={onClose}>
       <DialogTitle>
-        Выбор изображений
-        <IconButton onClick={onClose} sx={{ position: 'absolute', right: 16, top: 16 }}>
+        Selecter of Images
+        <IconButton
+          onClick={onClose}
+          sx={{
+            position: 'absolute',
+            right: 16,
+            top: 16
+          }}>
           <CloseIcon />
         </IconButton>
       </DialogTitle>
-
       <DialogContent>
         <Grid container>
           {selectedImages.map((img) =>
             <Grid size={{ xs: 4, sm: 3, md: 2 }} >
-              <Box
-                onClick={() => toggleSelect(img)}
-                sx={{
-                  border: isSelected(img.url) ? '2px solid blue' : '1px solid gray',
-                  borderRadius: 2,
-                  p: 1,
-                  cursor: 'pointer',
-                }}
-              >
-                <Avatar
-                  variant="rounded"
-                  src={img.url}
-                  alt={img.name}
-                  sx={{ width: '100%', height: 100, objectFit: 'cover' }}
-                />
-                <Typography variant="caption" noWrap>{img.name}</Typography>
-              </Box>
+              <ImagePickerCard
+                isSelected={isSelected}
+                toggleSelect={toggleSelect}
+                img={img}
+              />
             </Grid>)}
         </Grid>
-        <Typography variant="h6" gutterBottom>Доступные изображения</Typography>
+        <Typography variant="h6" gutterBottom>Available Images</Typography>
         <Grid container spacing={2}>
           {availableImages.length > 0 ? availableImages.map((img) => (
             <Grid size={{ xs: 4, sm: 3, md: 2 }} key={img.url}>
-              <Box
-                onClick={() => toggleSelect(img)}
-                sx={{
-                  border: isSelected(img.url) ? '2px solid blue' : '1px solid gray',
-                  borderRadius: 2,
-                  p: 1,
-                  cursor: 'pointer',
-                }}
-              >
-                <Avatar
-                  variant="rounded"
-                  src={img.url}
-                  alt={img.name}
-                  sx={{ width: '100%', height: 100, objectFit: 'cover' }}
-                />
-                <Typography variant="caption" noWrap>{img.name}</Typography>
-              </Box>
+              <ImagePickerCard
+                isSelected={isSelected}
+                toggleSelect={toggleSelect}
+                img={img}
+              />
             </Grid>
           )) : null}
         </Grid>
@@ -145,7 +121,7 @@ const ImagePickerModal: React.FC<Props> = ({ open, onClose, onSelect, folder, de
           <Button
             variant="outlined"
             component="label"
-            startIcon={<AddPhotoAlternateIcon />}
+            startIcon={<AddPhotoAlternate />}
             disabled={uploading}
           >
             Загрузить
@@ -154,7 +130,7 @@ const ImagePickerModal: React.FC<Props> = ({ open, onClose, onSelect, folder, de
 
           {uploadPreview && (
             <Box mt={2}>
-              <Typography variant="caption">Предпросмотр:</Typography>
+              <Typography variant="caption">Priview:</Typography>
               <Avatar
                 src={uploadPreview}
                 alt="preview"

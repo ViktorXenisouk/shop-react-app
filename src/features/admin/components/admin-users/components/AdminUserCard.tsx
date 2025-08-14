@@ -1,12 +1,12 @@
-import type { User } from "../../../../../types/user"
-import { Paper, CardContent, Typography, ButtonGroup, Button, Box } from "@mui/material"
+import React, { useState } from "react"
+import { type User } from "../../../../../types/user"
+import { Paper, Typography, ButtonGroup, Button, Box } from "@mui/material"
 import { autoSaveFetch } from "../../../../../services/safe-fetch"
 import { useAdminAuthStore } from "../../../../../store/useAdmin"
-import { useState } from "react"
 import { Link } from "react-router-dom"
 import {LockOutline,LockOpen,Edit,DeleteOutline} from "@mui/icons-material"
 
-const AdminUserCard = (props: User) => {
+const AdminUserCard : React.FC<User> = (props) => {
   const store = useAdminAuthStore()
 
   const [isBlocked, setIsBlocked] = useState(props.isBlocked ? true : false)

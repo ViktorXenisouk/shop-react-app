@@ -1,10 +1,15 @@
-import { Box,Button } from "@mui/material"
-import { BillboardItem } from "./types"
 import React from "react"
+import { Box, Button, SxProps,Theme } from '@mui/material';
+import { BillboardItem } from "./types"
 import { Link } from "react-router-dom"
 
+type Props = {
+    item:BillboardItem,
+    sx?:SxProps<Theme>
+}
 
-const BillboardCard : React.FC<{ item:BillboardItem }> = ({ item }) => {
+
+const BillboardCard: React.FC<Props> = ({ item,sx }) => {
     return (
         <Box
             sx={{
@@ -19,10 +24,22 @@ const BillboardCard : React.FC<{ item:BillboardItem }> = ({ item }) => {
                 color: 'white',
                 transition: 'opacity 0.5s ease-in-out',
                 zIndex: 0,
+                ...sx
             }}
         >
-            <Box sx={{ position: 'absolute', bottom: '70px', right: '10px' }}>
-                <Button size='large' variant="contained" component={Link} to={item.url}>
+            <Box
+                sx={{
+                    position: 'absolute',
+                    bottom: '70px',
+                    right: '10px'
+                }}
+            >
+                <Button
+                    size='large'
+                    variant="contained"
+                    component={Link}
+                    to={item.url}
+                >
                     Show More
                 </Button>
             </Box>

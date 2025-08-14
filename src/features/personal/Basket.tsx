@@ -1,8 +1,7 @@
 import { useAuthUserStore } from '../../store/useAuth';
 import { Link } from 'react-router-dom';
 import BasketForm from '../basket/BasketDisplay';
-import { Box, Button } from "@mui/material"
-import { Divider } from '@mui/material';
+import { Box, Button,Divider } from "@mui/material"
 import RecentlyViewedProducts from '../top-item/RecentlyViewedProducts';
 import TopItems from '../top-item/TopItems';
 

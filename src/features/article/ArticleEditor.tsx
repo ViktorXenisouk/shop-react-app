@@ -1,25 +1,19 @@
-import { useEffect, useState } from 'react';
-import { DndContext, closestCenter } from '@dnd-kit/core';
-import {
-  SortableContext, arrayMove, verticalListSortingStrategy,
-} from '@dnd-kit/sortable';
+import React, { useEffect, useState } from 'react';
+import { arrayMove, } from '@dnd-kit/sortable';
 import { v4 as uuidv4 } from 'uuid';
 import { ArticleBlock } from '../../types/article';
-import ArticleEditorBlock from './components/ArticleEditorBlock';
-import {
-  Box, Button, Typography, Accordion, AccordionDetails, AccordionSummary
-} from '@mui/material';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import Article from './Article';
+import { Block, ArticleVariant } from './types';
+import ArticleEditorView from './ArticleEditorView';
 
-type A = "imageWithText" | "paragraph" | "gallery"
+type Props = {
+  onChange?: (blocks: Block[]) => void;
+  defaultValue?: ArticleBlock[];
+}
 
-type Block = ArticleBlock & { id: string }
+const ArticleEditor: React.FC<Props> = ({ onChange, defaultValue }) => {
+  const [blocks, setBlocks] = useState<Block[]>(defaultValue ? defaultValue.map((v) => { return { ...v, id: uuidv4() } }) : []);
 
-const ArticleEditor = ({ onChange, defaultValue }: { onChange?: (blocks: Block[]) => void, defaultValue?: ArticleBlock[] }) => {
-  const [blocks, setBlocks] = useState<Block[]>(defaultValue ? defaultValue.map((v) => {return {...v,id:uuidv4()}}) : []);
-
-  const addBlock = (type: A) => {
+  const addBlock = (type: ArticleVariant) => {
     const newBlock: Block = {
       id: uuidv4(),
       title: '',
@@ -59,47 +53,13 @@ const ArticleEditor = ({ onChange, defaultValue }: { onChange?: (blocks: Block[]
   };
 
   return (
-    <Box>
-      <Accordion>
-        <AccordionSummary
-          expandIcon={<ExpandMoreIcon />}>
-          <Typography>Editor</Typography>
-        </AccordionSummary>
-        <AccordionDetails>
-          <Box>
-            <Typography variant="h5" gutterBottom>Редактор статьи</Typography>
-
-            <Box display="flex" gap={2} mb={3}>
-              <Button onClick={() => addBlock('paragraph')} variant="outlined">+ paragraf</Button>
-              <Button onClick={() => addBlock('imageWithText')} variant="outlined">+ image with text</Button>
-              <Button onClick={() => addBlock('gallery')} variant="outlined">+ galery</Button>
-            </Box>
-
-            <DndContext collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
-              <SortableContext items={blocks.map((b) => b.id)} strategy={verticalListSortingStrategy}>
-                {blocks.map((block) => (
-                  <ArticleEditorBlock block={block} updateBlock={updateBlock} deleteBlock={deleteBlock} />
-                ))}
-              </SortableContext>
-            </DndContext>
-            <Box mt={4}>
-              <Typography variant="subtitle2">JSON:</Typography>
-              <pre style={{ fontSize: 12 }}>{JSON.stringify(blocks, null, 2)}</pre>
-            </Box>
-          </Box>
-        </AccordionDetails>
-      </Accordion>
-      <Accordion>
-        <AccordionSummary
-          expandIcon={<ExpandMoreIcon />}>
-          <Typography>Presentation</Typography>
-        </AccordionSummary>
-        <AccordionDetails>
-          <Article articles={blocks} />
-        </AccordionDetails>
-      </Accordion>
-    </Box>
-  );
+    <ArticleEditorView
+      blocks={blocks}
+      updateBlock={updateBlock}
+      deleteBlock={deleteBlock}
+      handleDragEnd={handleDragEnd}
+      addBlock={addBlock} />
+  )
 };
 
 export default ArticleEditor

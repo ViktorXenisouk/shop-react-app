@@ -9,17 +9,16 @@ import { grey } from '@mui/material/colors';
 import { Box, Container, useMediaQuery, useTheme } from '@mui/material';
 
 function App() {
-  const store = useAdminAuthStore()
-  console.log(store.token)
   const theme = useTheme();
   const isSmall = useMediaQuery(theme.breakpoints.down('sm'));
+  const isMobile = useMediaQuery(theme.breakpoints.down('md'))
   return (
-    <Box className="App" sx={{ m: 0, p: 0 }}>
+    <Box className="App" sx={{ m: 0, p: 0,bgcolor:'primary' }}>
       <Navbar />
       <Container
         maxWidth={isSmall ? false : undefined}  // 100% на XS, 'md' на других
         disableGutters={isSmall}
-        component={'main'} sx={{ minHeight: 1500, backgroundColor: grey[50], pl: '0px!important', pr: '0px!important', pt: 0, overflowY: 'hidden', mb: isSmall ? "60px" : undefined }}>
+        component={'main'} sx={{ minHeight: 1500, bgcolor:'background.default', pl: '0px!important', pr: '0px!important', pt: 0, overflowY: 'hidden', mb: isMobile ? "60px" : undefined }}>
         <Routes>
           <Route index element={<pages.Main />} />
           <Route path='/me/:page' element={<pages.Personal />} />

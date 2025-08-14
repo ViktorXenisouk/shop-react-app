@@ -1,7 +1,8 @@
+import React from "react"
 import { Box, AppBar, Toolbar, Stack, Button } from "@mui/material"
 import { Link } from "react-router-dom"
 
-const AdminNavigation = () => {
+const AdminNavigation : React.FC = () => {
 
     return (
         <AppBar color="default" position="sticky" elevation={4}>

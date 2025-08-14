@@ -1,3 +1,4 @@
+import React from "react"
 import { Box, Stack, TextField, Button,Paper } from "@mui/material"
 import { useState } from "react"
 import { Link } from "react-router-dom"
@@ -6,7 +7,12 @@ import { PlayList } from "../../../../../types/play-list"
 import TagsInput from "../../../UI/TagsInput"
 import AdminSearchProductsModal from "../features/SearchProducts/AdminSearchProductsModal"
 
-const CategoryUpdateOrCreateForm = ({ onSubmit, data, parentPath }: { onSubmit: (body: Body) => Promise<void>, data?: PlayList, parentPath?: string }) => {
+type Props = { 
+    onSubmit: (body: Body) => Promise<void>, 
+    data?: PlayList, 
+    parentPath?: string }
+
+const CategoryUpdateOrCreateForm : React.FC<Props> = ({ onSubmit, data, parentPath } ) => {
     const ph = parentPath ? parentPath : data?.parentPath ? data.parentPath : '#root'
 
     const [loading, setLoading] = useState(false)

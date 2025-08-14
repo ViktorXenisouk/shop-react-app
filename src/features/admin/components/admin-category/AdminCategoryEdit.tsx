@@ -1,14 +1,15 @@
+import React from 'react';
 import { useParams } from 'react-router-dom';
 import { useAdminAuthStore } from '../../../../store/useAdmin';
 import { editCategory } from './api';
 import { DataLoaderFromPromise } from '../../../loading/Loading';
 import { safeFetch } from '../../../../services/safe-fetch';
-import { Catalog, Filter, CategoryProps, Variant } from '../../../../types/catalog';
+import { Catalog } from '../../../../types/catalog';
 import { Body } from './types';
 import CategoryUpdateOrCreateForm from './components/CategoryUpdateOrCreateForm';
 
 
-const A = ({ data }: { data: Catalog }) => {
+const Loader : React.FC<{ data: Catalog}> = ({ data }) => {
     const store = useAdminAuthStore()
    
     const submitHandler = async (body : Body) => {
@@ -35,7 +36,7 @@ const AdminCategoryEdit = () => {
     const res = safeFetch<Catalog>(`/category/${id}`, options)
 
     return (
-        <DataLoaderFromPromise res={res} page={A} />
+        <DataLoaderFromPromise res={res} page={Loader} />
     )
 }
 

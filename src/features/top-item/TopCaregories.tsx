@@ -7,7 +7,16 @@ const TopCategories = () => {
     const categories = getCategories()
    return (
         <Box sx={{ width: '100%' }}>
-            <Typography variant="h3" align='center' sx={{textDecoration:'underline', mt:'30px', mb:'12px'}}>Top Categories</Typography>
+            <Typography 
+            variant="h3" 
+            align='center' 
+            sx={{
+                color:'text.primary',
+                textDecoration:'underline', 
+                mt:'30px', 
+                mb:'12px'}}>
+                Top Categories
+                </Typography>
             {
                 categories ?
                     <CarouselWithButtons height="500px">

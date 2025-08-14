@@ -1,8 +1,9 @@
+import React from "react"
 import { useNavigate, useParams } from "react-router-dom"
 import { BottomNavigation, BottomNavigationAction } from "@mui/material"
 import { ShoppingBasketRounded, Person, Favorite } from "@mui/icons-material"
 
-const PersonalNavigation = () => {
+const PersonalNavigation : React.FC = () => {
     const params = useParams()
     const navigate = useNavigate()
 

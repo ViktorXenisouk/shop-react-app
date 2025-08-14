@@ -1,9 +1,10 @@
-import { Box, TextareaAutosize, Icon, Typography, Button, IconButton, Rating,TextField } from "@mui/material"
+import React from "react"
+import { Box, Icon, Typography, Button, IconButton, Rating,TextField } from "@mui/material"
 import { Link } from "react-router-dom"
 import { useAuthUserStore } from "../../../../store/useAuth"
 import { Send, Person } from "@mui/icons-material"
 
-const WriteComment = () => {
+const WriteComment : React.FC= () => {
     const store = useAuthUserStore()
 
     if (!store.user) {
@@ -18,7 +19,12 @@ const WriteComment = () => {
     return (
         <Box sx={{ display: 'flex', justifyContent: 'center' }}>
             <Box>
-                <Box sx={{ display: 'flex', alignContent: 'center', justifyContent: 'left' }}>
+                <Box sx={{ 
+                    display: 'flex', 
+                    alignContent: 'center', 
+                    justifyContent: 'left',
+                    color:'text.primary',
+                     }}>
                     <Icon><Person /></Icon>
                     <Typography>{store.user.username}</Typography>
                 </Box>

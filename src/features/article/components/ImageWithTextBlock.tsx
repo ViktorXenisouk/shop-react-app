@@ -1,8 +1,9 @@
+import React from "react";
 import type { ArticleBlock } from "../../../types/article"
 import { Box, Grid, Typography } from "@mui/material"
 
 
-const ImageWithTextBlock = ({ text, image, variant }: ArticleBlock) => {
+const ImageWithTextBlock : React.FC<ArticleBlock> = ({ text, image, variant }) => {
   const imgJSX = (
     <Box
       component="img"

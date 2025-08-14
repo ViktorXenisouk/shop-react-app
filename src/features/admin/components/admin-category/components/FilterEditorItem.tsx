@@ -1,5 +1,6 @@
+import React from "react";
 import { FilterItem, Variant } from "../../../../../types/catalog"
-import { Box, Stack, TextField, Typography, Select, MenuItem, Grid, Button } from "@mui/material"
+import { Box, Stack, TextField, Select, MenuItem, Grid, Button } from "@mui/material"
 import { useSortable, } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
 import { DragIndicator } from "@mui/icons-material"

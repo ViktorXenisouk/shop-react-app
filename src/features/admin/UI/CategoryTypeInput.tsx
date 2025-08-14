@@ -1,6 +1,11 @@
+import React from "react"
 import { Autocomplete, TextField } from "@mui/material"
 
-const CategoryTypeInput = ({ onChange }: { onChange: (value: string) => void }) => {
+type Props = {
+  onChange: (value: string) => void
+}
+
+const CategoryTypeInput: React.FC<Props> = ({ onChange }) => {
   const options = ['number', 'min-max', 'tags-horizontal', 'tags-vertical']
   const defaultValue = "tags-horizontal"
   const changeHandler = (event: any, value: string | null) => {

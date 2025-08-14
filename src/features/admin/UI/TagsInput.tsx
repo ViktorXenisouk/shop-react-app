@@ -1,12 +1,16 @@
-import { useState, Fragment, useMemo } from 'react';
+import React, { useState, Fragment, useMemo } from 'react';
 import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
 import CircularProgress from '@mui/material/CircularProgress';
 import type { Catalog } from '../../../types/catalog';
 import { useRequest } from '../../../hooks/useRequest';
 
+type Props = {
+onChange?: (value?: string[]) => void,
+ defaultValue?: string[]
+}
 
-const TagsInput = ({ onChange, defaultValue }: { onChange?: (value?: string[]) => void, defaultValue?: string[] }) => {
+const TagsInput : React.FC<Props> = ({ onChange, defaultValue }) => {
     const [open, setOpen] = useState(false);
 
     const [isLoaded, data, errors] = useRequest<Catalog[]>('/category/find/', { method: "GET" })

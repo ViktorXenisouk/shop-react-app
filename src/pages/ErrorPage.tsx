@@ -1,47 +1,73 @@
-import imgSrc from "../assets/images/robot-error-404.png"
-import { Box,Typography,Paper } from "@mui/material";
+import React from "react";
+import { Typography, Paper } from "@mui/material";
 import RobotWithMessage from "../assets/interactive-svg/RobotWithMessage"
 import NoFoundErrorPage from "./NoFoundErrorPage";
 
-type ErrorPageProps = {
-    status:number;
-    message:string;
-}
-
-const ErrorPage = ({status,message}:ErrorPageProps) => {
-
-    if(status === 404){
-        return <NoFoundErrorPage/>
-    }
-
+const getMessageByStatusStatusCode = (status: number) => {
     let index = 0
 
-    if(status >= 300 && status < 400){
-index = 0
+    if (status >= 300 && status < 400) {
+        index = 0
     }
-    if(status >= 400 && status < 500){
+    if (status >= 400 && status < 500) {
         index = 1
     }
-    if(status >= 500){
+    if (status >= 500) {
         index = 2
     }
 
-    const text = ['Some error due to Redirections','It is a Client Error, plese check if your Input is Correct','Server Error, We are very sorry and we are working about it']
+    return [
+        'Some error due to Redirections',
+        'It is a Client Error, plese check if your Input is Correct',
+        'Server Error, We are very sorry and we are working about it']
     [index]
+}
+
+type Props = {
+    status: number;
+    message: string;
+}
+
+const ErrorPage : React.FC<Props> = ({ status, message }) => {
+
+    if (status === 404) {
+        return <NoFoundErrorPage />
+    }
+
+
+    const text = getMessageByStatusStatusCode(status)
 
     return (
-        <Paper variant="outlined" sx={{display:'flex',justifyContent:'center',flexDirection:'column',alignItems:'center',pt:'10px',width:'600px',mx:'auto',mt:'30px',p:'30px'}}>
-              <Typography variant="h2">
+        <Paper
+            variant="outlined"
+            sx={{
+                display: 'flex',
+                justifyContent: 'center',
+                flexDirection: 'column',
+                alignItems: 'center',
+                pt: '10px',
+                width: '600px',
+                mx: 'auto',
+                mt: '30px',
+                p: '30px'
+            }}
+        >
+            <Typography variant="h2">
                 Error Page : {status}
             </Typography>
 
-            <RobotWithMessage message={status.toString()}/>
+            <RobotWithMessage message={status.toString()} />
 
-              <Typography variant="h3">
+            <Typography variant="h3">
                 {text}
             </Typography>
 
-            <Typography sx={{mt:'50px'}} variant="h3">message: {message}</Typography>
+            <Typography
+                variant="h3"
+                sx={{ mt: '50px' }}
+            >
+                message: {message}
+            </Typography>
         </Paper>
     )
 }

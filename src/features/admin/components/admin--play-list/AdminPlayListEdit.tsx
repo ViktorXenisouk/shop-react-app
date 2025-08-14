@@ -1,3 +1,4 @@
+import React from "react";
 import { PlayList } from "../../../../types/play-list";
 import { autoSaveFetch } from "../../../../services/safe-fetch";
 import { useParams } from "react-router-dom";
@@ -7,7 +8,7 @@ import { useAdminAuthStore } from "../../../../store/useAdmin";
 import { DataLoaderFromPromise } from "../../../loading/Loading";
 import { editPlayList } from "./api";
 
-const A = ({ data }: { data: PlayList }) => {
+const Render : React.FC<{ data: PlayList }> = ({ data }) => {
     const store = useAdminAuthStore()
 
     console.log(data)
@@ -30,7 +31,7 @@ const AdminPlayListEdit = () => {
     const res = autoSaveFetch<PlayList>(`/play-list/${id}`, {method:'GET'})
 
     return (
-        <DataLoaderFromPromise res={res} page={A} />
+        <DataLoaderFromPromise res={res} page={Render} />
     )
 }
 

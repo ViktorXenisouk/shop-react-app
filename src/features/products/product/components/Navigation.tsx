@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { Box, Tabs, Tab, useMediaQuery, useTheme } from "@mui/material"
 import { Reviews, AddComment, ReadMore, PermMedia,Build } from "@mui/icons-material"
 
@@ -7,7 +7,7 @@ type Props = {
     onChange: (value:number) => void,
 }
 
-const Navigation = ({value,onChange}:Props) => {
+const Navigation : React.FC<Props> = ({value,onChange}) => {
     const theme = useTheme()
     const isSmall = useMediaQuery(theme.breakpoints.only('xs'))
     const handleChange = (event: React.SyntheticEvent, newValue: number) => {

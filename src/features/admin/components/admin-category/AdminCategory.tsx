@@ -1,3 +1,4 @@
+import React from 'react';
 import { useLocation, useNavigate, useSearchParams } from 'react-router-dom';
 import { DataLoaderFromPromise } from "../../../loading/Loading";
 import { safeFetch } from "../../../../services/safe-fetch";
@@ -5,10 +6,10 @@ import { Catalog } from "../../../../types/catalog";
 import { parseParams } from "../../../../utils/parseParams";
 import AdminCategoryCard from "./components/AdminCategoryCard";
 import { ArrowBack, Add } from "@mui/icons-material"
-import { Box, Stack, Button, TextField, Breadcrumbs } from "@mui/material"
+import { Box, Stack, Button} from "@mui/material"
 import CategoryParser from './components/CategoryParser';
 
-const A = ({ data }: { data: Catalog[] }) => {
+const Loader : React.FC<{data: Catalog[]}> = ({ data }) => {
 
     const [params, setParams] = useSearchParams()
     const parentPath = params.get('parentPath');
@@ -89,7 +90,7 @@ const AdminCategory = () => {
 
     return (
         <Box>
-            <DataLoaderFromPromise res={res} page={A} />
+            <DataLoaderFromPromise res={res} page={Loader} />
             <Button endIcon={<Add />} onClick={addHandler}>Add</Button>
         </Box>
     )

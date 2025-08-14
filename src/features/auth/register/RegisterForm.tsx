@@ -1,6 +1,5 @@
-import { useState } from "react"
-import React from "react";
-import { Box, Stack,Paper } from '@mui/material';
+import React, { useState } from "react"
+import { Stack,Paper } from '@mui/material';
 import { type Body } from "./types";
 import RegisterStepper from './components/RegisterStepper';
 import { FirstPage, SecondPage, ThirdPage, FourthPage } from "./components/pages"
@@ -8,14 +7,10 @@ import HeaderText from "../../../UI/HeaderText";
 
 const pages = [FirstPage, SecondPage, ThirdPage, FourthPage]
 
-const Register = () => {
+const RegisterForm = () => {
     const [activeStep, setActiveStep] = useState(0)
     const [step,setStep] = useState(0)
     const [body, setBody] = useState<Body>({ username: '', email: '', password: '', tel: '' })
-
-    const setAActiveStep = (index: number) => {
-setActiveStep(index)
-    }
 
     const next = () => {
         setActiveStep((prev) => {
@@ -39,7 +34,7 @@ setActiveStep(index)
     return (
         <Paper sx={{ width: '600px', display: 'flex', justifyContent: 'center', flexDirection: 'column',p:'12px' }}>
             <HeaderText>Register Form</HeaderText>
-            <RegisterStepper setActiveStep={setAActiveStep} step={step} activeStep={activeStep} />
+            <RegisterStepper activeStep={activeStep} />
             <Stack sx={{p:'50px'}} spacing={2}>
                 {page}
             </Stack>
@@ -47,4 +42,4 @@ setActiveStep(index)
     )
 }
 
-export default Register
+export default RegisterForm

@@ -1,3 +1,4 @@
+import React from 'react';
 import { useLocation, useNavigate, useSearchParams } from 'react-router-dom';
 import { DataLoaderFromPromise } from "../../../loading/Loading";
 import { safeFetch } from "../../../../services/safe-fetch";
@@ -8,7 +9,7 @@ import { Box, Stack, Button, TextField, Breadcrumbs } from "@mui/material"
 import { PlayList } from '../../../../types/play-list';
 import CategoryParser from './components/CategoryParser';
 
-const A = ({ data }: { data: PlayList[] }) => {
+const Render : React.FC<{data:PlayList[]}> = ({ data }) => {
 
     const [params, setParams] = useSearchParams()
     const parentPath = params.get('parentPath');
@@ -67,7 +68,7 @@ const A = ({ data }: { data: PlayList[] }) => {
     )
 }
 
-const AdminCategory = () => {
+const AdminCategory : React.FC = () => {
     const navigate = useNavigate()
     const [params, setParams] = useSearchParams()
 
@@ -83,14 +84,11 @@ const AdminCategory = () => {
 
     const url = `/play-list/find/${parseParams(location.search, ['parentPath'])}`
 
-        console.log('url:')
-    console.log(url)
-
     const res = safeFetch<PlayList[]>(url, options)
 
     return (
         <Box>
-            <DataLoaderFromPromise res={res} page={A} />
+            <DataLoaderFromPromise res={res} page={Render} />
             <Button endIcon={<Add />} onClick={addHandler}>Add</Button>
         </Box>
     )

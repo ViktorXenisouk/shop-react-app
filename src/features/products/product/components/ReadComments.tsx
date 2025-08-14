@@ -1,5 +1,5 @@
 import CommentCard from "./CommentCard"
-import { useMemo, useState } from "react";
+import React, { useMemo, useState } from "react";
 import { Box, Button, Grid, Modal, Stack, Select, MenuItem, Paper, IconButton } from '@mui/material';
 import { Remove } from "@mui/icons-material"
 
@@ -15,7 +15,7 @@ type Props = {
     onClose: () => void
 }
 
-const ReadCommentsModal = ({ open, onClose }: Props) => {
+const ReadCommentsModal : React.FC<Props> = ({ open, onClose }) => {
 
     const [sort, setSort] = useState('0')
 

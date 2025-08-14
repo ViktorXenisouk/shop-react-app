@@ -1,5 +1,5 @@
-import { Product } from "../../../../types/product"
-import { DataLoaderFromHook, DataLoaderFromPromise } from "../../../loading/Loading"
+import React from "react"
+import { DataLoaderFromHook } from "../../../loading/Loading"
 import AdminProductsCard from "./components/AdminProductCard"
 import { useSearchParams } from "react-router-dom"
 import { autoSaveFetch } from "../../../../services/safe-fetch"
@@ -8,10 +8,11 @@ import AdminProductsSearch from './components/AdminProductsSearch';
 import { useAdminAuthStore } from "../../../../store/useAdmin"
 import { Link } from "react-router-dom"
 import { Box, Stack, Button, Pagination } from "@mui/material"
-import { Create } from "@mui/icons-material"
 import { useRequest } from "../../../../hooks/useRequest"
+import { Create } from "@mui/icons-material"
+import {type Product } from "../../../../types/product"
 
-const MyAdminProducts = ({ data }: { data: Product[] }) => {
+const MyAdminProducts : React.FC<{data:Product[]}> = ({ data }) => {
   const imgUrl = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRmqfYB4D3aqQcH4HpWAQKcD5Hgx4jbs7HCciF9-UlXn9VV6J28rAtu1W8emao&s';
 
   const [list, setList] = useState(data)
@@ -44,7 +45,7 @@ const MyAdminProducts = ({ data }: { data: Product[] }) => {
 
 }
 
-const AdminProducts = () => {
+const AdminProducts : React.FC = () => {
   const [searchParams, setSearchParams] = useSearchParams()
 
   const res = useRequest<Product[]>(`/products/search/?${searchParams.toString()}`, { method: 'GET' })

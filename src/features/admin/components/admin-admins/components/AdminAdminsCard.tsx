@@ -1,10 +1,11 @@
+import React from 'react'
 import { Link } from "react-router-dom"
 import { autoSaveFetch } from "../../../../../services/safe-fetch"
 import { useAdminAuthStore } from "../../../../../store/useAdmin"
 import type { Admin } from "../../../../../types/admin"
 import { Box, Typography, ButtonGroup, Button } from "@mui/material"
 
-const AdminAdminsCard = (props: Admin) => {
+const AdminAdminsCard : React.FC<Admin> = (props) => {
 
     const store = useAdminAuthStore()
 

@@ -1,3 +1,4 @@
+import React from "react"
 import { Card, CardMedia, CardContent, Typography, ButtonGroup, Button } from "@mui/material"
 import { Link as LinkRouter } from "react-router-dom"
 import { Delete, Edit } from "@mui/icons-material"
@@ -10,7 +11,7 @@ type Props = {
   handleDelete: (id: string) => void
 }
 
-const AdminProductsCard = ({ id, name, discription, imgUrl, handleDelete }: Props) => {
+const AdminProductsCard : React.FC<Props> = ({ id, name, discription, imgUrl, handleDelete }) => {
 
   const handleClick = async () => {
     handleDelete(id)

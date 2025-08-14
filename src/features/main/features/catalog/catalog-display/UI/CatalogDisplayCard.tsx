@@ -1,11 +1,18 @@
-import { useState } from 'react';
+import React, { useState, Fragment } from 'react';
 import { Box, Typography, Button, Collapse, Link as MuiLink, Stack, Grid, Avatar, Paper, AccordionSummary, Accordion, AccordionDetails, Divider } from '@mui/material';
 import { Link as RouterLink } from 'react-router-dom';
 import { ExpandMore, ExpandLess } from '@mui/icons-material'
-import { Catalog } from '../../../../../types/catalog';
-import { PlayList } from '../../../../../types/play-list';
+import { Catalog } from '../../../../../../types/catalog';
+import { PlayList } from '../../../../../../types/play-list';
 
-const CatalogDisplayCard = ({ name, path, subCataloge, isPlaylist }: { name: string, path: string, subCataloge?: (Catalog | PlayList)[], isPlaylist?: boolean }) => {
+type Props = {
+    name: string,
+    path: string,
+    subCataloge?: (Catalog | PlayList)[],
+    isPlaylist?: boolean
+}
+
+const CatalogDisplayCard: React.FC<Props> = ({ name, path, subCataloge, isPlaylist }) => {
     const [expanded, setExpanded] = useState(false);
 
     const toggleExpanded = () => setExpanded((prev) => !prev);
@@ -21,8 +28,12 @@ const CatalogDisplayCard = ({ name, path, subCataloge, isPlaylist }: { name: str
                     component={RouterLink}
                     to={`/${isPlaylist ? 'play-list' : 'products'}/${path}`}
                     underline="hover"
-                    color="primary"
-                    sx={{ display: 'block', ml: '10px', fontWeight: 'bold' }}>
+                    sx={{
+                        color: theme => theme.palette.text.primary,
+                        display: 'block',
+                        ml: '10px',
+                        fontWeight: 'bold'
+                    }}>
                     {name}
                 </MuiLink>
             </Box>
@@ -32,21 +43,37 @@ const CatalogDisplayCard = ({ name, path, subCataloge, isPlaylist }: { name: str
                     <AccordionSummary onClick={() => setExpanded((prev) => !prev)}>
                         {
                             expanded ?
-                                <>
-                                    <Box sx={{ borderBottom: '#ccc solid 1px', width: '100%', pb: '20px' }}><ExpandLess /> less</Box>
-                                </>
+                                <Fragment>
+                                    <Box
+                                        sx={{
+                                            borderBottomWidth: '1px',
+                                            borderBottomStyle: '1px',
+                                            borderBottomColor: 'divider',
+                                            width: '100%',
+                                            pb: '20px'
+                                        }}>
+                                        <ExpandLess />
+                                        less
+                                    </Box>
+                                </Fragment>
                                 :
                                 <Box><ExpandMore /> more</Box>
                         }
                     </AccordionSummary>
                     <AccordionDetails>
-                        <Stack spacing={1} sx={{ mt: 1 }}>
+                        <Stack spacing={1}
+                            sx={{
+                                mt: 1
+                            }}>
                             {subCataloge.map((item) => (
                                 <MuiLink
                                     key={item.path}
                                     component={RouterLink}
                                     to={`/${isPlaylist ? 'play-list' : 'products'}/${item.fullPath}`}
                                     underline="hover"
+                                    sx={{
+                                        color: theme => theme.palette.text.primary,
+                                    }}
                                 >
                                     {item.name}
                                 </MuiLink>

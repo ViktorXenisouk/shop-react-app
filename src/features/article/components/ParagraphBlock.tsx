@@ -1,7 +1,8 @@
+import React from "react"
 import type { ArticleBlock } from "../../../types/article"
 import { Box, Typography } from "@mui/material"
 
-const ParagraphBlock = ({ variant, text }: ArticleBlock) => {
+const ParagraphBlock : React.FC<ArticleBlock> = ({ variant, text }) => {
 
   if (variant == 'center')
     return (

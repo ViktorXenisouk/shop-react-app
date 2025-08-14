@@ -22,12 +22,14 @@ const BillboardMainCarousel = () => {
     ]
 
     return (
-<Box sx={{display:'flex', justifyContent:'center'}}>
- <BillboardCarousel
-            interval={5000}
-            items={items}
-        />
-</Box>
+        <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+            <BillboardCarousel
+                interval={5000}
+                items={items}
+                width={{xs:'350px',sm:'500px',md:'600px',lg:'800px'}}
+                height={{xs:'400px',sm:'400px',md:'500px',lg:'600px'}}
+            />
+        </Box>
     )
 }
 

@@ -1,3 +1,4 @@
+import React from "react"
 import { Box} from "@mui/material"
 import { DataLoaderFromPromise } from "../../../loading/Loading"
 import { safeFetch } from "../../../../services/safe-fetch"
@@ -6,7 +7,7 @@ import { useParams } from "react-router-dom"
 import { useAdminAuthStore } from "../../../../store/useAdmin"
 import AdminUsersEditForm from "./components/AdminUsersEditForm"
 
-const AdminUsersEdit = () => {
+const AdminUsersEdit : React.FC = () => {
     const store = useAdminAuthStore()
   const requestInit: RequestInit = {}
   requestInit.method = 'GET'

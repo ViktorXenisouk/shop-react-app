@@ -1,5 +1,5 @@
-import { Button } from "@mui/material"
 import React from "react"
+import { Button } from "@mui/material"
 
 type Props = {
     onClick: () => void,
@@ -9,7 +9,7 @@ type Props = {
     icon: React.ReactNode,
 }
 
-const BillboardButton : React.FC<Props> = (
+const BillboardButton: React.FC<Props> = (
     { onClick, left, right, icon }) => {
 
     return (
@@ -17,23 +17,23 @@ const BillboardButton : React.FC<Props> = (
             startIcon
             onClick={onClick}
             sx={{
-                minHeight:'50px',
-                minWidth:'50px',
+                minHeight: '50px',
+                minWidth: '50px',
                 height: '50px',
                 width: '50px',
                 zIndex: 1,
-                borderColor:'divider',
-                borderStyle:'solid',
-                borderWidth:'1px',
+                borderColor: 'divider',
+                borderStyle: 'solid',
+                borderWidth: '1px',
+                borderRadius:10,
                 color: 'text.secondary',
-                bgcolor: 'secondary.main',
-                p:'3px',
-                m:'3px',
+                bgcolor: theme => theme.palette.background.paper,
+                p: '3px',
+                m: '3px',
 
                 ':hover': {
-                                    color: 'primary.main',
-                    borderColor:'none',
-                    backgroundColor: 'grey.200'
+                    color: 'primary.main',
+                    backgroundColor: theme => theme.palette.action.hover
                 },
             }}
         >

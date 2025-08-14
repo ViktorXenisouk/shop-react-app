@@ -1,5 +1,5 @@
 import { Link as RouterLink } from 'react-router-dom';
-import { Box, Container, Grid, IconButton, Link, Typography, useMediaQuery, useTheme, BottomNavigation, BottomNavigationAction } from '@mui/material';
+import { Box, Container, Grid, IconButton, Link, Typography, useMediaQuery, useTheme, BottomNavigation, BottomNavigationAction,Paper } from '@mui/material';
 import { Facebook, Twitter, Instagram, GitHub, LinkedIn, Person2, ShoppingBasket, Search, Restore } from '@mui/icons-material';
 
 const Footer = () => {
@@ -9,7 +9,15 @@ const Footer = () => {
   if (isMobile) {
 
     return (
-      <BottomNavigation sx={{position: 'fixed',zIndex:3 ,bottom: 0, left: 0, right: 0}}>
+      <BottomNavigation sx={{
+        borderTop:'1px solid',
+        borderTopColor:'divider',
+        position: 'fixed',
+        zIndex:3 ,
+        bottom: 0, 
+        left: 0, 
+        right: 0
+        }}>
         <BottomNavigationAction component={RouterLink} to='' icon={<Restore />} label='Main' />
         <BottomNavigationAction component={RouterLink} to='' icon={<Search />} label='Search' />
         <BottomNavigationAction component={RouterLink} to='' icon={<ShoppingBasket />} label='Basket' />
@@ -19,14 +27,16 @@ const Footer = () => {
   }
   else
     return (
-      <Box
+      <Paper
         component="footer"
         sx={{
+          borderRadius:0,
           position: 'relative',
-          backgroundColor: '#f5f5f5',
           paddingY: 4,
           marginTop: 'auto',
-          borderTop: '1px solid #ddd',
+          borderTopWidth:'1px',
+          borderTopStyle:'solid',
+          borderTopColor:'divider',
           zIndex: '2'
         }}
       >
@@ -45,10 +55,10 @@ const Footer = () => {
                 Навигация
               </Typography>
               <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
-                <Link href="/" underline="hover" color="text.primary">Главная</Link>
-                <Link href="/about" underline="hover" color="text.primary">О нас</Link>
-                <Link href="/contact" underline="hover" color="text.primary">Контакты</Link>
-                <Link href="/privacy" underline="hover" color="text.primary">Политика конфиденциальности</Link>
+                <Link href="/" underline="hover" color="text.secondary">Главная</Link>
+                <Link href="/about" underline="hover" color="text.secondary">О нас</Link>
+                <Link href="/contact" underline="hover" color="text.secondary">Контакты</Link>
+                <Link href="/privacy" underline="hover" color="text.secondary">Политика конфиденциальности</Link>
               </Box>
             </Grid>
             <Grid size={{ xs: 6, md: 4 }}>
@@ -75,7 +85,7 @@ const Footer = () => {
             </Grid>
           </Grid>
         </Container>
-      </Box>
+      </Paper>
     );
 };
 

@@ -1,11 +1,17 @@
 import LoginForm from "../features/auth/login/LoginForm"
 import { Box } from "@mui/material"
-import HeaderText from "../UI/HeaderText"
 
 const Login = () => {
 
     return (
-        <Box sx={{ display: 'flex', justifyContent: 'center',width:'100%',mt:'40px' }}>
+        <Box
+            sx={{
+                display: 'flex',
+                justifyContent: 'center',
+                width: '100%',
+                mt: '40px'
+            }}
+        >
             <LoginForm />
         </Box>
     )

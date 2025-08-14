@@ -1,20 +1,18 @@
-import { Body, PropsCnd } from "../types";
-import { useAuthUserStore } from "../../../store/useAuth"
+import React,{Fragment} from "react";
+import { PropsCnd } from "../types";
 import BasketForm from "../../basket/BasketDisplay"
 import { Button } from "@mui/material"
 
-const ConfirmBakset = (props: PropsCnd) => {
-    const store = useAuthUserStore()
-
+const ConfirmBakset : React.FC<PropsCnd> = (props) => {
     const onClick = () => {
         props.setCompleted(props.index, true)
     }
 
     return (
-        <>
+        <Fragment>
             <BasketForm />
-            <Button onClick={onClick}>Countinue</Button>
-        </>
+            <Button variant='outlined' onClick={onClick}>Countinue</Button>
+        </Fragment>
     )
 }
 

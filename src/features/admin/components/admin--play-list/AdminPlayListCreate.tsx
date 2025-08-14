@@ -1,10 +1,11 @@
+import React from "react"
 import { useParams } from "react-router-dom"
 import { useAdminAuthStore } from "../../../../store/useAdmin"
 import AdminPlayListCreateOrUpdateForm from "./components/AdminPlayListCreateOrUpdateForm"
 import { createPlayList } from "./api"
 import { Body } from "./types"
 
-const AdminPlayListCreate = () => {
+const AdminPlayListCreate : React.FC = () => {
     const params = useParams()
     const store = useAdminAuthStore()
 

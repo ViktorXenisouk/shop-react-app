@@ -1,13 +1,9 @@
-import { Body, PropsCnd } from "../types";
+import React,{Fragment} from "react";
+import { PropsCnd } from "../types";
 import { Address } from "../../../types/adress";
-import { TextField } from "@mui/material";
 import AddressInput from "../../../UI/AdressInput";
 
-const ConfirmAdress = (props: PropsCnd) => {
-
-    const textHandler = (event: any) => {
-        props.setBody({ adress: event.target.value })
-    }
+const ConfirmAdress : React.FC<PropsCnd> = (props) => {
 
     const body = props.body
 
@@ -18,9 +14,9 @@ const ConfirmAdress = (props: PropsCnd) => {
     }
 
     return (
-        <>
+        <Fragment>
             <AddressInput value={body.adress} onChange={onChangeHandler} />
-        </>
+        </Fragment>
     )
 }
 

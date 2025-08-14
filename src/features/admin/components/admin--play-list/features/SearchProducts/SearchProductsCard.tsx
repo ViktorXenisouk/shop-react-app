@@ -3,7 +3,9 @@ import { Box, Typography, Grid } from "@mui/material"
 import React, { useEffect, useState } from "react"
 import { autoSaveFetch } from "../../../../../../services/safe-fetch"
 
-const SearchProductsCard: React.FC<(Product | { id: string }) & { onClick?: (id: string) => void, isSelected?: boolean }> = ({ isSelected, onClick, ...productData }) => {
+type Props = (Product | { id: string }) & { onClick?: (id: string) => void, isSelected?: boolean }
+
+const SearchProductsCard: React.FC<Props> = ({ isSelected, onClick, ...productData }) => {
     const [product, setProduct] = useState<Product | null>(typeof productData == 'object' && !('id' in productData) ? productData as Product : null)
 
     const fetchProduct = async (id: string) => {

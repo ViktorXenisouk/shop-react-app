@@ -14,10 +14,10 @@ const getItems = () => {
         title: 'mac',
         type: 'product',
         category: '',
-        url: '/products/computers/notebook',
-        id:'6858146d17dd6b4a8d0726eb',
+        url: '/products/688374af23f715bf779f1eb5',
+        id:'688374af23f715bf779f1eb5',
         imageUrl: 'https://res.cloudinary.com/djdxksokm/image/upload/v1753359255/my-pet-project/whooqmb8vkdtsw7dqxrh.png',
-        shortDescription: 'some good fefjj',
+        shortDescription: 'some good short discription ............',
         priority: 0,
     }
     return Array(15).fill(mac)
@@ -31,7 +31,7 @@ const getCategories = () => {
         category: '',
         url: '/products/computers/notebook',
         imageUrl: 'https://res.cloudinary.com/djdxksokm/image/upload/v1753359255/my-pet-project/whooqmb8vkdtsw7dqxrh.png',
-        shortDescription: 'some good fefjj',
+        shortDescription: 'some good short discription ....',
         priority: 0,
     }
 
@@ -45,7 +45,7 @@ const getArticles = () => {
         category: '',
         url: '/products/computers/notebook',
         imageUrl: 'https://res.cloudinary.com/djdxksokm/image/upload/v1753359255/my-pet-project/whooqmb8vkdtsw7dqxrh.png',
-        shortDescription: 'some good fefjj',
+        shortDescription: 'some good short discription ....',
         priority: 0,
     }
 

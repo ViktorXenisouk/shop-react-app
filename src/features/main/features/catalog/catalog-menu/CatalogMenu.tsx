@@ -1,10 +1,15 @@
-import { useState } from "react"
+import React, { useState } from "react"
 import CatalogCard from "./UI/CatalogCard"
 import { Stack } from "@mui/material"
-import { useCatalogStorage } from "./hooks/useCatalog";
+import { useCatalogStorage } from "../hooks/useCatalog";
 
+type Props = {
+    currentId: number,
+    onCurrentIndexUpdate: any,
+    onMouseOut?: React.Dispatch<React.SetStateAction<boolean>>
+}
 
-const CatalogMenu = ({ currentId, onCurrentIndexUpdate, onMouseOut }: { currentId: number, onCurrentIndexUpdate: any, onMouseOut?: React.Dispatch<React.SetStateAction<boolean>> }) => {
+const CatalogMenu: React.FC<Props> = ({ currentId, onCurrentIndexUpdate, onMouseOut }) => {
     const store = useCatalogStorage()
 
     if (!store.isLoading && !store.catalog) {
@@ -14,7 +19,14 @@ const CatalogMenu = ({ currentId, onCurrentIndexUpdate, onMouseOut }: { currentI
         <Stack
             spacing={0}
             sx={{
-                backgroundColor: '#f5f5f5', p: 0, m: 0, pt: '5px', height: '100%', borderRight: '1px solid #ccc',
+                bgcolor: 'background.paper',
+                p: 0,
+                m: 0,
+                pt: '5px',
+                height: '100%',
+                borderRightWidth: '1px',
+                borderRightStyle: 'solid',
+                borderRightColor: 'divider'
             }}
             component='div'
             onMouseOut={() => onMouseOut && onMouseOut(false)}
@@ -22,8 +34,8 @@ const CatalogMenu = ({ currentId, onCurrentIndexUpdate, onMouseOut }: { currentI
         >
             {!store.isLoading && store.catalog ? store.catalog.map((item, i) => (
                 <CatalogCard
-                isPlaylist={item.isPlaylist}
-                fullPath={item.fullPath}
+                    isPlaylist={item.isPlaylist}
+                    fullPath={item.fullPath}
                     key={item.fullPath}
                     isActive={currentId === i}
                     catalogIndex={i}

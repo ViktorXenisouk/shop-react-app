@@ -8,14 +8,17 @@ type Props = {
   value: string;
 };
 
-const CustomRadio : React.FC<Props> = ({ label, value,isSelected,addOrRemoveTag }) => {
+const CustomRadio: React.FC<Props> = ({ label, value, isSelected, addOrRemoveTag }) => {
 
   const handleChange = () => {
     addOrRemoveTag(value)
   };
 
   return (
-    <CheckboxWithLabel onClick={handleChange} isSelected={isSelected} label={label}/>
+    <CheckboxWithLabel
+      onClick={handleChange}
+      isSelected={isSelected}
+      label={label} />
   )
 }
 

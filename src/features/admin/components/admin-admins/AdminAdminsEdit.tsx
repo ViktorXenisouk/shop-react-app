@@ -1,14 +1,14 @@
+import React, { useState } from "react"
 import type { Admin } from "../../../../types/admin"
 import { DataLoaderFromPromise } from "../../../loading/Loading"
 import { autoSaveFetch } from "../../../../services/safe-fetch"
 import { useParams } from "react-router-dom"
 import { useAdminAuthStore } from "../../../../store/useAdmin"
-import { useState } from "react"
 import { inputBodyHandler } from "../../../../utils/inputHandler"
 import { Box, TextField, Button } from "@mui/material"
 import { sanitizePayload } from "../../../../utils/sanitizePayload"
 
-const Loader = ({ data }: { data: Admin }) => {
+const Loader : React.FC<{data:Admin}> = ({ data }) => {
     const store = useAdminAuthStore()
 
     const [body, setBody] = useState<{ name: string, email: string, password: string, securityLvl: number }>({ name: data.name, email: data.email, password: '', securityLvl: data.securityLvl })
@@ -34,7 +34,7 @@ const Loader = ({ data }: { data: Admin }) => {
     )
 }
 
-const AdminAdminsEdit = () => {
+const AdminAdminsEdit : React.FC = () => {
 
     const params = useParams()
     const id = params.id

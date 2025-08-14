@@ -1,3 +1,4 @@
+import React from "react";
 import { Box } from "@mui/material"
 import { useLocation } from "react-router-dom";
 import { useRequest } from "../../../hooks/useRequest";
@@ -8,7 +9,7 @@ import { useTheme, useMediaQuery } from "@mui/material";
 import { ErrorPage } from "../../../pages";
 import PlayListHeader from "./UI/PlayListHeader";
 
-const PlayListDisplay = () => {
+const PlayListDisplay : React.FC = () => {
     const theme = useTheme();
 
     const isSmall = useMediaQuery(theme.breakpoints.down('md'))

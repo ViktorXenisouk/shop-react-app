@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react"
 import { Link as RouterLink } from "react-router-dom"
-import CountBlock from './CountBlock';
 import { useAuthUserStore } from "../../../store/useAuth";
 import { Box, Card, CardContent, CardActions, Typography, Avatar, Dialog, DialogTitle, DialogActions, Button } from "@mui/material";
 import LikeButton from "../../favourite/UI/LikeButton";
@@ -41,7 +40,7 @@ const BacketCard = ({ id, info, onChange }: Props) => {
     console.log(data)
 
     return (
-        <Card sx={{ display: 'flex', justifyContent: 'space-between', flexDirection: 'row' }} variant="outlined">
+        <Card sx={{ display: 'flex', justifyContent: 'space-between', flexDirection: 'row',alignItems:'center' }} variant="outlined">
             <CardContent sx={{ display: 'flex', alignItems: 'center',height:'100%' }}>
                 {
                     data?.imgs && data?.imgs[0] && <Avatar src={data?.imgs[0]?.url ?? ''} />

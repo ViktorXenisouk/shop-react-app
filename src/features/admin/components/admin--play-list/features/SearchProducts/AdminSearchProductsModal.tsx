@@ -1,3 +1,4 @@
+import React from "react"
 import { Button, Modal, Box, Stack, TextField, Paper, IconButton, Grid } from "@mui/material"
 import { useState } from "react"
 import { useRequest } from "../../../../../../hooks/useRequest"
@@ -6,7 +7,6 @@ import SearchProductsCard from "./SearchProductsCard"
 import TagsInput from "../../../../UI/TagsInput"
 import CategorieInput from "../../../../UI/CategorieInput"
 import { Clear } from "@mui/icons-material"
-import React from "react"
 
 type Props = {
     value: string[],

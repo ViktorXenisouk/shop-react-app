@@ -1,38 +1,13 @@
+import React, { useMemo, useState, Fragment } from "react"
 import BasketCard from "./UI/BacketCard"
 import { useAuthUserStore } from "../../store/useAuth"
-import { Box, Typography, Stack, Dialog, DialogTitle, DialogActions, Button, Divider } from "@mui/material";
-import { useMemo, useState } from "react"
+import { Box, Stack } from "@mui/material";
 import { useLocalStorage } from "../../store/useLocalStorage";
 import HeaderText from "../../UI/HeaderText";
-import TopItems from "../top-item/TopItems";
-import RecentlyViewedProducts from "../top-item/RecentlyViewedProducts";
 import BasketEmpty from "./components/BasketEmpty"
+import BasketDialog from "./BasketDialog";
 
-type Props = {
-    onClose: (value: 'no' | 'yes' | 'no-ask' | 'nothing') => void
-    open: boolean
-}
-
-const CustomDialog: React.FC<Props> = ({ onClose, open }) => {
-    return (
-        <Dialog open={open} onClose={() => onClose('nothing')}>
-            <DialogTitle>Are you sure to remove this item from basket</DialogTitle>
-            <DialogActions>
-                <Button onClick={() => onClose('yes')}>
-                    Yes
-                </Button>
-                <Button onClick={() => onClose('no')}>
-                    No
-                </Button>
-                <Button onClick={() => onClose('no-ask')}>
-                    Dont ask me again
-                </Button>
-            </DialogActions>
-        </Dialog>
-    )
-}
-
-const BasketDisplay = () => {
+const BasketDisplay: React.FC = () => {
     const store = useAuthUserStore()
 
     const localStore = useLocalStorage()
@@ -43,7 +18,6 @@ const BasketDisplay = () => {
     const onClose = (value: 'no' | 'yes' | 'no-ask' | 'nothing') => {
         setOpen(false)
         if (currentId) {
-            console.log('valid id')
             if (value === 'yes') {
                 store.createOrChangeBasketItem({ id: currentId, count: 0 })
             }
@@ -88,23 +62,38 @@ const BasketDisplay = () => {
     })
 
     return (
-        <>
+        <Fragment>
             <Box>
                 <HeaderText>Basket</HeaderText>
-                <Box sx={{ display: 'flex', justifyContent: 'center', flexDirection: 'column', }}>
-                    <Stack sx={{ width: '600px', p: '16px', bgcolor: 'background.paper' }}>
+                <Box
+                    sx={{
+                        display: 'flex',
+                        justifyContent: 'center',
+                        flexDirection: 'row',
+                        width: '100%'
+                    }}>
+                    <Stack
+                        sx={{
+                            bgcolor: 'background.paper',
+                            width: '600px',
+                            p: '16px',
+                            borderRadius:4
+                        }}>
                         {basket.length > 0 ?
-                            <>
-                                {basket.map((item) => <BasketCard onChange={onChange} id={item.id} info={{ count: item.count, liked: (user.favourite.includes(item.id) ?? false) }} />)}
-                            </>
+                            basket.map((item) =>
+                                <BasketCard
+                                    onChange={onChange}
+                                    id={item.id}
+                                    info={{ count: item.count, liked: (user.favourite.includes(item.id) ?? false) }}
+                                />)
                             :
                             <BasketEmpty />
                         }
                     </Stack>
                 </Box>
             </Box>
-            <CustomDialog onClose={onClose} open={open} />
-        </>
+            <BasketDialog onClose={onClose} open={open} />
+        </Fragment>
     )
 }
 

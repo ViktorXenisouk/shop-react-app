@@ -1,4 +1,9 @@
 import React, { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion'
+import { ArrowBackIosNew, ArrowForwardIos } from '@mui/icons-material';
+import BillboardButton from './BillboardButton';
+import BillboardCard from './BillboardCard';
+import { BillboardItem } from './types';
 import {
     Box,
     Typography,
@@ -6,19 +11,6 @@ import {
     Theme,
     Paper
 } from '@mui/material';
-import { motion, AnimatePresence } from 'framer-motion'
-import { ArrowBackIosNew, ArrowForwardIos } from '@mui/icons-material';
-import BillboardButton from './BillboardButton';
-import BillboardCard from './BillboardCard';
-import { BillboardItem } from './types';
-
-type Props = {
-    items: BillboardItem[];
-    width?: number | string;
-    height?: number | string;
-    sx?: SxProps<Theme>;
-    interval?: number; // в мс, например, 3000
-};
 
 const variants = {
     enter: (direction: number) => ({
@@ -38,7 +30,15 @@ const variants = {
     }),
 };
 
-const BillboardCarousel: React.FC<Props> = ({ items,sx }) => {
+type Props = {
+    items: BillboardItem[];
+    width?: number | string | any;
+    height?: number | string | any;
+    interval?: number; // в мс, например, 3000
+};
+
+
+const BillboardCarousel: React.FC<Props> = ({ items, width, height }) => {
     const [[index, direction], setIndex] = useState<[number, number]>([0, 0]);
 
     const paginate = (newDirection: number) => {
@@ -51,13 +51,15 @@ const BillboardCarousel: React.FC<Props> = ({ items,sx }) => {
     return (
         <Paper sx={{
             position: 'relative',
-            overflow: 'hidden',
-            width: '800px',
-            height: '600px',
+            width: width,
+            height: 'auto',
             borderRadius: 2,
-            ...sx
         }}>
-            <Box sx={{ position: 'relative', height: 200 }}>
+            <Box sx={{
+                position: 'relative',
+                overflow: 'hidden',
+                height: height
+            }}>
                 <AnimatePresence initial={false} custom={direction}>
                     <motion.div
                         key={index}
@@ -68,30 +70,38 @@ const BillboardCarousel: React.FC<Props> = ({ items,sx }) => {
                         exit="exit"
                         transition={{ duration: 1 }}
                     >
-                        <BillboardCard item={items[index]} />
+                        <BillboardCard sx={{ width: width, height: height }} item={items[index]} />
                     </motion.div>
                 </AnimatePresence>
             </Box>
             <Box sx={{
-                width: '798px',
+                width: width,
                 bgcolor: 'background.paper',
-                position: 'absolute',
-                bottom: '0px',
-                left: '0px',
+                position: 'relative',
                 display: 'flex',
                 justifyContent: 'space-between',
-                borderWidth:'1px',
-                borderColor:'divider',
-                borderStyle:'solid',
-                borderRadius:2,
-                flexDirection:'row',
-                alignItems:'center'
+                borderWidth: '1px',
+                borderColor: 'divider',
+                borderStyle: 'solid',
+                borderRadius: 2,
+                flexDirection: 'row',
+                alignItems: 'center',
             }}>
-                <BillboardButton onClick={() => paginate(-1)} disabled={false} left='0px' icon={<ArrowBackIosNew />} />
+                <BillboardButton
+                    onClick={() => paginate(-1)}
+                    disabled={false}
+                    left='0px'
+                    icon={<ArrowBackIosNew />}
+                />
                 <Typography variant="h6" fontWeight="bold">
                     {items[index].title}
                 </Typography>
-                <BillboardButton onClick={() => paginate(1)} disabled={false} right='0px' icon={<ArrowForwardIos />} />
+                <BillboardButton
+                    onClick={() => paginate(1)}
+                    disabled={false}
+                    right='0px'
+                    icon={<ArrowForwardIos />}
+                />
             </Box>
         </Paper>
     );

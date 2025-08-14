@@ -1,3 +1,4 @@
+import React from "react"
 import { DataLoaderFromPromise } from "../../../loading/Loading"
 import { autoSaveFetch } from "../../../../services/safe-fetch"
 import { useParams } from "react-router-dom"
@@ -7,7 +8,7 @@ import { Box } from '@mui/material';
 import { ProductBody } from "./types"
 import AdminEditOrCreateForm from "./components/AdminEditOrCreateForm"
 
-const Render = ({ data }: { data: Product }) => {
+const Render : React.FC<{data:Product}> = ({ data }) => {
 
   const store = useAdminAuthStore()
 

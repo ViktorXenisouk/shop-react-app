@@ -1,5 +1,6 @@
+import React from "react"
 import type { Admin } from "../../../../types/admin"
-import { autoSaveFetch, safeFetch } from "../../../../services/safe-fetch"
+import { autoSaveFetch } from "../../../../services/safe-fetch"
 import { parseParams } from "../../../../utils/parseParams"
 import { useLocation } from "react-router-dom"
 import { DataLoaderFromPromise } from "../../../loading/Loading"
@@ -7,7 +8,8 @@ import AdminAdminsCard from "./components/AdminAdminsCard"
 import { useAdminAuthStore } from "../../../../store/useAdmin"
 import { Box,Button } from "@mui/material"
 
-const Loader = ({ data }: { data: Admin[] }) => {
+
+const Loader : React.FC<{data:Admin[]}> = ({ data }) => {
 
     return (
         <Box>

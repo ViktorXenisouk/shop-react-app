@@ -1,19 +1,13 @@
-import { Stepper, Step, StepLabel, Typography, StepButton } from "@mui/material"
+import { Stepper, Step, StepLabel } from "@mui/material"
 import React from "react"
 
 const steps = ['your data', 'create password', 'more info', 'confirm email']
 
 type Props = {
     activeStep: number,
-    step: number,
-    setActiveStep: (index: number) => void
 }
 
-const RegisterStepper: React.FC<Props> = ({ activeStep, step, setActiveStep }) => {
-    const isStepOptional = (step: number) => {
-        return false
-    }
-
+const RegisterStepper: React.FC<Props> = ({ activeStep }) => {
     const isCompletedStep = (s: number) => {
         return activeStep > s;
     }

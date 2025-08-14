@@ -1,9 +1,10 @@
+import React from "react";
 import AdminEditOrCreateForm from "./components/AdminEditOrCreateForm";
 import { autoSaveFetch } from "../../../../services/safe-fetch";
 import { ProductBody } from "./types";
 import { useAdminAuthStore } from "../../../../store/useAdmin";
 
-const AdminProductsCreate = () => {
+const AdminProductsCreate : React.FC = () => {
     const store = useAdminAuthStore()
 
     const onSubmit = async (body : ProductBody) => {

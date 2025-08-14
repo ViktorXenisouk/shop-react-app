@@ -1,3 +1,4 @@
+import React from "react";
 import { Link as RouterLink } from "react-router-dom"
 import BasketCountButton from "../../../basket/UI/BasketCountButton";
 import LikeButtonWithText from '../../../favourite/UI/LikeButtonWithText';
@@ -7,7 +8,7 @@ import type { ImageItem } from "../../../../types/Image";
 import PriceBlock from "../PriceBlock";
 import SuperTag from "../../features/super-tag/SuperTag";
 
-type ItemCardProps = {
+type Props = {
     discription: string
     title: string;
     id: string;
@@ -20,14 +21,31 @@ type ItemCardProps = {
     superTag?: 'new' | 'super-price' | 'the-best' | null
 }
 
-const ProductCardView = (props: ItemCardProps) => {
+const ProductCardView: React.FC<Props> = (props) => {
     const theme = useTheme()
     const isSmall = useMediaQuery(theme.breakpoints.down('sm'))
 
     if (isSmall) {
         return (
-            <Box sx={{ width: "100%", height: '100%', display: 'flex', justifyContent: 'flex-start', flexDirection: 'column', backgroundColor: 'paper', mb: '30px' }}>
-                <Typography align="center" sx={{ display: 'block', mt: 1, fontWeight: 'bold', color: 'GrayText', textDecoration: 'underline', minHeight: '3em' }}>
+            <Box sx={{
+                width: "100%",
+                height: '100%',
+                display: 'flex',
+                justifyContent: 'flex-start',
+                flexDirection: 'column',
+                backgroundColor: 'paper',
+                mb: '30px'
+            }}>
+                <Typography
+                    align="center"
+                    sx={{
+                        display: 'block',
+                        mt: 1,
+                        fontWeight: 'bold',
+                        color: 'GrayText',
+                        textDecoration: 'underline',
+                        minHeight: '3em'
+                    }}>
                     {props.title}
                 </Typography >
                 <Box
@@ -37,7 +55,13 @@ const ProductCardView = (props: ItemCardProps) => {
                     width='100%'
                     src={props.img.url}
                 />
-                <Typography sx={{ display: 'block', mt: 1, color: 'GrayText', maxHeight: '8em' }}>
+                <Typography
+                    sx={{
+                        display: 'block',
+                        mt: 1,
+                        color: 'text.primary',
+                        height: '8em'
+                    }}>
                     {props.discription.slice(0, 70).length === props.discription.length ? props.discription : props.discription.slice(0, 70) + '....'}
                 </Typography>
                 <PriceBlock price={2000} />
@@ -52,7 +76,16 @@ const ProductCardView = (props: ItemCardProps) => {
     //background: 'linear-gradient(to bottom,rgb(195, 195, 195),rgb(255, 255, 255))'
     if (props.view === 'grid') {
         return (
-            <Box sx={{ width: "100%", height: '100%', display: 'flex', justifyContent: 'space-between', flexDirection: 'column', backgroundColor: 'transparent',position:'relative' }}>
+            <Box
+                sx={{
+                    width: "100%",
+                    height: '100%',
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    flexDirection: 'column',
+                    backgroundColor: 'transparent',
+                    position: 'relative'
+                }}>
                 <Box>
                     {props.superTag && <SuperTag superTag={props.superTag} />}
                     <Box
@@ -63,10 +96,24 @@ const ProductCardView = (props: ItemCardProps) => {
                         src={props.img.url}
                     />
                     <CardContent component={RouterLink} to={`/product/${props.id}`}>
-                        <Typography sx={{ display: 'block', mt: 1, fontWeight: 'bold', color: 'GrayText', textDecoration: 'underline', minHeight: '3em', mx: '5px' }}>
+                        <Typography
+                            sx={{
+                                display: 'block',
+                                mt: 1,
+                                fontWeight: 'bold',
+                                color: 'text.primary',
+                                textDecoration: 'underline',
+                                minHeight: '3em',
+                                mx: '5px'
+                            }}>
                             {props.title}
                         </Typography >
-                        <Typography sx={{ display: 'block', mt: 1, color: 'GrayText', maxHeight: '8em', mx: '5px' }}>
+                        <Typography sx={{ 
+                            display: 'block', 
+                            mt: 1, 
+                            color: 'text.secondary', 
+                            maxHeight: '8em', 
+                            mx: '5px' }}>
                             {props.discription.slice(0, 70).length === props.discription.length ? props.discription : props.discription.slice(0, 70) + '....'}
                         </Typography>
                     </CardContent>
@@ -84,7 +131,14 @@ const ProductCardView = (props: ItemCardProps) => {
     else
         return (
             <Box>
-                <Typography sx={{ display: 'block', mt: 1, fontWeight: 'bold', color: 'GrayText', textDecoration: 'underline', minHeight: '3em', textAlign: 'center' }}>
+                <Typography sx={{ 
+                    display: 'block',
+                     mt: 1, 
+                     fontWeight: 'bold',
+                      color: 'text.primary', 
+                      textDecoration: 'underline',
+                       minHeight: '3em', 
+                       textAlign: 'center' }}>
                     {props.title}
                 </Typography >
                 <Box sx={{ display: 'flex', justifyContent: 'space-between', flexDirection: 'row', alignItems: 'center', mb: '40px' }}>
@@ -96,12 +150,21 @@ const ProductCardView = (props: ItemCardProps) => {
                         src={props.img.url}
                     />
                     <Box>
-                        <Typography sx={{ mt: 1, color: 'GrayText', maxHeight: '10em', maxWidth: '400px', mx: '20px' }}>
+                        <Typography sx={{ 
+                            mt: 1, 
+                            color: 'text.secondary', 
+                            maxHeight: '10em', 
+                            maxWidth: '400px', 
+                            mx: '20px' }}>
                             {props.discription.slice(0, 100).length === props.discription.length ? props.discription : props.discription.slice(0, 100) + '....'}
                         </Typography>
                     </Box>
                     <ButtonGroup orientation="vertical" sx={{ height: '100%' }}>
-                        <Button component={RouterLink} to={`/product/${props.id}`}>Show More</Button>
+                        <Button 
+                        component={RouterLink} 
+                        to={`/product/${props.id}`}>
+                        Show More
+                        </Button>
                         <BasketCountButton onChange={props.onChangeHandlerCount} count={props.count} />
                         <LikeButtonWithText liked={props.liked} onClick={props.onLikeClick} />
                     </ButtonGroup>

@@ -1,22 +1,15 @@
-import { Box, Paper, Typography, ButtonGroup, Button, Stack } from "@mui/material"
+import React from "react"
+import { Paper, Typography, ButtonGroup, Button, Stack } from "@mui/material"
 import { Catalog } from "../../../../../types/catalog"
-import { Link } from "react-router-dom"
-import {ArrowForward,Delete,EditDocument} from "@mui/icons-material"
+import { ArrowForward, Delete, EditDocument } from "@mui/icons-material"
+import ButtonLink from "../UI/ButtonLink"
 
-const ButtonLink = ({ children, to, onClick }: { children: any, to: string, onClick?: () => void }) => {
-    return (
-        <Button
-            component={Link}
-            to={to}
-            sx={{ textTransform: 'none', color: 'inherit' }}
-            onClick={onClick}
-        >
-            {children}
-        </Button>
-    );
-};
+type Props = {
+    body: Catalog,
+    onSelect: (path: string) => void
+}
 
-const AdminCategoryCard = ({ body }: { body: Catalog, onSelect: (path: string) => void }) => {
+const AdminCategoryCard: React.FC<Props> = ({ body, onSelect }) => {
 
     const { name, fullPath, path, parentPath, subCategories, filter, _id } = body
 
@@ -25,7 +18,7 @@ const AdminCategoryCard = ({ body }: { body: Catalog, onSelect: (path: string) =
     }
 
     return (
-        <Paper sx={{display:'flex',flexDirection:'row',justifyContent:'space-between',alignItems:'center',width:'100%',mb:'20px'}}>
+        <Paper sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', width: '100%', mb: '20px' }}>
             <Stack direction="column">
                 <Typography>
                     name:{name}
@@ -38,9 +31,9 @@ const AdminCategoryCard = ({ body }: { body: Catalog, onSelect: (path: string) =
                 </Typography>
             </Stack>
             <ButtonGroup orientation="vertical">
-                <ButtonLink to={`/admin/categories/edit/${_id}`}>Edit <EditDocument/></ButtonLink>
-                <ButtonLink onClick={deleteHandler} to='#'>Delete <Delete/></ButtonLink>
-                <ButtonLink to={`/admin/categories/search/?parentPath=${fullPath ? encodeURIComponent(fullPath) : encodeURIComponent('#root')}`}>Select <ArrowForward/> </ButtonLink>
+                <ButtonLink to={`/admin/categories/edit/${_id}`}>Edit <EditDocument /></ButtonLink>
+                <ButtonLink onClick={deleteHandler} to='#'>Delete <Delete /></ButtonLink>
+                <ButtonLink to={`/admin/categories/search/?parentPath=${fullPath ? encodeURIComponent(fullPath) : encodeURIComponent('#root')}`}>Select <ArrowForward /> </ButtonLink>
             </ButtonGroup>
         </Paper>
     )

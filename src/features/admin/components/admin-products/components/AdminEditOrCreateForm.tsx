@@ -1,6 +1,6 @@
+import React, { useState } from "react"
 import { Product } from "../../../../../types/product"
 import TagsInput from "../../../UI/TagsInput"
-import { useState } from "react"
 import ImagePicker from "../../../../image-picker-modal/ImagePicker";
 import type { ImageItem } from "../../../../../types/Image";
 import ArticleEditor from "../../../../article/ArticleEditor"
@@ -12,7 +12,12 @@ import { Link } from "react-router-dom"
 import { ArrowBack } from "@mui/icons-material"
 import { ProductBody } from "../types";
 
-const AdminEditOrCreateForm = ({ data, onSubmit }: { data?: Product, onSubmit: (body: ProductBody) => Promise<void> }) => {
+type Props = { 
+    data?: Product, 
+    onSubmit: (body: ProductBody) => Promise<void> 
+}
+
+const AdminEditOrCreateForm : React.FC<Props> = ({ data, onSubmit }) => {
 
     const [body, setBody] = useState({} as ProductBody)
     const [isSaving, setIsSaving] = useState(false)

@@ -1,4 +1,4 @@
-import { Box, Card, Stack, CardMedia, Typography, CardActions } from '@mui/material';
+import { Box, Stack, Typography, Button, ButtonGroup } from '@mui/material';
 import { Link } from "react-router-dom"
 import { TopItem } from "../../../types/top-item"
 import BasketCountButton from "../../basket/UI/BasketCountButton"
@@ -33,14 +33,17 @@ const TopItemCard = (props: TopItem & { id: string }) => {
                 p: '0px',
                 m: '0px',
                 height: '100%',
-                width: '200px',
-                flexShrink:0,
-                display:'flex',
-                justifyContent:'space-between',
-                flexDirection:'column',
-                alignItems:'center',
-             '&:hover': {
-                    boxShadow: 5,                // можно добавить тень
+                width: '250px',
+                flexShrink: 0,
+                display: 'flex',
+                justifyContent: 'space-between',
+                flexDirection: 'column',
+                alignItems: 'center',
+                bgcolor: 'background.paper',
+                boxShadow: 2,
+                '&:hover': {
+                    boxShadow: 10,
+                    zIndex: 4,
                 },
             }}>
             <Box
@@ -48,14 +51,40 @@ const TopItemCard = (props: TopItem & { id: string }) => {
                 height="auto"
                 width="150px"
                 src={props.imageUrl} />
-            <Stack component={Link}
-                to={props.url}>
-                <Typography sx={{ color: 'text.primary' }} variant="h3">{props.title}</Typography>
-                <Typography sx={{ color: 'text.primary' }} variant="subtitle1">{props.shortDescription}</Typography>
+            <Stack>
+                <Typography
+                    sx={{ color: 'text.primary', whiteSpace: 'normal' }}
+                    variant="h3"
+                    align='center'>
+                    {props.title}
+                </Typography>
+                <Typography
+                    variant="subtitle1"
+                    sx={{
+                        ml: 3,
+                        display: 'block',
+                        color: 'text.secondary',
+                        height: '6em',
+                        whiteSpace: 'normal'
+                    }}>
+                    {props.shortDescription}</Typography>
             </Stack>
-            <Box sx={{mb:'12px',mx:'8px'}}>
-                <BasketCountButton simple onChange={bucketHandler} setCount={setCount} count={count} />
-            </Box>
+            <ButtonGroup orientation='horizontal' sx={{ mb: '12px', mx: '8px' }}>
+                <Button
+                    component={Link}
+                    to={props.url}
+                    color="secondary"
+                >
+                    Show More
+                </Button>
+                <BasketCountButton
+                    simple
+                    count={count}
+                    color="secondary"
+                    onChange={bucketHandler}
+                    setCount={setCount}
+                />
+            </ButtonGroup>
         </Box>
     )
 }

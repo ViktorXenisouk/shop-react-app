@@ -1,10 +1,10 @@
-import { useState } from "react"
+import React, { useState } from "react"
 import { inputBodyHandler } from "../../../../utils/inputHandler"
 import { Box, TextField, Button } from "@mui/material"
 import { autoSaveFetch } from "../../../../services/safe-fetch"
 import { useAdminAuthStore } from "../../../../store/useAdmin"
 
-const AdminAdminsCreate = () => {
+const AdminAdminsCreate : React.FC = () => {
 
     const [body, setBody] = useState<{ name: string, email: string, securityLvl: number, password: string }>({ name: '', email: '', securityLvl: 0, password: '' })
     const store = useAdminAuthStore()

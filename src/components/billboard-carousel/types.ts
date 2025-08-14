@@ -4,4 +4,4 @@ type BillboardItem = {
     url: string;
 };
 
-export type {BillboardItem}
+export type { BillboardItem }

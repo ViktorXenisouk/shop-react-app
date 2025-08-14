@@ -11,27 +11,36 @@ type Props = {
 
 const CarouselButton = ({ onClick, disabled, left, right, icon }: Props) => {
 
+    const borderProps : any = [
+        {
+            borderLeftWidth: '1px',
+            borderLeftStyle: 'solid',
+            borderLeftColor: 'primary.main',
+        },
+         {
+            borderRightWidth: '1px',
+            borderRightStyle: 'solid',
+            borderRightColor: 'primary.main',
+        },
+    ][right?0:1]
+
     return (
         <Button
             startIcon
             onClick={onClick}
+            variant="contained"
+            color="primary"
             sx={{
                 position: 'absolute',
+                borderRadius: 0,
                 top: '0px',
                 bottom: '0px',
                 left: left,
                 right: right,
                 zIndex: 1,
-                border: '#ccc solid 1px',
-                color: disabled ? 'grey.400' : 'primary.main',
-                bgcolor: 'transparent',
-                borderWidth: '1px',
-                borderStyle:'double',
-
-                ':hover': {
-                    borderColor: 'grey.500',
-                    backgroundColor: 'grey.200'
-                },
+                color: theme => disabled ? theme.palette.action.disabled : undefined,
+                bgcolor: disabled ? 'action.disabled' : undefined,
+                ...borderProps
             }}
         >
             {icon}

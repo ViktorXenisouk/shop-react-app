@@ -1,12 +1,12 @@
-import { useMemo, useState } from "react"
+import React, { useMemo, useState, Fragment } from "react"
 import { useAuthUserStore } from "../../store/useAuth"
-import { Box, Stack, Typography } from "@mui/material"
+import { Box, Stack } from "@mui/material"
 import FavouriteCard from './components/FavouriteCard';
 import FavouriteDialog from "./components/FavouriteDialog"
 import FavouriteEmpty from "./components/FavouriteEmpty";
 import HeaderText from "../../UI/HeaderText";
 
-const FavouriteDisplay = () => {
+const FavouriteDisplay: React.FC = () => {
     const store = useAuthUserStore()
 
     const [open, setOpen] = useState(false)
@@ -35,28 +35,39 @@ const FavouriteDisplay = () => {
         setOpen(true)
     }
 
-    const page = store.user ? (
-        <Stack>
-            {favourite.length > 0 ? favourite.map((item) => {
-                const countInBasket = store.user?.basketInfo?.find((v) => v.id === item)?.count ?? 0
-                return <FavouriteCard onDelete={onDelete} id={item} presentInBasket={countInBasket > 0} />
-            })
-                :
-                <FavouriteEmpty/>}
-        </Stack>
-    ) :
-        (
-            <Typography>You are not login</Typography>
-        )
-
     return (
-        <>
-            <Box>
-                                <HeaderText>Favourite</HeaderText>
-                {page}
-            </Box>
+        <Fragment>
+                <Box
+                    sx={{
+                        display: 'flex',
+                        justifyContent: 'center',
+                        flexDirection: 'column',
+                        width: '100%'
+                    }}>
+                    <HeaderText>Favourite</HeaderText>
+                    <Stack
+                        sx={{
+                            bgcolor: 'background.paper',
+                            width: '600px',
+                            p: '16px',
+                            mx:'auto'
+                        }}>
+                        {favourite.length > 0 ?
+                            favourite.map((item) => {
+                                const countInBasket = store.user?.basketInfo?.find((v) => v.id === item)?.count ?? 0
+                                return (
+                                    <FavouriteCard
+                                        id={item}
+                                        onDelete={onDelete}
+                                        presentInBasket={countInBasket > 0}
+                                    />)
+                            })
+                            :
+                            <FavouriteEmpty />}
+                    </Stack>
+                </Box>
             <FavouriteDialog open={open} onClose={onClose} />
-        </>
+        </Fragment>
     )
 }
 

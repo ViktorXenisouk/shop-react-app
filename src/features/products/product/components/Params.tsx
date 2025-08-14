@@ -1,3 +1,4 @@
+import React from "react";
 import { Box, Table, TableBody, TableCell, TableRow,Paper } from "@mui/material"
 
 type Par = { [name: string]: string | number };
@@ -10,7 +11,7 @@ const rows: Par =
     raw: '8 gb'
 }
 
-const Params = () => {
+const Params : React.FC = () => {
 
     const getRows = () => {
         let array = []

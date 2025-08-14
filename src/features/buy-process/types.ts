@@ -17,4 +17,4 @@ type PropsCnd = {
     isCompleted: boolean
 }
 
-export {type Body, type PropsCnd}
+export type {Body, PropsCnd}

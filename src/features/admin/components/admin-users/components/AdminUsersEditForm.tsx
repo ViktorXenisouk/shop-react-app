@@ -1,14 +1,18 @@
+import React, { useState } from "react"
 import { TextField, Typography, Button, Paper,Stack } from "@mui/material"
 import { safeFetch } from "../../../../../services/safe-fetch"
-import type { User } from "../../../../../types/user"
-import { useState } from "react"
+import {type User } from "../../../../../types/user"
 import { useAdminAuthStore } from "../../../../../store/useAdmin"
 import { sanitizePayload } from "../../../../../utils/sanitizePayload"
 import {Edit} from "@mui/icons-material"
 
 type Handle = React.ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement>
 
-const AdminUsersEditForm = ({ data }: { data: User }) => {
+type Props = {
+  data:User
+}
+
+const AdminUsersEditForm : React.FC<Props> = ({ data }) => {
 const store = useAdminAuthStore()
   const [body,setBody] = useState<{username:string,email:string,password:string|undefined}>({username:data.username,email:data.email,password:undefined})
 

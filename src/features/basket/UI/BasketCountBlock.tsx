@@ -1,7 +1,14 @@
+import React from "react";
 import CountBlock from "./CountBlock";
-import { Paper} from "@mui/material"
+import { Paper } from "@mui/material"
 
-const BasketCountBlock = ({ count, onChange, id }: { count: number, onChange?: (count: number) => void, id: string }) => {
+type Props = {
+    count: number,
+    onChange?: (count: number) => void,
+    id: string
+}
+
+const BasketCountBlock: React.FC<Props> = ({ count, onChange, id }) => {
 
     const changeHandler = (count: number) => {
         onChange?.(count)

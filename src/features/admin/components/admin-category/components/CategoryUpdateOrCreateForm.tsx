@@ -1,7 +1,6 @@
+import React from "react"
 import { Box, Stack, TextField, Button, Paper } from "@mui/material"
-import { useParams } from "react-router-dom"
 import { useState } from "react"
-import { useAdminAuthStore } from "../../../../../store/useAdmin"
 import CategoryListTagsManager from "../components/FilterEditor"
 import { Link } from "react-router-dom"
 import { Filter, FilterItem } from "../../../../../types/catalog"
@@ -9,7 +8,13 @@ import { Catalog } from "../../../../../types/catalog"
 import { FilterToFilterItems } from "../utils"
 import { Body } from "../types"
 
-const CategoryUpdateOrCreateForm = ({ onSubmit, data, parentPath }: { onSubmit: (body: Body) => Promise<void>, data?: Catalog, parentPath?: string }) => {
+type Props = {
+    onSubmit: (body: Body) => Promise<void>,
+    data?: Catalog,
+    parentPath?: string
+}
+
+const CategoryUpdateOrCreateForm: React.FC<Props> = ({ onSubmit, data, parentPath }) => {
     const ph = parentPath ? parentPath : data?.parentPath ? data.parentPath : '#root'
 
     const getParsedPH = (ph: string) => {
@@ -65,8 +70,8 @@ const CategoryUpdateOrCreateForm = ({ onSubmit, data, parentPath }: { onSubmit: 
     }
 
     return (
-        <Box sx={{ mt: '80px',width:'100%',display:'flex',justifyContent:'center' }}>
-            <Paper sx={{width:'800px'}}>
+        <Box sx={{ mt: '80px', width: '100%', display: 'flex', justifyContent: 'center' }}>
+            <Paper sx={{ width: '800px' }}>
                 <Button component={Link} to={`/admin/categories/search/?parentPath=${encodeURIComponent(ph)}`}>Back</Button>
                 <Stack direction='column'>
                     <TextField onChange={(event) => parentPathHandler(event.target.value)} disabled label='parent path' value={getParsedPH(ph)} />

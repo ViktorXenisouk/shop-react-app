@@ -1,18 +1,14 @@
-import { useState, ChangeEventHandler } from "react"
+import React, { useState } from "react"
 import { useNavigate, Link } from 'react-router-dom';
 import { useAuthUserStore } from "../../../store/useAuth"
-
-import ButtonLink from "../../../UI/ButtonLink"
 import TextField from '@mui/material/TextField';
 import { Button, Stack, Paper, Box } from "@mui/material"
-
 import { inputBodyHandler } from "../../../utils/inputHandler"
 import HeaderText from "../../../UI/HeaderText";
-
 import { Email, Password, Login as LoginIcon } from "@mui/icons-material";
+import { EmailLabel,PasswordLabel } from "../../../components/labels";
 
-const Login = () => {
-
+const LoginForm : React.FC = () => {
     const { login } = useAuthUserStore();
 
     const navigate = useNavigate()
@@ -53,13 +49,13 @@ const Login = () => {
 
             >
                 <TextField
-                    label={<Box sx={{ display: 'flex', alignItems: 'center' }}><Email sx={{ mx: '10px' }} /> email</Box>}
+                    label={EmailLabel}
                     type="email"
                     onChange={emailHandler}
                     defaultValue={'abcd@gmail.com'}
                 />
                 <TextField
-                    label={<Box sx={{ display: 'flex', alignItems: 'center' }}><Password sx={{ mx: '10px' }} /> password</Box>}
+                    label={PasswordLabel}
                     type="password"
                     autoComplete="current-password"
                     defaultValue={'admin'}
@@ -68,6 +64,7 @@ const Login = () => {
                 <Button
                     variant="text"
                     type="button"
+                    
                 >
                     forgot password
                 </Button>
@@ -94,4 +91,4 @@ const Login = () => {
     )
 }
 
-export default Login
+export default LoginForm

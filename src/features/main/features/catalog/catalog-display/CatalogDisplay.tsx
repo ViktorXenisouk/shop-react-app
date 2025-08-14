@@ -1,15 +1,20 @@
-import CatalogDisplayCard from "./UI/CatalogDisplayCard"
-import { Grid, Box, Fade, IconButton, useScrollTrigger, useTheme, useMediaQuery } from '@mui/material';
-import { useCatalogStorage } from "./hooks/useCatalog";
-import { useEffect, useState } from 'react';
-import { Catalog } from "../../../../types/catalog";
-import { Close } from "@mui/icons-material"
-import { grey } from "@mui/material/colors";
 import React from "react";
-import { useWindowWidth } from "../../../../hooks/useWindowWidth";
-import { PlayList } from "../../../../types/play-list";
+import CatalogDisplayCard from "./UI/CatalogDisplayCard"
+import { Grid, Box, Fade, IconButton, useScrollTrigger, useTheme, useMediaQuery, Paper } from '@mui/material';
+import { useCatalogStorage } from "../hooks/useCatalog";
+import { useEffect, useState } from 'react';
+import { Catalog } from "../../../../../types/catalog";
+import { Close } from "@mui/icons-material"
+import { useWindowWidth } from "../../../../../hooks/useWindowWidth";
+import { PlayList } from "../../../../../types/play-list";
 
-const CatalogDisplay = ({ currentId, onClose, onMouseOut }: { currentId: number, onClose?: () => void, onMouseOut?: React.Dispatch<React.SetStateAction<boolean>> }) => {
+type Props = {
+    currentId: number,
+    onClose?: () => void,
+    onMouseOut?: React.Dispatch<React.SetStateAction<boolean>>
+}
+
+const CatalogDisplay: React.FC<Props> = ({ currentId, onClose, onMouseOut }) => {
     const trigger = useScrollTrigger({ threshold: 60 });
 
     const screenWidth = useWindowWidth()
@@ -27,7 +32,6 @@ const CatalogDisplay = ({ currentId, onClose, onMouseOut }: { currentId: number,
 
         window.addEventListener('scroll', handleScroll);
 
-        // Очистка при размонтировании
         return () => {
             window.removeEventListener('scroll', handleScroll);
         };
@@ -36,7 +40,7 @@ const CatalogDisplay = ({ currentId, onClose, onMouseOut }: { currentId: number,
     useEffect(() => {
         const catalog = store.catalog
 
-        if(!catalog)
+        if (!catalog)
             return
 
         if (catalog)
@@ -49,7 +53,7 @@ const CatalogDisplay = ({ currentId, onClose, onMouseOut }: { currentId: number,
         }
     }, [])
 
-    const [catalogs, setCatalogs] = useState<((Catalog | PlayList)&{isPlayList?:boolean})[]>([])
+    const [catalogs, setCatalogs] = useState<((Catalog | PlayList) & { isPlayList?: boolean })[]>([])
 
     const store = useCatalogStorage()
 
@@ -64,7 +68,7 @@ const CatalogDisplay = ({ currentId, onClose, onMouseOut }: { currentId: number,
 
     return (
         <Fade in={isVisible} timeout={500}>
-            <Box
+            <Paper
                 component='div'
                 sx={{
                     pt: top,
@@ -74,7 +78,7 @@ const CatalogDisplay = ({ currentId, onClose, onMouseOut }: { currentId: number,
                     position: scrollY > 60 ? 'fixed' : 'absolute',
                     zIndex: '2',
                     height: '100vh',
-                    backgroundColor: grey[200],
+                    backgroundColor: 'background.default',
                 }}
                 onMouseOut={() => onMouseOut && onMouseOut(false)}
                 onMouseOver={() => onMouseOut && onMouseOut(true)}
@@ -82,15 +86,23 @@ const CatalogDisplay = ({ currentId, onClose, onMouseOut }: { currentId: number,
                 <Box sx={{ display: 'flex', justifyContent: 'right' }}>
                     <IconButton onClick={onClose}><Close /></IconButton>
                 </Box>
-                <Box sx={{ mx: '30px', my: '30px' }}>
+                <Box
+                    sx={{
+                        mx: '30px',
+                        my: '30px'
+                    }}>
                     <Grid
                         container
-                        sx={{ backgroundColor: grey[200] }}
+                        sx={{
+                            bgcolor: 'background.paper',
+                            p: 3,
+                            borderRadius:1,
+                        }}
                         spacing={2}>
                         {catalogs?.map((item) => (
                             <Grid size={4}>
                                 <CatalogDisplayCard
-                                isPlaylist={item.isPlayList}
+                                    isPlaylist={item.isPlayList}
                                     key={item.path}
                                     name={item.name}
                                     path={item.fullPath}
@@ -100,7 +112,7 @@ const CatalogDisplay = ({ currentId, onClose, onMouseOut }: { currentId: number,
                         ))}
                     </Grid>
                 </Box>
-            </Box>
+            </Paper>
         </Fade>
     );
 };

@@ -1,5 +1,5 @@
-import { Box, Stack, Button, IconButton } from "@mui/material"
 import React, { useState } from "react"
+import { Box, Stack, Button, IconButton,Paper } from "@mui/material"
 import BuyProcessStepper from "./components/BuyProcessStepper"
 import { PersonalInfo, ConfirmBakset, ConfirmAdress } from './components/index';
 import { Body } from "./types";
@@ -7,7 +7,7 @@ import { ArrowBack, ArrowForward } from "@mui/icons-material"
 
 const stepsCount = 4
 
-const BuingProcessForm = () => {
+const BuingProcessForm: React.FC = () => {
     const [activeStep, setActiveStep] = useState(0)
     const [completed, setCompleted] = useState(new Set<number>())
 
@@ -71,19 +71,43 @@ const BuingProcessForm = () => {
     const page = activeStep < pages.length ? React.createElement(pages[activeStep], { index: activeStep, body: body, setBody: changeBody, setCompleted: setCompletedPP, isCompleted: completed.has(activeStep) }) : null
 
     return (
-        <Box sx={{ width: '100%', overflowX: 'hidden', mt: '16px' }}>
-                <BuyProcessStepper activeStep={activeStep} completed={completed} setActiveStep={setActiveStep} />
-            <Stack spacing={3} sx={{ width: '100%', overflowX: 'hidden', pt: '20px', mt: '30px' }}>
+        <Paper
+            sx={{
+                width: '100%',
+                overflowX: 'hidden',
+                mt: '16px',
+                p:'32px',
+                m:'32px'
+            }}
+        >
+            <BuyProcessStepper activeStep={activeStep} completed={completed} setActiveStep={setActiveStep} />
+            <Stack
+                spacing={3}
+                sx={{
+                    width: '100%',
+                    overflowX: 'hidden',
+                    pt: '20px',
+                    mt: '30px'
+                }}
+            >
                 {page}
             </Stack>
             <Box>
-                <IconButton onClick={handlePrevious} disabled={activeStep <= 0}><ArrowBack /></IconButton>
-                <IconButton onClick={handleNext} disabled={activeStep > stepsCount - 1}><ArrowForward /></IconButton>
-
-                <Button onClick={handleComplete}>Complete</Button>
-                {allStepsCompleted() && <Button>Finish</Button>}
+                <IconButton onClick={handlePrevious} disabled={activeStep <= 0}>
+                    <ArrowBack />
+                </IconButton>
+                <IconButton onClick={handleNext} disabled={activeStep > stepsCount - 1}>
+                    <ArrowForward />
+                </IconButton>
+                <Button onClick={handleComplete}>
+                    Complete
+                </Button>
+                {allStepsCompleted() &&
+                    <Button>
+                        Finish
+                    </Button>}
             </Box>
-        </Box>
+        </Paper>
     )
 }
 

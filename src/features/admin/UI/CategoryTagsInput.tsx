@@ -3,7 +3,7 @@ import { Autocomplete, TextField } from '@mui/material';
 
 type Props = { defaultValue?: string[], onChange?: (value: string[]) => void,freeSolo?:boolean,options?: string[]}
 
-const CategoryTagsInput = ({ defaultValue, onChange,freeSolo,options }: Props) => {
+const CategoryTagsInput : React.FC<Props> = ({ defaultValue, onChange,freeSolo,options }) => {
   const [selectedTags, setSelectedTags] = useState<string[]>(defaultValue || []);
 
   useEffect(() => {
@@ -13,16 +13,12 @@ const CategoryTagsInput = ({ defaultValue, onChange,freeSolo,options }: Props) =
   }, [selectedTags, onChange]);
 
   const handleChange = (event : React.SyntheticEvent, newValue: (string | null)[]) => {
-    // Обработка новых значений, где могут быть строки или null
-    // Удаляем null и приводим к массиву строк
     const sanitizedValues = newValue.filter((v): v is string => v !== null);
     setSelectedTags(sanitizedValues);
   };
 
   const handleInputChange = (event : React.SyntheticEvent, value: string, reason: string) => {
-    // Когда пользователь вводит новую строку
     if (reason === 'freeSolo') {
-      // Если пользователь вводит новую строку и она ещё не в списке
       if (value && !selectedTags.includes(value)) {
         setSelectedTags(prev => [...prev, value]);
       }

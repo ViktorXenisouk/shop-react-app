@@ -1,10 +1,13 @@
+import React from "react";
 import { Box, Container, Stack, Typography } from "@mui/material";
 import type { ArticleBlock } from "../../types/article"
-import GalleryBlock from "./components/GalleryBlock"
-import ImageWithTextBlock from "./components/ImageWithTextBlock";
-import ParagraphBlock from "./components/ParagraphBlock";
+import {GalleryBlock,ImageWithTextBlock,ParagraphBlock} from "./components"
 
-const Article = ({ articles }: { articles: ArticleBlock[] }) => {
+type Props = {
+articles: ArticleBlock[]
+}
+
+const Article : React.FC<Props> = ({ articles }) => {
 
     return (
         <Container>

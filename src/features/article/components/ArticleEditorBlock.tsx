@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import {
   Box, Button, IconButton, MenuItem, Paper, Select, TextField, Typography,
 } from '@mui/material';
@@ -13,7 +13,7 @@ type Block = ArticleBlock & { id: string }
 
 type Props = { block: Block, deleteBlock: (id: string) => void, updateBlock: (id: string, updates: Partial<Block>) => void }
 
-const ArticleEditorBlock = ({ block, deleteBlock, updateBlock, }: Props) => {
+const ArticleEditorBlock : React.FC<Props> = ({ block, deleteBlock, updateBlock, }) => {
   const { attributes, listeners, setNodeRef, transform, transition } = useSortable({ id:block.id });
 
   const style = {

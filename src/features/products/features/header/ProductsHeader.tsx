@@ -1,3 +1,4 @@
+import React from "react"
 import { Box, useMediaQuery, useTheme } from "@mui/material"
 import { DataLoaderSimple } from "../../../loading/Loading"
 import { autoSaveFetch } from "../../../../services/safe-fetch"
@@ -10,7 +11,11 @@ import type { ViewType } from "../../types"
 
 import ProductHeaderCategories from "./ProductHeaderCategories"
 
-const ProductsHeader = ({ subPath }: { subPath: string }) => {
+type Props = {
+    subPath: string
+}
+
+const ProductsHeader: React.FC<Props> = ({ subPath }) => {
     const res = autoSaveFetch<Catalog>(`/category/subpath/${subPath}`, { method: 'GET' })
 
     const theme = useTheme()
@@ -24,12 +29,18 @@ const ProductsHeader = ({ subPath }: { subPath: string }) => {
     }
 
     return (
-        <Box sx={{ borderBottom: '1px solid #ccc', mb: '10px' }}>
+        <Box
+            sx={{
+                borderBottomWidth: '1px',
+                borderBottomStyle: 'solid',
+                borderBottomColor: 'divider',
+                mb: '10px'
+            }}>
             <CategoryParser category={subPath} renderMain />
             <DataLoaderSimple res={res} page={ProductHeaderCategories} />
             {
                 !isSmall ?
-                    <Box sx={{ display: 'flex', justifyContent: 'space-between' ,mx:'30px'}}>
+                    <Box sx={{ display: 'flex', justifyContent: 'space-between', mx: '30px' }}>
                         <SortSwitcher />
                         <ViewSwitcher onChange={onChange} />
                     </Box>

@@ -18,4 +18,4 @@ const ItemForCarousel = ({children,minWidth,height}: {children: React.ReactNode,
   )
 }
 
-export default ItemForCarousel
+//export default ItemForCarousel

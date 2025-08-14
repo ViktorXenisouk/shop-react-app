@@ -1,10 +1,10 @@
+import React, { useState } from "react"
 import { Box, Stack, TextField, Button } from "@mui/material"
 import TagsInput from "../../../UI/TagsInput"
 import { useSearchParams } from "react-router-dom"
 import CategorieInput from "../../../UI/CategorieInput"
-import { useState } from "react"
 
-const AdminProductsSearch = () => {
+const AdminProductsSearch : React.FC = () => {
     const [body, setBody] = useState<{ search: string, tags: string[], category: string }>({ search: '', tags: [], category: '' })
     const [searchParams, setSearchParams] = useSearchParams()
 

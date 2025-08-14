@@ -1,3 +1,4 @@
+import React from "react"
 import { useAuthUserStore } from "../../../store/useAuth"
 import { CardSkeleton } from "./product-card/ProductCardView"
 import { useSearchParams } from "react-router-dom"
@@ -5,13 +6,14 @@ import { type Product } from "../../../types/product"
 import ProductCard from "./product-card/ProductCard"
 import { Grid, Box } from "@mui/material"
 import useMediaQuery from '@mui/material/useMediaQuery';
-import { useTheme } from '@mui/material/styles';
-import { grey } from "@mui/material/colors"
 import { SuperTag } from "../features/super-tag/types"
+import { useTheme } from "@mui/material/styles"
 
-const border = `${grey[200]} solid 2px`
+type Props = {
+    data?: Product[] | null
+}
 
-const ProductsLoader = ({ data }: { data?: Product[] | null }) => {
+const ProductsLoader: React.FC<Props> = ({ data }) => {
 
     const store = useAuthUserStore()
 
@@ -19,63 +21,65 @@ const ProductsLoader = ({ data }: { data?: Product[] | null }) => {
 
     const theme = useTheme();
 
+    const border = `${theme.palette.divider} solid 2px`
+
     const isXs = useMediaQuery(theme.breakpoints.only('xs'));
     const isSm = useMediaQuery(theme.breakpoints.only('sm'));
     const isMd = useMediaQuery(theme.breakpoints.only('md'));
 
-            const getStyleBySize = () => {
-            if (isXs || searchParams.get('view') === 'list') {
-                return { borderTop: 'border', borderRight: 'none',height:'auto', }
-            }
-            else if (isSm) {
-                return {
-                    ':nth-child(-n+2)': {
-                        borderTop: 'none'
-                    },
-                    ':nth-child(2n)': {
-                        borderRight: 'none'
-                    }
-                }
-            }
-            else if (isMd) {
-                return {
-                    ':nth-child(-n+3)': {
-                        borderTop: 'none'
-                    },
-                    ':nth-child(3n)': {
-                        borderRight: 'none'
-                    }
-                }
-            }
-            else {
-                return {
-                    ':nth-child(-n+4)': {
-                        borderTop: 'none'
-                    },
-                    ':nth-child(4n)': {
-                        borderRight: 'none'
-                    }
+    const getStyleBySize = () => {
+        if (isXs || searchParams.get('view') === 'list') {
+            return { borderTop: border, borderRight: border, height: 'auto', }
+        }
+        else if (isSm) {
+            return {
+                ':nth-child(-n+2)': {
+                    borderTop: 'none'
+                },
+                ':nth-child(2n)': {
+                    borderRight: 'none'
                 }
             }
         }
+        else if (isMd) {
+            return {
+                ':nth-child(-n+3)': {
+                    borderTop: 'none'
+                },
+                ':nth-child(3n)': {
+                    borderRight: 'none'
+                }
+            }
+        }
+        else {
+            return {
+                ':nth-child(-n+4)': {
+                    borderTop: 'none'
+                },
+                ':nth-child(4n)': {
+                    borderRight: 'none'
+                }
+            }
+        }
+    }
 
     const getSize = () => {
         if (!searchParams.get('view') || searchParams.get('view') === 'grid') {
-            return { xs: 12, sm: 6, md: 4,lg:3 }
+            return { xs: 12, sm: 6, md: 4, lg: 3 }
         }
         else {
             return { xs: 12 }
         }
     }
 
-    const getSuperTag = (i:number) : SuperTag | undefined => {
-        if(i == 0){
+    const getSuperTag = (i: number): SuperTag | undefined => {
+        if (i == 0) {
             return "new"
         }
-        if(i == 1){
+        if (i == 1) {
             return "super-price"
         }
-        if(i == 2){
+        if (i == 2) {
             return "the-best"
         }
         return undefined
@@ -101,7 +105,7 @@ const ProductsLoader = ({ data }: { data?: Product[] | null }) => {
             return arr
         }
 
-        return (data && typeof data.map === 'function') && data.map((item , i) => {
+        return (data && typeof data.map === 'function') && data.map((item, i) => {
             const count = store.user?.basketInfo.find((v) => v.id == item._id)?.count ?? 0
             const liked = store.user?.favourite.includes(item._id) ?? false
             return (
@@ -113,7 +117,15 @@ const ProductsLoader = ({ data }: { data?: Product[] | null }) => {
                         borderTop: border,
                         ...getStyleBySize()
                     }}>
-                    <ProductCard superTag={getSuperTag(i)} discription={item.discription} count={count} isLiked={liked} id={item._id} title={item.name} img={item.imgs[0]} view={searchParams.get('view')} />
+                    <ProductCard
+                        superTag={getSuperTag(i)}
+                        discription={item.discription}
+                        count={count}
+                        isLiked={liked}
+                        id={item._id}
+                        title={item.name}
+                        img={item.imgs[0]}
+                        view={searchParams.get('view')} />
                 </Grid>)
         })
     }

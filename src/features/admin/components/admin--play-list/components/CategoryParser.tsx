@@ -1,9 +1,14 @@
+import React from "react"
 import { Breadcrumbs, Link } from "@mui/material"
 import { Link as RouterLink, useSearchParams } from "react-router-dom"
 import { Home } from "@mui/icons-material"
 
+type Props = {
+ category: string, 
+ renderMain?: boolean
+}
 
-const CategoryParser = ({ category, renderMain }: { category: string, renderMain?: boolean }) => {
+const CategoryParser : React.FC<Props> = ({ category, renderMain }) => {
     const [searchParams, setSearchParams] = useSearchParams()
 
     const parse = (name: string) => {

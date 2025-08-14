@@ -1,8 +1,7 @@
-import { IconButton, Box, TextField, SxProps } from '@mui/material';
+import React, { useState, useEffect } from "react";
+import { IconButton, Box, TextField } from '@mui/material';
 import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
-import { useState } from "react";
-import { useEffect } from 'react';
 
 type Props = {
     count?: number;
@@ -10,7 +9,7 @@ type Props = {
     onChange?: (count: number) => void,
 }
 
-const CountBlock = ({ count = 0, setCount, onChange, }: Props) => {
+const CountBlock: React.FC<Props> = ({ count = 0, setCount, onChange, }) => {
 
     const [inputValue, setInputValue] = useState(count.toString());
 
@@ -38,7 +37,7 @@ const CountBlock = ({ count = 0, setCount, onChange, }: Props) => {
     const changeHandler: React.ChangeEventHandler<HTMLInputElement> = (event) => {
         const value = event.target.value;
 
-                    setInputValue(value);
+        setInputValue(value);
 
         const parsed = parseInt(value);
         if (!isNaN(parsed) && parsed >= 0) {
@@ -64,7 +63,6 @@ const CountBlock = ({ count = 0, setCount, onChange, }: Props) => {
     };
 
     const onBlur = () => {
-        // Если значение пустое или невалидное, возвращаемся к текущему count
         if (inputValue.trim() === "" || isNaN(Number(inputValue))) {
             setInputValue('0');
             setCount?.(0)
@@ -87,7 +85,6 @@ const CountBlock = ({ count = 0, setCount, onChange, }: Props) => {
                 <RemoveIcon />
             </IconButton>
             <TextField
-                sx={{ maxWidth: '100px', minWidth: '40px', '& input': { MozAppearance: 'textfield' }, alignItems: 'center', textAlign: 'center' }}
                 onBlur={onBlur}
                 onKeyDown={onKeyDown}
                 value={inputValue !== '0' ? inputValue : count.toString()}
@@ -101,6 +98,13 @@ const CountBlock = ({ count = 0, setCount, onChange, }: Props) => {
                     }
                 }}
                 size="small"
+                sx={{
+                    maxWidth: '100px',
+                    minWidth: '40px',
+                    alignItems: 'center',
+                    textAlign: 'center',
+                    '& input': { MozAppearance: 'textfield' }
+                }}
             />
             <IconButton onClick={onIncrease}>
                 <AddIcon />

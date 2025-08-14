@@ -1,17 +1,18 @@
 import { styled, Paper } from "@mui/material";
-import Link from "@mui/material";
 
 const CategoryHeaderCard = styled(Paper)(({ theme }) => ({
-    component: typeof Link,
     variant: "outlined",
     elevation: 24,
     minHeight: '40px',
     display: 'flex',
     alignContent: 'center',
     justifyContent: 'center',
+    borderWidth:'1px',
+    borderStyle:'solid',
+    borderColor:theme.palette.divider,
     ':hover': {
-        border: 'grey.400 solid 1px'
+            borderColor:theme.palette.action.selected,
     }
 }))
 
-export default CategoryHeaderCard
+//export default CategoryHeaderCard

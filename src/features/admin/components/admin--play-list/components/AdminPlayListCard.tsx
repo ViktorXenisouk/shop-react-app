@@ -1,9 +1,16 @@
+import React from "react"
 import { Box, Paper, Typography, ButtonGroup, Button, Stack } from "@mui/material"
 import { PlayList } from "../../../../../types/play-list"
 import { Link } from "react-router-dom"
 import {ArrowForward,Delete,EditDocument} from "@mui/icons-material"
 
-const ButtonLink = ({ children, to, onClick }: { children: any, to: string, onClick?: () => void }) => {
+type Props = { 
+    children: any, 
+    to: string, 
+    onClick?: () => void 
+}
+
+const ButtonLink : React.FC<Props> = ({ children, to, onClick }) => {
     return (
         <Button
             component={Link}

@@ -1,10 +1,10 @@
 type Body = {
-    path:string,
+    path: string,
     name: string,
     tags: string[],
     discription: string,
     ids: string[],
-        parentPath?: string | null,
+    parentPath?: string | null,
 }
 
-export type {Body}
+export type { Body }

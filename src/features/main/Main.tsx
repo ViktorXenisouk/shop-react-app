@@ -1,8 +1,8 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useTimer } from '../../hooks/useTimer';
 import MainView from './MainView';
 
-const Main = () => {
+const Main : React.FC = () => {
     const [currentId, setCurrentId] = useState(-1);
     const [isCatalogMouseOver, setIsCatalogMouseOver] = useState(false);
 

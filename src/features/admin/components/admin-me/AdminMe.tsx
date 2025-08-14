@@ -1,21 +1,11 @@
+import React from 'react';
 import { useNavigate, Link as LinkRouter } from 'react-router-dom';
 import { useAdminAuthStore } from "../../../../store/useAdmin"
-import { Admin } from "../../../../types/admin"
-import { Box, Paper, Stack, Button, Typography, ButtonGroup } from "@mui/material"
+import { Paper, Stack, Button, Typography, ButtonGroup } from "@mui/material"
 import { useEffect } from "react"
 import { fetchAdmin } from './utils/fetchAdmin';
 
-const Render = ({ data }: { data: Admin }) => {
-
-    return (
-        <Box>
-            <Typography>{data.name}</Typography>
-
-        </Box>
-    )
-}
-
-const AdminMe = () => {
+const AdminMe : React.FC = () => {
     const navigate = useNavigate()
     const store = useAdminAuthStore()
 

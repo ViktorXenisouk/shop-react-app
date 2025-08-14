@@ -1,15 +1,21 @@
+import React from "react";
 import { srcset } from "../../../utils/src-set";
-import { ImageList,ImageListItem } from "@mui/material";
+import { ImageList, ImageListItem } from "@mui/material";
 
-const MyImageList = () => {
+const MyImageList: React.FC = () => {
 
     return (
- <ImageList
+        <ImageList
             variant="quilted"
             cols={2}
             rowHeight='auto'
-            sx={{mx:'auto',width:{xs:'100%',sm:'500px',md:'600px',lg:'500px'}}}
-            >
+            sx={{
+                bgcolor:'background.paper',
+                mx: 'auto',
+                borderRadius:4,
+                p:4,
+                width: { xs: '250px', sm: '500px', md: '600px', lg: '500px' }
+            }}>
             <ImageListItem rows={1} cols={2}>
                 <img {...srcset("https://res.cloudinary.com/djdxksokm/image/upload/v1753537558/my-pet-project/hcphvusk6w8ybrg7flo3.png", 150, 1, 2)} />
             </ImageListItem>
@@ -22,5 +28,5 @@ const MyImageList = () => {
         </ImageList>
     )
 }
-    
+
 export default MyImageList

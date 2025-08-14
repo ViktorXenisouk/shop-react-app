@@ -1,3 +1,4 @@
+import React from "react"
 import { Link } from "react-router-dom"
 import { useAuthUserStore } from "../../store/useAuth"
 import { useLocalStorage } from "../../store/useLocalStorage"
@@ -5,7 +6,7 @@ import { Box, Typography, Button, Grid, TextField, Paper, Stack, Divider } from 
 import HeaderText from "../../UI/HeaderText"
 import Image from "../../UI/Image"
 
-const Me = () => {
+const Me : React.FC= () => {
     const store = useAuthUserStore()
     const localStorage = useLocalStorage()
 

@@ -1,6 +1,7 @@
+import React from "react"
 import FavouriteView from "../favourite/FavouriteDisplay"
 
-const Favourite = () => {
+const Favourite : React.FC = () => {
 return <FavouriteView/>
 }
 

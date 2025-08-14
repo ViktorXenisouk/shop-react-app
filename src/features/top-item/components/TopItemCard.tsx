@@ -1,8 +1,9 @@
-import { Box, Button, Card, CardContent, CardMedia, Typography } from "@mui/material"
+import React from "react"
+import { Box, Button, Typography } from "@mui/material"
 import { Link } from "react-router-dom"
 import { TopItem } from "../../../types/top-item"
 
-const TopItemCard = (props: TopItem) => {
+const TopItemCard : React.FC<TopItem> = (props) => {
 
     return (
         <Box
@@ -27,14 +28,29 @@ const TopItemCard = (props: TopItem) => {
                     width="300px"
                     src={props.imageUrl}
                 />
-                <Typography align="center" color="black" variant="h3">{props.title}</Typography>
+                <Typography align="center" variant="h3" sx={{
+                    color:'text.primary'
+                }}>
+                    {props.title}
+                </Typography>
+                <Typography
+                    variant="subtitle1"
+                    sx={{
+                        color:'text.secondary',
+                        ml:3}}  >
+                    {props.shortDescription}
+                </Typography>
+
             </Box>
             <Box sx={{ mx: '12px', mb: '30px' }}>
-                <Typography color="black" variant="subtitle1">{props.shortDescription}</Typography>
                 <Button
                     component={Link}
                     to={props.url}
-                    variant="contained">
+                    variant="contained"
+                    color="secondary"
+                    sx={{
+                        px:4,
+                    }}>
                     Show More
                 </Button>
             </Box>

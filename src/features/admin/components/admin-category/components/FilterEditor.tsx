@@ -1,10 +1,6 @@
-import ItemListManager from "../../../UI/ItemListManager"
-import { forwardRef, useEffect, useImperativeHandle, useState } from "react"
-import CategoryTagsInput from "../../../UI/CategoryTagsInput"
-import CategoryTypeInput from "../../../UI/CategoryTypeInput"
+import React, { useEffect, useState } from "react"
 import { v4 as uuidv4 } from 'uuid';
-import { Variant, CategoryProps, FilterItem } from "../../../../../types/catalog"
-import { FilterItemToFilter, FilterToFilterItems } from "../utils"
+import { Variant, FilterItem } from "../../../../../types/catalog"
 import { DndContext, closestCenter } from '@dnd-kit/core';
 import {
     SortableContext, arrayMove, verticalListSortingStrategy,
@@ -14,7 +10,11 @@ import FilterEditorItem from "./FilterEditorItem"
 
 type F = FilterItem & { id: string }
 
-const CategoryListTagsManager = ({ onChange, defaultValue }: { onChange?: (value: FilterItem[]) => void, defaultValue?: FilterItem[] }) => {
+type Props = {
+onChange?: (value: FilterItem[]) => void, defaultValue?: FilterItem[]
+}
+
+const CategoryListTagsManager : React.FC<Props> = ({ onChange, defaultValue }) => {
     const [blocks, setBlocks] = useState<F[]>(defaultValue ? defaultValue.map((v) => { return { ...v, id: uuidv4() } }) : []);
 
     useEffect(() => {

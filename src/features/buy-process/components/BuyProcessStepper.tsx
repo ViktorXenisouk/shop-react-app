@@ -1,4 +1,5 @@
-import { Step,Stepper,Typography,StepButton } from '@mui/material';
+import React from 'react';
+import { Step,Stepper,StepButton } from '@mui/material';
 import {ShoppingBasketOutlined,FolderSharedOutlined,Business,AddCard} from "@mui/icons-material"
 
 import MyLabel from '../../../components/labels/MyLabel';
@@ -16,7 +17,7 @@ const steps : {icon:React.ReactNode,title:string}[] = [
 {icon:<AddCard/>, title:'set payment method'}, 
 ]
 
-const BuyProcessStepper = ({ activeStep, completed, setActiveStep }: Props) => {
+const BuyProcessStepper : React.FC<Props> = ({ activeStep, completed, setActiveStep }) => {
 
     const isCompletedStep = (step: number) => {
         return completed.has(step);
