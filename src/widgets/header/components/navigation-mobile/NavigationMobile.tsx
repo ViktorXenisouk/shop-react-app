@@ -1,7 +1,7 @@
 import React, { useState, useEffect, Fragment } from "react"
 import { LINK_DATA, EXPAND_LINK_DATA } from "../../api"
-import MyLink from "../../UI/MyLink"
 import { Link as RouterLink } from "react-router-dom"
+import { Logo } from "../Logo";
 
 import {
   Box,
@@ -48,15 +48,16 @@ const NavigationMobile: React.FC<Props> = ({ onSearchClick }) => {
 
       <Drawer anchor="left" open={open} onClose={toggleDrawer(false)}>
         <Box width={250} role="presentation" p={2}>
-          <Typography component={RouterLink} to='/' variant="h6">Logo</Typography>
+          <IconButton onClick={toggleDrawer(false)} component={RouterLink} to='/'>
+            <Logo />
+          </IconButton>
           <Divider sx={{ my: 1 }} />
-
           <Stack justifyContent='flex-start' alignItems='flex-start'>
             {store.token ?
               <Button
                 component={RouterLink}
                 to='/login'
-                color="primary"
+                onClick={toggleDrawer(false)}
                 startIcon={<Person />}>
                 My Account
               </Button> :
@@ -65,6 +66,7 @@ const NavigationMobile: React.FC<Props> = ({ onSearchClick }) => {
                   component={RouterLink}
                   to='/login'
                   color="primary"
+                  onClick={toggleDrawer(false)}
                   startIcon={<Person />}>
                   Login
                 </Button>
@@ -72,28 +74,28 @@ const NavigationMobile: React.FC<Props> = ({ onSearchClick }) => {
                   component={RouterLink}
                   to='/login'
                   color="primary"
+                  onClick={toggleDrawer(false)}
                   startIcon={<Person />}>
                   Create Account
                 </Button>
               </Fragment>
             }
-            <Button 
-            component={RouterLink} 
-            to='/me/favourite' 
-            color="primary"
-            startIcon={<Favorite />}>
-                  Favorite
-                </Button>
-                <Button 
-                component={RouterLink} 
-                to='/me/basket' 
-                color='primary'
-                 startIcon={<ShoppingBasketRounded />}
-                 >
-                  Basket
-                </Button>
-            <Button component={RouterLink} to='/search' sx={{ color: 'black' }} startIcon={<Search />}>
-              search
+            <Button
+              component={RouterLink}
+              to='/me/favourite'
+              color="primary"
+              onClick={toggleDrawer(false)}
+              startIcon={<Favorite />}>
+              Favorite
+            </Button>
+            <Button
+              component={RouterLink}
+              to='/me/basket'
+              color='primary'
+              onClick={toggleDrawer(false)}
+              startIcon={<ShoppingBasketRounded />}
+            >
+              Basket
             </Button>
             <Divider sx={{ my: 1 }} />
           </Stack>
@@ -105,9 +107,12 @@ const NavigationMobile: React.FC<Props> = ({ onSearchClick }) => {
               {item.links.map((link) => (
                 <ListItem key={link.to} disablePadding>
                   <Button
-                    color="primary"
                     component={RouterLink}
-                    to={link.to}>
+                    to={link.to}
+                    onClick={toggleDrawer(false)}
+                    sx={{
+                      color: 'text.secondary'
+                    }}>
                     {item.title}
                   </Button>
                 </ListItem>
@@ -125,9 +130,12 @@ const NavigationMobile: React.FC<Props> = ({ onSearchClick }) => {
             {LINK_DATA.map((item) => (
               <ListItem key={item.to} disablePadding>
                 <Button
-                  color="primary"
                   component={RouterLink}
-                  to={item.to}>
+                  to={item.to}
+                  onClick={toggleDrawer(false)}
+                  sx={{
+                    color: 'text.secondary'
+                  }}>
                   {item.title}
                 </Button>
               </ListItem>

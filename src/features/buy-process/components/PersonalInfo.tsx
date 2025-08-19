@@ -3,7 +3,11 @@ import { PropsCnd } from "../types";
 import { useAuthUserStore } from "../../../store/useAuth";
 import { TextField, Button } from "@mui/material";
 import PhoneInput from "../../../UI/PhoneInput";
+import {Person2} from "@mui/icons-material"
 import { EmailLabel, UserNameLabel } from "../../../components/labels";
+import MyLabel from "../../../components/labels/MyLabel";
+
+const yourNameLabel = <MyLabel icon={<Person2/>} title='your name'/>
 
 const PersonalInfo: React.FC<PropsCnd> = (props) => {
     const store = useAuthUserStore()
@@ -48,7 +52,7 @@ const PersonalInfo: React.FC<PropsCnd> = (props) => {
             <TextField
                 onChange={textHandle}
                 value={props.body.username}
-                label={UserNameLabel}
+                label={yourNameLabel}
                 focused={isCompleted ? true : undefined}
                 color={isCompleted ? 'success' : 'info'}
             />

@@ -2,7 +2,7 @@ import React from "react"
 import { Catalog } from "../../../../types/catalog"
 import { PlayList } from "../../../../types/play-list"
 import { useSearchParams, Link } from "react-router-dom"
-import { Box, Grid, Paper, Typography, Skeleton } from "@mui/material"
+import { Box, Grid, Paper, Skeleton } from "@mui/material"
 
 type Props = {
     data: Catalog | PlayList | null

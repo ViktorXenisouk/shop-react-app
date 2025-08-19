@@ -2,7 +2,7 @@ import React from 'react';
 import { useParams } from 'react-router-dom';
 import { useAdminAuthStore } from '../../../../store/useAdmin';
 import { editCategory } from './api';
-import { DataLoaderFromPromise } from '../../../loading/Loading';
+import { DataLoaderFromPromise } from '../../../loading';
 import { safeFetch } from '../../../../services/safe-fetch';
 import { Catalog } from '../../../../types/catalog';
 import { Body } from './types';

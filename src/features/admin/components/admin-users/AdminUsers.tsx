@@ -1,6 +1,6 @@
 import React from "react"
 import { Box, Grid } from "@mui/material"
-import { DataLoaderFromPromise } from "../../../loading/Loading"
+import { DataLoaderFromPromise } from "../../../loading"
 import { safeFetch } from "../../../../services/safe-fetch"
 import { useAdminAuthStore } from "../../../../store/useAdmin"
 import type { User } from "../../../../types/user"

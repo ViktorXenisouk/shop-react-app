@@ -1,11 +1,12 @@
+import { getTopProducts } from "../api"
+import {Box,Typography} from "@mui/material"
 import CarouselWithButtons from "../features/carousel-with-buttons/CarouselWithButtons"
-import { Box, Typography } from "@mui/material"
-import { getItems } from "../../../types/top-item"
-import TopItemProduct from "../components/TopItemProduct"
+import TopItemCard from "../top-categories/TopCategoriesCard"
 
-const TopProductCarousel = ({ title }: { title: string }) => {
-    const categories = getItems()
-    return (
+const RecentlyViewedProducts = () => {
+    const categories = getTopProducts()
+
+       return (
         <Box sx={{ width: '100%' }}>
             <Typography
                 variant="h3"
@@ -16,13 +17,13 @@ const TopProductCarousel = ({ title }: { title: string }) => {
                     mt: '30px',
                     mb: '12px'
                 }}>
-                {title}
+                Top Products
             </Typography>
             {
                 categories ?
                     <CarouselWithButtons height="350px">
                         {categories && categories.map((v) =>
-                            <TopItemProduct {...v} />
+                            <TopItemCard {...v} />
                         )}
                     </CarouselWithButtons>
                     :
@@ -32,4 +33,4 @@ const TopProductCarousel = ({ title }: { title: string }) => {
     )
 }
 
-export default TopProductCarousel
+export default RecentlyViewedProducts

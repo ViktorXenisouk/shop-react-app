@@ -1,6 +1,6 @@
 import React from "react"
 import { Box} from "@mui/material"
-import { DataLoaderFromPromise } from "../../../loading/Loading"
+import { DataLoaderFromPromise } from "../../../loading"
 import { safeFetch } from "../../../../services/safe-fetch"
 import type { User } from "../../../../types/user"
 import { useParams } from "react-router-dom"

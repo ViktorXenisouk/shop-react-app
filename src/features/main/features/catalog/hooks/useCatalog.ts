@@ -9,6 +9,12 @@ type CatalogStorage = {
     fetchCatalog: () => void;
 };
 
+const addFieldIntoPlayLists = (playLists: PlayList[]) => {
+    return playLists.map((item) => {
+        return { ...item, isPlaylist: true } as PlayList & { isPlaylist?: boolean }
+    })
+}
+
 const useCatalogStorage = create<CatalogStorage>((set) => ({
     catalog: null,
     playlists: null,
@@ -25,10 +31,7 @@ const useCatalogStorage = create<CatalogStorage>((set) => ({
 
         const all: ((Catalog | PlayList) & { isPlaylist?: boolean })[] = [
             ...result.data,
-            ...result2.data.map((item) => {
-                const aaa = { ...item, isPlaylist: true } as PlayList & { isPlaylist?: boolean }
-                return aaa
-            })
+            ...addFieldIntoPlayLists(result2.data),
         ]
 
         if (result.success && result.data) {

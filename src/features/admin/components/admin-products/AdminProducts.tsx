@@ -1,5 +1,5 @@
 import React from "react"
-import { DataLoaderFromHook } from "../../../loading/Loading"
+import { DataLoaderFromHook } from "../../../loading"
 import AdminProductsCard from "./components/AdminProductCard"
 import { useSearchParams } from "react-router-dom"
 import { autoSaveFetch } from "../../../../services/safe-fetch"

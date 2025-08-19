@@ -7,6 +7,7 @@ import { Box } from "@mui/material"
 import type { ImageItem } from "../../../../types/Image";
 import PriceBlock from "../PriceBlock";
 import SuperTag from "../../features/super-tag/SuperTag";
+import BuyButton from "./UI/BuyButton";
 
 type Props = {
     discription: string
@@ -19,6 +20,7 @@ type Props = {
     onChangeHandlerCount: (count: number) => void
     view: string,
     superTag?: 'new' | 'super-price' | 'the-best' | null
+    onButtonClick?: (id: string) => void
 }
 
 const ProductCardView: React.FC<Props> = (props) => {
@@ -42,7 +44,7 @@ const ProductCardView: React.FC<Props> = (props) => {
                         display: 'block',
                         mt: 1,
                         fontWeight: 'bold',
-                        color: 'GrayText',
+                        color: 'text.primary',
                         textDecoration: 'underline',
                         minHeight: '3em'
                     }}>
@@ -59,7 +61,7 @@ const ProductCardView: React.FC<Props> = (props) => {
                     sx={{
                         display: 'block',
                         mt: 1,
-                        color: 'text.primary',
+                        color: 'text.secondary',
                         height: '8em'
                     }}>
                     {props.discription.slice(0, 70).length === props.discription.length ? props.discription : props.discription.slice(0, 70) + '....'}
@@ -67,13 +69,12 @@ const ProductCardView: React.FC<Props> = (props) => {
                 <PriceBlock price={2000} />
                 <ButtonGroup orientation='vertical'>
                     <Button sx={{ width: '100%' }} variant="outlined" component={RouterLink} to={`/product/${props.id}`}>Show More</Button>
-                    <BasketCountButton simple onChange={props.onChangeHandlerCount} count={props.count} />
+                    <BuyButton id={props.id} onClick={() => props.onButtonClick?.(props.id)} />
                     <LikeButtonWithText liked={props.liked} onClick={props.onLikeClick} />
                 </ButtonGroup>
             </Box>
         )
     }
-    //background: 'linear-gradient(to bottom,rgb(195, 195, 195),rgb(255, 255, 255))'
     if (props.view === 'grid') {
         return (
             <Box
@@ -108,12 +109,13 @@ const ProductCardView: React.FC<Props> = (props) => {
                             }}>
                             {props.title}
                         </Typography >
-                        <Typography sx={{ 
-                            display: 'block', 
-                            mt: 1, 
-                            color: 'text.secondary', 
-                            maxHeight: '8em', 
-                            mx: '5px' }}>
+                        <Typography sx={{
+                            display: 'block',
+                            mt: 1,
+                            color: 'text.secondary',
+                            maxHeight: '8em',
+                            mx: '5px'
+                        }}>
                             {props.discription.slice(0, 70).length === props.discription.length ? props.discription : props.discription.slice(0, 70) + '....'}
                         </Typography>
                     </CardContent>
@@ -121,7 +123,7 @@ const ProductCardView: React.FC<Props> = (props) => {
                 <Box>
                     <PriceBlock price={2000} />
                     <CardActions sx={{ display: 'flex', flexDirection: 'column' }}>
-                        <BasketCountButton simple onChange={props.onChangeHandlerCount} count={props.count} />
+                        <BuyButton id={props.id} onClick={() => props.onButtonClick?.(props.id)} />
                         <LikeButtonWithText liked={props.liked} onClick={props.onLikeClick} />
                     </CardActions>
                 </Box>
@@ -131,17 +133,15 @@ const ProductCardView: React.FC<Props> = (props) => {
     else
         return (
             <Box>
-                <Typography sx={{ 
-                    display: 'block',
-                     mt: 1, 
-                     fontWeight: 'bold',
-                      color: 'text.primary', 
-                      textDecoration: 'underline',
-                       minHeight: '3em', 
-                       textAlign: 'center' }}>
-                    {props.title}
-                </Typography >
-                <Box sx={{ display: 'flex', justifyContent: 'space-between', flexDirection: 'row', alignItems: 'center', mb: '40px' }}>
+                <Box
+                 sx={{
+                     display: 'flex', 
+                     justifyContent: 'space-between', 
+                     flexDirection: 'row',
+                      alignItems: 'center',
+                       my: 1 ,
+p:4
+                    }}>
                     <Box
                         component="img"
                         alt={props.img.name ?? ''}
@@ -150,22 +150,34 @@ const ProductCardView: React.FC<Props> = (props) => {
                         src={props.img.url}
                     />
                     <Box>
-                        <Typography sx={{ 
-                            mt: 1, 
-                            color: 'text.secondary', 
-                            maxHeight: '10em', 
-                            maxWidth: '400px', 
-                            mx: '20px' }}>
+                        <Typography sx={{
+                            display: 'block',
+                            mt: 1,
+                            fontWeight: 'bold',
+                            color: 'text.primary',
+                            textDecoration: 'underline',
+                            minHeight: '3em',
+                            textAlign: 'center'
+                        }}>
+                            {props.title}
+                        </Typography >
+                        <Typography sx={{
+                            mt: 1,
+                            color: 'text.secondary',
+                            maxHeight: '10em',
+                            maxWidth: '400px',
+                            mx: '20px'
+                        }}>
                             {props.discription.slice(0, 100).length === props.discription.length ? props.discription : props.discription.slice(0, 100) + '....'}
                         </Typography>
                     </Box>
                     <ButtonGroup orientation="vertical" sx={{ height: '100%' }}>
-                        <Button 
-                        component={RouterLink} 
-                        to={`/product/${props.id}`}>
-                        Show More
+                        <Button
+                            component={RouterLink}
+                            to={`/product/${props.id}`}>
+                            Show More
                         </Button>
-                        <BasketCountButton onChange={props.onChangeHandlerCount} count={props.count} />
+                        <BuyButton id={props.id} onClick={() => props.onButtonClick?.(props.id)} />
                         <LikeButtonWithText liked={props.liked} onClick={props.onLikeClick} />
                     </ButtonGroup>
                 </Box>

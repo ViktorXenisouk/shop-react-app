@@ -1,6 +1,6 @@
 import { Link as RouterLink } from 'react-router-dom';
 import { Box, Container, Grid, IconButton, Link, Typography, useMediaQuery, useTheme, BottomNavigation, BottomNavigationAction,Paper } from '@mui/material';
-import { Facebook, Twitter, Instagram, GitHub, LinkedIn, Person2, ShoppingBasket, Search, Restore } from '@mui/icons-material';
+import { Facebook, Twitter, Instagram, GitHub, LinkedIn, Person2, ShoppingBasket, Favorite, Restore } from '@mui/icons-material';
 
 const Footer = () => {
   const theme = useTheme()
@@ -18,10 +18,10 @@ const Footer = () => {
         left: 0, 
         right: 0
         }}>
-        <BottomNavigationAction component={RouterLink} to='' icon={<Restore />} label='Main' />
-        <BottomNavigationAction component={RouterLink} to='' icon={<Search />} label='Search' />
-        <BottomNavigationAction component={RouterLink} to='' icon={<ShoppingBasket />} label='Basket' />
-        <BottomNavigationAction component={RouterLink} to='' icon={<Person2 />} label='My Acount' />
+        <BottomNavigationAction component={RouterLink} to='/' icon={<Restore />} label='Main' />
+        <BottomNavigationAction component={RouterLink} to='/me/basket' icon={<ShoppingBasket />} label='Basket' />
+                <BottomNavigationAction component={RouterLink} to='/me/favourite' icon={<Favorite />} label='Favorite' />
+        <BottomNavigationAction component={RouterLink} to='me/me' icon={<Person2 />} label='My Acount' />
       </BottomNavigation>
     )
   }

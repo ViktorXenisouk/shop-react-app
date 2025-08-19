@@ -15,9 +15,10 @@ type Props = {
     isLiked?: boolean
     view?: string | null,
     superTag?:'new'|'super-price'|'the-best'|null
+    onButtonClick?: (id:string)=>void
 }
 
-const ProductCard : React.FC<Props>= ({ title, id, img, count, isLiked,view ,discription,superTag}) => {
+const ProductCard : React.FC<Props>= ({ title, id, img, count, isLiked,view ,discription,superTag,onButtonClick}) => {
     const [cnt, setCnt] = useState(count ?? 0)
     const [liked, setLiked] = useState(isLiked ?? false)
 
@@ -45,6 +46,7 @@ const ProductCard : React.FC<Props>= ({ title, id, img, count, isLiked,view ,dis
     onLikeClick={onLikeClick} 
     onChangeHandlerCount={onChangeHandlerCount} 
     liked={liked} 
+    onButtonClick={onButtonClick}
     view={view ?? 'grid'}
      title={title} />
 }

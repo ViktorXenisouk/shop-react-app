@@ -11,10 +11,10 @@ const MyImageList: React.FC = () => {
             rowHeight='auto'
             sx={{
                 bgcolor:'background.paper',
-                mx: 'auto',
+                mx: {xs:'0px',sm:'auto'},
                 borderRadius:4,
-                p:4,
-                width: { xs: '250px', sm: '500px', md: '600px', lg: '500px' }
+                p:{xs:0,sm:4},
+                width: { xs: '100%', sm: '500px', md: '600px', lg: '500px' }
             }}>
             <ImageListItem rows={1} cols={2}>
                 <img {...srcset("https://res.cloudinary.com/djdxksokm/image/upload/v1753537558/my-pet-project/hcphvusk6w8ybrg7flo3.png", 150, 1, 2)} />

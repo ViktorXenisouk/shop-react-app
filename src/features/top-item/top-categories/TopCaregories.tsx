@@ -1,10 +1,10 @@
-import { getCategories } from "../../types/top-item"
+import { getTopCategories } from "../api"
 import { Typography,Box } from "@mui/material"
-import CarouselWithButtons from "./features/carousel-with-buttons/CarouselWithButtons"
-import TopItemCard from "./components/TopItemCard"
+import CarouselWithButtons from "../features/carousel-with-buttons/CarouselWithButtons"
+import TopCategoriesCard from "./TopCategoriesCard"
 
 const TopCategories = () => {
-    const categories = getCategories()
+    const categories = getTopCategories()
    return (
         <Box sx={{ width: '100%' }}>
             <Typography 
@@ -21,7 +21,7 @@ const TopCategories = () => {
                 categories ?
                     <CarouselWithButtons height="500px">
                         {categories && categories.map((v) =>
-                                <TopItemCard {...v} />
+                                <TopCategoriesCard {...v} />
                          )}
                     </CarouselWithButtons>
                     :

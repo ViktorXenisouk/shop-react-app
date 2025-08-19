@@ -3,11 +3,11 @@ import { Box } from "@mui/material"
 import { useLocation } from "react-router-dom";
 import { useRequest } from "../../../hooks/useRequest";
 import { Product } from "../../../types/product";
-import { DataLoaderFromHookSimple } from "../../loading/Loading";
+import { DataLoaderFromHookSimple } from "../../loading";
 import ProductsLoader from "../components/ProductsLoader";
 import { useTheme, useMediaQuery } from "@mui/material";
-import { ErrorPage } from "../../../pages";
 import PlayListHeader from "./UI/PlayListHeader";
+import ErrorDisplay from "../../../widgets/error-display/ErrorDisplay";
 
 const PlayListDisplay : React.FC = () => {
     const theme = useTheme();
@@ -22,7 +22,7 @@ const PlayListDisplay : React.FC = () => {
 
     if (res[2]) {
         return (
-            <ErrorPage status={res[2].status} message={res[2].message} />
+            <ErrorDisplay status={res[2].status} message={res[2].message} />
         )
     }
 

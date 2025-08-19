@@ -10,10 +10,11 @@ import { SuperTag } from "../features/super-tag/types"
 import { useTheme } from "@mui/material/styles"
 
 type Props = {
-    data?: Product[] | null
+    data?: Product[] | null,
+    onButtonBuyClick?: (id: string) => void
 }
 
-const ProductsLoader: React.FC<Props> = ({ data }) => {
+const ProductsLoader: React.FC<Props> = ({ data, onButtonBuyClick }) => {
 
     const store = useAuthUserStore()
 
@@ -23,13 +24,13 @@ const ProductsLoader: React.FC<Props> = ({ data }) => {
 
     const border = `${theme.palette.divider} solid 2px`
 
-    const isXs = useMediaQuery(theme.breakpoints.only('xs'));
     const isSm = useMediaQuery(theme.breakpoints.only('sm'));
     const isMd = useMediaQuery(theme.breakpoints.only('md'));
+    const isLg = useMediaQuery(theme.breakpoints.only('lg'));
 
     const getStyleBySize = () => {
-        if (isXs || searchParams.get('view') === 'list') {
-            return { borderTop: border, borderRight: border, height: 'auto', }
+        if (searchParams.get('view') === 'list') {
+            return { borderTop: border, borderRight: 'none', height: 'auto', }
         }
         else if (isSm) {
             return {
@@ -65,7 +66,7 @@ const ProductsLoader: React.FC<Props> = ({ data }) => {
 
     const getSize = () => {
         if (!searchParams.get('view') || searchParams.get('view') === 'grid') {
-            return { xs: 12, sm: 6, md: 4, lg: 3 }
+            return { xs: 6, sm: 6, md: 4, lg: 3 }
         }
         else {
             return { xs: 12 }
@@ -111,8 +112,9 @@ const ProductsLoader: React.FC<Props> = ({ data }) => {
             return (
                 <Grid component='div' size={getSize()}
                     sx={{
-                        flexGrow: 0, minWidth: { md: 200 },
-                        height: '600px',
+                        flexGrow: 0,
+                        minWidth: { md: 200 },
+                        height: { md: '800px', lg: '700px' },
                         borderRight: border,
                         borderTop: border,
                         ...getStyleBySize()
@@ -125,13 +127,18 @@ const ProductsLoader: React.FC<Props> = ({ data }) => {
                         id={item._id}
                         title={item.name}
                         img={item.imgs[0]}
-                        view={searchParams.get('view')} />
+                        view={searchParams.get('view')}
+                        onButtonClick={onButtonBuyClick} />
                 </Grid>)
         })
     }
 
     return (
-        <Box >
+        <Box
+            sx={{
+                width: { xs: '100%', sm: '600px', md: '100%', lg: '100%' },
+                mx: 'auto'
+            }}>
             <Grid container
                 direction="row"
                 sx={{

@@ -2,10 +2,9 @@ import React, { useEffect, useState } from 'react';
 import { useTimer } from '../../hooks/useTimer';
 import MainView from './MainView';
 
-const Main : React.FC = () => {
+const Main: React.FC = () => {
     const [currentId, setCurrentId] = useState(-1);
     const [isCatalogMouseOver, setIsCatalogMouseOver] = useState(false);
-
 
     const onClose = () => {
         setCurrentId(-1)
@@ -23,7 +22,12 @@ const Main : React.FC = () => {
 
 
     return (
-        <MainView currentId={currentId} onClose={onClose} setIsCatalogMouseOver={setIsCatalogMouseOver} setCurrentId={setCurrentId}/>
+        <MainView
+            onClose={onClose}
+            currentId={currentId}
+            setIsCatalogMouseOver={setIsCatalogMouseOver}
+            setCurrentId={setCurrentId}
+        />
     )
 }
 

@@ -2,7 +2,7 @@ import { useLocation, useSearchParams } from "react-router-dom";
 import { Box, Typography, Avatar, Paper, TextField } from "@mui/material"
 import { autoSaveFetch } from "../services/safe-fetch";
 import type { SearchItem } from "../types/search-item"
-import { DataLoaderFromPromise } from "../features/loading/Loading";
+import { DataLoaderFromPromise } from "../features/loading";
 import { Link } from "react-router-dom";
 import SearchForm from "../features/search/search-form/SearchForm";
 import NoFoundErrorPage from "./NoFoundErrorPage";

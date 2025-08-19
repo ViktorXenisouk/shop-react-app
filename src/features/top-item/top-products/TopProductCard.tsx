@@ -5,7 +5,7 @@ import BasketCountButton from "../../basket/UI/BasketCountButton"
 import { useAuthUserStore } from '../../../store/useAuth';
 import { useEffect, useState } from 'react';
 
-const TopItemCard = (props: TopItem & { id: string }) => {
+const TopProductCard = (props: TopItem & { id: string }) => {
     const [count, setCount] = useState(0)
 
     const store = useAuthUserStore()
@@ -89,4 +89,4 @@ const TopItemCard = (props: TopItem & { id: string }) => {
     )
 }
 
-export default TopItemCard
+export default TopProductCard

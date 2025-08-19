@@ -5,7 +5,7 @@ import { useParams } from "react-router-dom";
 import AdminPlayListCreateOrUpdateForm from "./components/AdminPlayListCreateOrUpdateForm"
 import { Body } from "./types";
 import { useAdminAuthStore } from "../../../../store/useAdmin";
-import { DataLoaderFromPromise } from "../../../loading/Loading";
+import { DataLoaderFromPromise } from "../../../loading";
 import { editPlayList } from "./api";
 
 const Render : React.FC<{ data: PlayList }> = ({ data }) => {

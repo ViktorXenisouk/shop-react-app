@@ -8,13 +8,11 @@ type Props = {
     sx?:SxProps<Theme>
 }
 
-
 const BillboardCard: React.FC<Props> = ({ item,sx }) => {
     return (
         <Box
             sx={{
                 width: '800px', height: '600px',
-                backgroundImage: `url(${item.imgUrl})`,
                 backgroundSize: 'cover',
                 backgroundPosition: 'center',
                 position: 'absolute',
@@ -24,14 +22,18 @@ const BillboardCard: React.FC<Props> = ({ item,sx }) => {
                 color: 'white',
                 transition: 'opacity 0.5s ease-in-out',
                 zIndex: 0,
-                ...sx
+                ...sx,
+                display:'flex',
+                justifyContent:'center',
+                alignItems:'center'
             }}
         >
+            <Box component='img' src={item.imgUrl} sx={{width:'100%',height:'auto'}}/>
             <Box
                 sx={{
                     position: 'absolute',
-                    bottom: '70px',
-                    right: '10px'
+                    bottom:{xs:2,sm:'20px',md:'40px'},
+                    right: {xs:1,sm:3,md:'10px',lg:'50px'}
                 }}
             >
                 <Button

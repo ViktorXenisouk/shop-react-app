@@ -17,7 +17,7 @@ import AdminUsersEdit from "./components/admin-users/AdminUsersEdit";
 
 import AdminPlayListCreate from "./components/admin--play-list/AdminPlayListCreate";
 import AdminPlayListEdit from "./components/admin--play-list/AdminPlayListEdit";
-import AdminPlayList from "./components/admin--play-list/AdminPlayList"
+import AdminPlayList from "./components/admin--play-list/AdminPlayList/AdminPlayList"
 
 
 import AdminMe from "./components/admin-me/AdminMe";

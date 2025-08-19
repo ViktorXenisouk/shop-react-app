@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { type Product } from "../../../types/product"
 import { useLocation, useSearchParams } from "react-router-dom";
 import { useRequest } from "../../../hooks/useRequest";
@@ -6,11 +6,16 @@ import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTheme } from "@mui/material";
 import ProductListView from "./ProductListView";
 
-
-const Products : React.FC = () => {
+const Products: React.FC = () => {
     const theme = useTheme();
 
     const isSmall = useMediaQuery(theme.breakpoints.down('md'))
+
+    const [id, setId] = useState<string | null>(null)
+
+    const onProductSelect = (id: string) => {
+        setId(id)
+    }
 
     const location = useLocation()
 
@@ -31,11 +36,14 @@ const Products : React.FC = () => {
 
     return (
         <ProductListView
-        page={parseInt(searchParams.get('page') ?? '1')}
-        isSmall={isSmall}
-        subPath={subPath}
-        res={res}
-        onChangePage={onChangePage}
+            page={parseInt(searchParams.get('page') ?? '1')}
+            isSmall={isSmall}
+            subPath={subPath}
+            res={res}
+            onChangePage={onChangePage}
+            onDrawerClose={() => setId(null)}
+            onProductSelect={onProductSelect}
+            selectedId={id}
         />
     )
 }

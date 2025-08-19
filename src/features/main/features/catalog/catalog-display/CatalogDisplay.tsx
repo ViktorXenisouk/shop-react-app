@@ -98,7 +98,7 @@ const CatalogDisplay: React.FC<Props> = ({ currentId, onClose, onMouseOut }) => 
                             p: 3,
                             borderRadius:1,
                         }}
-                        spacing={2}>
+                        spacing={4}>
                         {catalogs?.map((item) => (
                             <Grid size={4}>
                                 <CatalogDisplayCard

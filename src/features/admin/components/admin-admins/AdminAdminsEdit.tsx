@@ -1,6 +1,6 @@
 import React, { useState } from "react"
 import type { Admin } from "../../../../types/admin"
-import { DataLoaderFromPromise } from "../../../loading/Loading"
+import { DataLoaderFromPromise } from "../../../loading"
 import { autoSaveFetch } from "../../../../services/safe-fetch"
 import { useParams } from "react-router-dom"
 import { useAdminAuthStore } from "../../../../store/useAdmin"

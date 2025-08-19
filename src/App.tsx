@@ -1,11 +1,8 @@
 import './App.css';
 import { Routes, Route } from 'react-router-dom'
 import * as pages from './pages/index'
-import AdminNavigation from './features/admin/UI/AdminNavigation';
-import { useAdminAuthStore } from './store/useAdmin';
 import Navbar from './widgets/header/Navbar';
 import Footer from './widgets/footer/Footer';
-import { grey } from '@mui/material/colors';
 import { Box, Container, useMediaQuery, useTheme } from '@mui/material';
 
 function App() {

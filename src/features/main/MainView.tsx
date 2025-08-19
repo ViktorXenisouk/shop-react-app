@@ -2,8 +2,7 @@ import React, { Fragment } from 'react';
 import { useTheme } from '@mui/material';
 import { Box, Stack, useMediaQuery } from '@mui/material';
 import { useWindowWidth } from '../../hooks/useWindowWidth';
-import TopCategories from '../top-item/TopCaregories';
-import TopItems from "../top-item/TopItems"
+import { TopProducts, TopCategories } from "../top-item"
 import { CatalogDisplay, CatalogMenu, CatalogModal } from './features/catalog';
 import MyImageList from './components/MyImageList';
 
@@ -51,21 +50,20 @@ const MainView: React.FC<Props> = ({ currentId, onClose, setIsCatalogMouseOver, 
                                 />
                             </Box>
                             <Stack sx={{
-                                pb:4
+                                pb: 4
                             }}>
                                 <BillboardMainCarousel />
-                                <MyImageList />
                                 <TopCategories />
-                                <TopItems />
+                                <TopProducts />
                             </Stack>
                         </Box>
                     </Fragment>
                     :
-                    <Stack spacing={4} sx={{ width: '100%',pb:4 }}>
+                    <Stack spacing={4} sx={{ width: '100%', pb: 4,alignItems:'center' }}>
                         <BillboardMainCarousel />
                         <MyImageList />
+                        <TopProducts grid />
                         <TopCategories />
-                        <TopItems />
                     </Stack>
             }
         </Fragment>

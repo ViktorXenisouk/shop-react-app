@@ -1,6 +1,6 @@
 import React from "react"
 import { Box, useMediaQuery, useTheme } from "@mui/material"
-import { DataLoaderSimple } from "../../../loading/Loading"
+import { DataLoaderFromPromiseSimple } from "../../../loading"
 import { autoSaveFetch } from "../../../../services/safe-fetch"
 import type { Catalog } from "../../../../types/catalog"
 import { useSearchParams } from "react-router-dom"
@@ -37,7 +37,7 @@ const ProductsHeader: React.FC<Props> = ({ subPath }) => {
                 mb: '10px'
             }}>
             <CategoryParser category={subPath} renderMain />
-            <DataLoaderSimple res={res} page={ProductHeaderCategories} />
+            <DataLoaderFromPromiseSimple res={res} page={ProductHeaderCategories} />
             {
                 !isSmall ?
                     <Box sx={{ display: 'flex', justifyContent: 'space-between', mx: '30px' }}>

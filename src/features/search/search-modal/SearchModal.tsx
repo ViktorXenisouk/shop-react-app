@@ -47,9 +47,8 @@ const SearchModal: React.FC<Props> = ({ isActive, setIsActive }) => {
               width: '100%',
               display: 'flex',
               justifyContent: 'end',
-              border: '1px solid',
-              borderColor: 'divider',
-              borderRadius: 3
+              borderBottom: '1px solid',
+              borderBottomColor: 'divider',
             }}>
             <IconButton
               onClick={handleClose}

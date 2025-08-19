@@ -3,7 +3,7 @@ import { Box, Button, Typography } from "@mui/material"
 import { Link } from "react-router-dom"
 import { TopItem } from "../../../types/top-item"
 
-const TopItemCard : React.FC<TopItem> = (props) => {
+const TopCategoriesCard : React.FC<TopItem> = (props) => {
 
     return (
         <Box
@@ -58,4 +58,4 @@ const TopItemCard : React.FC<TopItem> = (props) => {
     )
 }
 
-export default TopItemCard
+export default TopCategoriesCard

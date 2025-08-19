@@ -61,7 +61,7 @@ const ReadComments = () => {
 
     const closeHandler = () => setOpen(false)
 
-    const c = commments.slice(0, 8)
+    const c = commments.slice(0, 4)
 
     return (
         <>

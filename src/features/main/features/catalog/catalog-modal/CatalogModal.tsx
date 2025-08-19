@@ -1,19 +1,40 @@
-import { Modal, Box, Button, List, ListItemButton, Typography, IconButton, Grid, Paper } from "@mui/material"
-import React, { useState, Fragment } from "react"
-import { Link, useNavigate } from "react-router-dom"
+import { Modal, Box, IconButton, List, ListItemText, ListItemButton, Collapse, Paper, styled } from "@mui/material"
+import React, { useState, useEffect, Fragment } from "react"
+import { Link } from "react-router-dom"
 import { useCatalogStorage } from "../hooks/useCatalog"
 import { Close } from "@mui/icons-material"
 import SearchCategoryButton from "./UI/SearchCategoryButton"
+import CatalogList from "../catalog-list/CatalogList"
+
+const MyListItemText = styled(ListItemText)(({ theme }) => ({
+    color: theme.palette.text.secondary,
+    textDecoration: 'underline',
+}))
 
 const CatalogModal: React.FC = () => {
     const [open, setOpen] = useState(false)
     const store = useCatalogStorage()
-    const navigate = useNavigate()
 
-    const [index, setIndex] = useState(0)
+    const [index, setIndex] = useState<number[]>([])
+
+    useEffect(() => {
+        setIndex([])
+    }, [open])
 
     if (!store.isLoading && !store.catalog) {
         store.fetchCatalog()
+    }
+
+    const handleList = (id: number) => {
+        setIndex((prev) => {
+            if (prev.includes(id)) {
+                prev = prev.filter((item) => item !== id)
+            }
+            else {
+                prev.push(id)
+            }
+            return [...prev]
+        })
     }
 
     return (
@@ -25,9 +46,15 @@ const CatalogModal: React.FC = () => {
                     onClick={() => setOpen(true)}
                 />
             </Box>
-            <Modal open={open} onClose={() => setOpen(false)} sx={{ display: 'flex', alignItems: 'flex-start', mt: '60px' }}>
-                <Box sx={{ width: '100%', height: 'auto', p: 4, borderRadius: 4, backgroundColor: 'background.paper', m: 4 }}>
-                    <Box sx={{ display: 'flex', justifyContent: 'flex-end', borderBottom: '1px solid', borderBottomColor: 'divider' }}>
+            <Modal open={open} onClose={() => setOpen(false)}>
+                <Paper sx={{
+                    width: '100%',
+                    height: '100%',
+                    overflowY: 'scroll',
+                    overflowX: 'hidden',
+                    borderRadius: 0,
+                }}>
+                    <Box sx={{ display: 'flex', justifyContent: 'flex-end', borderBottom: '1px solid', borderBottomColor: 'divider',m:2,p:1 }}>
                         <IconButton onClick={() => setOpen(false)}>
                             <Close />
                         </IconButton>
@@ -37,65 +64,11 @@ const CatalogModal: React.FC = () => {
                             display: 'flex',
                             flexDirection: 'row',
                             width: '100%',
-                            backgroundColor: 'background.paper'
-
+                            height: '1fr',
                         }}>
-                        <List
-                        sx={{
-                            borderRight:'1px solid',
-                            borderRightColor:'divider'
-                        }}>
-                            {store.catalog && store.catalog.map((cat, i) =>
-                                <ListItemButton
-                                    selected={index === i}
-                                    onClick={
-                                        () => {
-                                            if (index === i) {
-                                                navigate(`/${cat.isPlaylist ? 'play-list' : 'products'}/${cat.fullPath}`)
-                                            }
-                                            setIndex(i)
-                                        }
-                                    }
-                                    sx={{
-                                        borderRadius: 2,
-                                        color:'text.primary',
-                                        ':hover': {
-                                            border: '1px solid',
-                                            borderColor: 'primary.main'
-                                        }
-                                    }}>
-                                    {cat.name}
-                                </ListItemButton>
-                            )}
-                        </List>
-                        <Box
-                            sx={{
-                                p: 4
-                            }}>
-                            <Grid container spacing={3} sx={{ width: '100%', mx: 1 }}>
-                                {store.catalog && store.catalog[index] && store.catalog[index].subCategories?.map((catalog) =>
-                                    <Grid size={{ xs: 6, sm: 4, md: 3 }}>
-                                        <Button
-                                            component={Link}
-                                            to={`/${store.catalog && store.catalog[index].isPlaylist ? 'play-list' : 'products'}/${catalog.fullPath}`}
-                                            variant="outlined"
-                                            sx={{
-                                                minHeight: '100px',
-                                                display: 'flex',
-                                                alignContent: 'center',
-                                                justifyContent: 'center',
-                                                ':hover': {
-                                                    border: '1px solid',
-                                                    borderColor: 'primary.main'
-                                                }
-                                            }}>
-                                            {catalog.name}
-                                        </Button>
-                                    </Grid>)}
-                            </Grid >
-                        </Box>
+                       <CatalogList catalog={store.catalog}/>
                     </Box>
-                </Box>
+                </Paper>
             </Modal>
         </Fragment>
     )

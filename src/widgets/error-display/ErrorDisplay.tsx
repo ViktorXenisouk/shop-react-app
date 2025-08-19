@@ -1,7 +1,8 @@
 import React from "react";
 import { Typography, Paper } from "@mui/material";
-import RobotWithMessage from "../assets/interactive-svg/RobotWithMessage"
-import NoFoundErrorPage from "./NoFoundErrorPage";
+import RobotWithMessage from "../../assets/interactive-svg/RobotWithMessage"
+import NoFoundErrorPage from "../../pages/NoFoundErrorPage"
+import { type ErrorMessage } from "../../types/fetch";
 
 const getMessageByStatusStatusCode = (status: number) => {
     let index = 0
@@ -23,19 +24,14 @@ const getMessageByStatusStatusCode = (status: number) => {
     [index]
 }
 
-type Props = {
-    status: number;
-    message: string;
-}
-
-const ErrorPage : React.FC<Props> = ({ status, message }) => {
+const ErrorDisplay : React.FC<ErrorMessage> = ({ status, message }) => {
 
     if (status === 404) {
         return <NoFoundErrorPage />
     }
 
 
-    const text = getMessageByStatusStatusCode(status)
+    const text = getMessageByStatusStatusCode(status ?? 500)
 
     return (
         <Paper
@@ -56,7 +52,7 @@ const ErrorPage : React.FC<Props> = ({ status, message }) => {
                 Error Page : {status}
             </Typography>
 
-            <RobotWithMessage message={status.toString()} />
+            <RobotWithMessage message={ status ? status.toString() : ''} />
 
             <Typography variant="h3">
                 {text}
@@ -72,4 +68,4 @@ const ErrorPage : React.FC<Props> = ({ status, message }) => {
     )
 }
 
-export default ErrorPage
+export default ErrorDisplay

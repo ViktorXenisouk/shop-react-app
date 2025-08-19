@@ -4,13 +4,12 @@ const baseUrl = process.env.REACT_APP_API_URL as string
 
 const safeFetch = async <T>(url: string, requestInit: RequestInit): Promise<FetchResponse<T>> => {
     try {
-        console.log(baseUrl+url)
         const response = await fetch((baseUrl + url), requestInit);
 
         if (!response.ok) {
             const errorData = await response.json();
             return {
-                data: {} as T,
+                data: undefined,
                 success: false,
                 status: response.status,
                 message: errorData?.message || 'Something went wrong',
@@ -18,10 +17,15 @@ const safeFetch = async <T>(url: string, requestInit: RequestInit): Promise<Fetc
         }
 
         const result = await response.json();
-        return { data: result.data as T, success: true, message: result?.message || 'ok',paginationInfo:result?.paginationInfo };
+        return {
+            data: result.data as T,
+            success: true,
+            message: result?.message || 'ok',
+            paginationInfo: result?.paginationInfo
+        };
     } catch (error: any) {
         return {
-            data: {} as T,
+            data: undefined as T,
             success: false,
             status: 500,
             message: error.message || 'Network error',
@@ -48,7 +52,7 @@ const autoSaveFetch = async <T>(url: string, options: AutoSafeFetch, params?: { 
             opt.body = options.body
     }
 
-    const headers : any = {}
+    const headers: any = {}
 
     if (options.token) {
         headers['Authorization'] = `Bearer ${options.token}`
@@ -68,4 +72,4 @@ const autoSaveFetch = async <T>(url: string, options: AutoSafeFetch, params?: { 
     return safeFetch<T>(url + queryString, opt)
 }
 
-export { safeFetch,autoSaveFetch,type AutoSafeFetch }
+export { safeFetch, autoSaveFetch, type AutoSafeFetch }

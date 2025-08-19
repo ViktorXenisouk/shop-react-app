@@ -37,20 +37,22 @@ const FavouriteDisplay: React.FC = () => {
 
     return (
         <Fragment>
+            <Box>
+                <HeaderText>Favourite</HeaderText>
                 <Box
                     sx={{
                         display: 'flex',
                         justifyContent: 'center',
-                        flexDirection: 'column',
+                        flexDirection: 'row',
                         width: '100%'
                     }}>
-                    <HeaderText>Favourite</HeaderText>
                     <Stack
                         sx={{
                             bgcolor: 'background.paper',
                             width: '600px',
                             p: '16px',
-                            mx:'auto'
+                            mx: 'auto',
+                            borderRadius:4,
                         }}>
                         {favourite.length > 0 ?
                             favourite.map((item) => {
@@ -66,6 +68,7 @@ const FavouriteDisplay: React.FC = () => {
                             <FavouriteEmpty />}
                     </Stack>
                 </Box>
+            </Box>
             <FavouriteDialog open={open} onClose={onClose} />
         </Fragment>
     )

@@ -10,7 +10,7 @@ import Article from "../../article/Article"
 import Params from "./components/Params"
 import BasketCountButton from "../../basket/UI/BasketCountButton"
 import LikeButtonWithText from "../../favourite/UI/LikeButtonWithText"
-import TopItems from "../../top-item/TopItems"
+import { TopProducts,TopCategories } from "../../top-item"
 import Navigation from "./components/Navigation"
 import WriteComment from "./components/WriteComment"
 import ReadComments from "./components/ReadComments"
@@ -66,10 +66,6 @@ const ProductLoader: React.FC<Props> = ({ data }) => {
         })
     }
 
-    const onButtonClick = () => {
-        navigate(-1)
-    }
-
     const changeHandler = (count: number) => {
         store.createOrChangeBasketItem({ id: data._id, count: count })
     }
@@ -79,6 +75,7 @@ const ProductLoader: React.FC<Props> = ({ data }) => {
             <Typography
                 variant="h2"
                 sx={{
+                    fontSize: { xs: 'large', md: undefined },
                     color: 'text.primary',
                     textAlign: 'center',
                     textDecoration: 'underline',
@@ -119,14 +116,15 @@ const ProductLoader: React.FC<Props> = ({ data }) => {
                         </Paper>
                     </Grid>
                     <Grid size={{ xs: 12 }}>
-                                                        <Divider variant="middle" sx={{ mt: '10px', mb: '20px' }} />
+                        <Divider variant="middle" sx={{ mt: '10px', mb: '20px' }} />
                         <Navigation onChange={(v) => setValue(v)} value={value} />
                         {component}
                     </Grid>
                     <Grid size={{ xs: 12 }}>
                         <Box sx={{ mb: '50px' }}>
                             <Divider sx={{ mt: '30px', mb: '50px' }} />
-                            <TopItems />
+                            <TopProducts grid />
+                            <TopCategories/>
                         </Box>
                     </Grid>
                 </Grid>

@@ -1,7 +1,7 @@
-import { useEffect, useState } from "react"
+import React, { useEffect, useState } from "react"
 import { Link as RouterLink } from "react-router-dom"
 import { useAuthUserStore } from "../../../store/useAuth";
-import { Box, Card, CardContent, CardActions, Typography, Avatar, Dialog, DialogTitle, DialogActions, Button } from "@mui/material";
+import { Stack, Card, Typography, Avatar, Box,useTheme,useMediaQuery } from "@mui/material";
 import LikeButton from "../../favourite/UI/LikeButton";
 import BasketCountBlock from './BasketCountBlock';
 import { useRequest } from "../../../hooks/useRequest";
@@ -12,9 +12,13 @@ type Props = {
     onChange: (id: string, count: number) => void
 }
 
-const BacketCard = ({ id, info, onChange }: Props) => {
+const BacketCard : React.FC<Props> = ({ id, info, onChange }) => {
     const store = useAuthUserStore()
     const [liked, setLiked] = useState(info.liked)
+
+    const theme = useTheme()
+
+    const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
 
     useEffect(() => {
     }, [info.count])
@@ -36,27 +40,24 @@ const BacketCard = ({ id, info, onChange }: Props) => {
 
     const [success, data, error] = useRequest<Product>(`/products/${id}`, { method: 'GET' })
 
-    console.log('data')
-    console.log(data)
-
     return (
-        <Card sx={{ display: 'flex', justifyContent: 'space-between', flexDirection: 'row',alignItems:'center' }} variant="outlined">
-            <CardContent sx={{ display: 'flex', alignItems: 'center',height:'100%' }}>
-                {
-                    data?.imgs && data?.imgs[0] && <Avatar src={data?.imgs[0]?.url ?? ''} />
-                }
-
-                <Typography component={RouterLink} sx={{ color: 'CaptionText',ml:'10px' }} to={`/product/${id}`}>{data && data.name}</Typography>
-
-                <Typography sx={{ml:'20px', }}>Price: 2000-,</Typography>
-
-               <Typography sx={{ml:'20px', }}>Total: {info.count * 2000}</Typography>
-
-            </CardContent>
-            <CardActions>
-                <BasketCountBlock onChange={changeHandler} count={info.count} id={id} />
-                <LikeButton onClick={onClick} liked={liked} />
-            </CardActions>
+        <Card variant="outlined">
+            <Stack spacing={3} direction={isMobile ? 'column' :'row'} sx={{alignItems:'center'}}>
+                    {data?.imgs && data?.imgs[0] && <Avatar src={data?.imgs[0]?.url ?? ''} />}
+                <Box>
+                    <Typography component={RouterLink} sx={{ color: 'text.primary', ml: '10px' }} to={`/product/${id}`}>{data && data.name}</Typography>
+                </Box>
+                <Box>
+                    <Stack direction={isMobile ? 'row' :'column'}>
+                        <Typography >Price: 2000-,</Typography>
+                        <Typography >Total: {info.count * 2000}-</Typography>
+                    </Stack>
+                </Box>
+                <Stack direction={isMobile ? 'row' :'column'}>
+                    <BasketCountBlock onChange={changeHandler} count={info.count} id={id} />
+                    <LikeButton onClick={onClick} liked={liked} />
+                </Stack>
+            </Stack>
         </Card>
     )
 }

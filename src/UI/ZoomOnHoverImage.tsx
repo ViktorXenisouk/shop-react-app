@@ -4,8 +4,8 @@ import { Box } from '@mui/material';
 type Props = {
   src: string;
   alt?: string;
-  width?: number | string;
-  height?: number | string;
+  width?: number | string | any;
+  height?: number | string | any;
   zoomScale?: number;
 };
 
@@ -44,6 +44,9 @@ const ZoomOnHoverImage: React.FC<Props> = ({
         borderRadius: 2,
         position: 'relative',
         cursor: 'zoom-in',
+        display:'flex',
+        alignItems:'center',
+        justifyContent:'center'
       }}
     >
       <Box
@@ -52,7 +55,7 @@ const ZoomOnHoverImage: React.FC<Props> = ({
         alt={alt}
         sx={{
           width: '100%',
-          height: '100%',
+          height: 'auto',
           objectFit: 'cover',
           transition: 'transform 0.3s ease',
           transformOrigin: transformOrigin,

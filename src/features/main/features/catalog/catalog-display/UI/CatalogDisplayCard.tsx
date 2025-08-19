@@ -15,8 +15,6 @@ type Props = {
 const CatalogDisplayCard: React.FC<Props> = ({ name, path, subCataloge, isPlaylist }) => {
     const [expanded, setExpanded] = useState(false);
 
-    const toggleExpanded = () => setExpanded((prev) => !prev);
-
     const imgURL =
         'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRmqfYB4D3aqQcH4HpWAQKcD5Hgx4jbs7HCciF9-UlXn9VV6J28rAtu1W8emao&s';
 

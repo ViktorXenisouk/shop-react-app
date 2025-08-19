@@ -1,5 +1,5 @@
 import React from "react"
-import { DataLoaderFromPromise } from "../../../loading/Loading"
+import { DataLoaderFromPromise } from "../../../loading"
 import { autoSaveFetch } from "../../../../services/safe-fetch"
 import { useParams } from "react-router-dom"
 import { Product } from "../../../../types/product"

@@ -1,6 +1,6 @@
 import React from 'react';
 import { useLocation, useNavigate, useSearchParams } from 'react-router-dom';
-import { DataLoaderFromPromise } from "../../../loading/Loading";
+import { DataLoaderFromPromise } from "../../../loading";
 import { safeFetch } from "../../../../services/safe-fetch";
 import { Catalog } from "../../../../types/catalog";
 import { parseParams } from "../../../../utils/parseParams";

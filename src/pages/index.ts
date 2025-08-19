@@ -1,4 +1,3 @@
-import ErrorPage from "./ErrorPage";
 import Basket from "./Basket";
 import Main from "./Main";
 import Product from "./Product"
@@ -23,7 +22,7 @@ from "../features/admin/index"
 export {
     BuyProccess,
     Personal,SearchPage,
-    Basket, Main, ErrorPage, Products, Product,
+    Basket, Main, Products, Product,
     Login, Register,PlayListPage,NoFoundErrorPage,
 
     AdminLogin, AdminMe, AdminEditMe,
